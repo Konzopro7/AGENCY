@@ -941,6 +941,12 @@ code {
   grid-template-columns: 1fr;
 }
 
+.empty {
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  margin-top: 16px;
+}
+
 .project {
   text-align: left;
   padding: 16px;

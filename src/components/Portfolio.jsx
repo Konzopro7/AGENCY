@@ -71,6 +71,12 @@ export function Portfolio() {
           ))}
         </div>
 
+        {items.length === 0 ? (
+          <div className="card empty">
+            <div className="muted">Aucun projet dans cette catégorie pour le moment.</div>
+          </div>
+        ) : null}
+
         <Modal open={Boolean(selected)} title={selected?.title} onClose={() => setSelected(null)}>
           {selected ? (
             <div className="project-modal">
@@ -106,6 +112,12 @@ export function Portfolio() {
                   Demander un devis
                   <Icon name="arrow-right" size={18} />
                 </button>
+                {selected.url ? (
+                  <a className="btn btn-ghost" href={selected.url} target="_blank" rel="noreferrer">
+                    Voir le site
+                    <Icon name="external" size={18} />
+                  </a>
+                ) : null}
                 <button className="btn btn-ghost" type="button" onClick={() => setSelected(null)}>
                   Fermer
                 </button>

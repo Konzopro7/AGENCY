@@ -10,6 +10,8 @@ function clamp(n, a, b) {
 export function Testimonials() {
   const scrollerRef = useRef(null);
   const [index, setIndex] = useState(0);
+  const count = TESTIMONIALS.length;
+  const hasMany = count > 1;
 
   const scrollToIndex = (i) => {
     const el = scrollerRef.current;
@@ -31,13 +33,13 @@ export function Testimonials() {
       const gap = 16;
       const w = card.getBoundingClientRect().width + gap;
       const next = Math.round(el.scrollLeft / w);
-      setIndex(clamp(next, 0, TESTIMONIALS.length - 1));
+      setIndex(clamp(next, 0, count - 1));
     };
 
     el.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => el.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [count]);
 
   return (
     <section id="avis" className="section" aria-label="Avis">
@@ -53,26 +55,28 @@ export function Testimonials() {
         <Reveal as="div" className="t-wrap card" delay={80}>
           <div className="t-head">
             <div className="t-title">Avis clients</div>
-            <div className="t-actions">
-              <button
-                className="icon-btn"
-                type="button"
-                aria-label="Avis précédent"
-                onClick={() => scrollToIndex(clamp(index - 1, 0, TESTIMONIALS.length - 1))}
-              >
-                <span className="flip">
+            {hasMany ? (
+              <div className="t-actions">
+                <button
+                  className="icon-btn"
+                  type="button"
+                  aria-label="Avis précédent"
+                  onClick={() => scrollToIndex(clamp(index - 1, 0, count - 1))}
+                >
+                  <span className="flip">
+                    <Icon name="arrow-right" size={18} />
+                  </span>
+                </button>
+                <button
+                  className="icon-btn"
+                  type="button"
+                  aria-label="Avis suivant"
+                  onClick={() => scrollToIndex(clamp(index + 1, 0, count - 1))}
+                >
                   <Icon name="arrow-right" size={18} />
-                </span>
-              </button>
-              <button
-                className="icon-btn"
-                type="button"
-                aria-label="Avis suivant"
-                onClick={() => scrollToIndex(clamp(index + 1, 0, TESTIMONIALS.length - 1))}
-              >
-                <Icon name="arrow-right" size={18} />
-              </button>
-            </div>
+                </button>
+              </div>
+            ) : null}
           </div>
 
           <div className="t-slider" ref={scrollerRef}>
@@ -94,17 +98,19 @@ export function Testimonials() {
             ))}
           </div>
 
-          <div className="t-dots" aria-label="Pagination">
-            {TESTIMONIALS.map((_, i) => (
-              <button
-                key={i}
-                className={`dot-btn ${i === index ? "is-active" : ""}`}
-                type="button"
-                aria-label={`Aller à l'avis ${i + 1}`}
-                onClick={() => scrollToIndex(i)}
-              />
-            ))}
-          </div>
+          {hasMany ? (
+            <div className="t-dots" aria-label="Pagination">
+              {TESTIMONIALS.map((_, i) => (
+                <button
+                  key={i}
+                  className={`dot-btn ${i === index ? "is-active" : ""}`}
+                  type="button"
+                  aria-label={`Aller à l'avis ${i + 1}`}
+                  onClick={() => scrollToIndex(i)}
+                />
+              ))}
+            </div>
+          ) : null}
         </Reveal>
       </div>
     </section>
