@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0b0d14" />
+
+    <title>KonzoTech Agency | Sites web modernes, rapides et rentables</title>
+    <meta
+      name="description"
+      content="KonzoTech Agency crée des sites vitrines, e-commerce et applications web modernes, rapides et orientés conversion. Design premium, SEO prêt et support réactif."
+    />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://konzotechagency.com" />
+
+    <meta property="og:site_name" content="KonzoTech Agency" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://konzotechagency.com" />
+    <meta property="og:title" content="KonzoTech Agency | Sites web modernes, rapides et rentables" />
+    <meta
+      property="og:description"
+      content="Sites vitrines, e-commerce et applications web qui convertissent. Design premium, performance et SEO."
+    />
+    <meta property="og:image" content="https://konzotechagency.com/og.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="KonzoTech Agency" />
+    <meta
+      name="twitter:description"
+      content="Sites web modernes, rapides et rentables. Design premium, performance et SEO."
+    />
+    <meta name="twitter:image" content="https://konzotechagency.com/og.svg" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      (() => {
+        try {
+          const stored = localStorage.getItem("kt-theme");
+          const preferred = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+          const theme = stored || preferred;
+          document.documentElement.dataset.theme = theme;
+        } catch {
+          document.documentElement.dataset.theme = "dark";
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Aller au contenu</a>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
