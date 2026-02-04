@@ -48,6 +48,9 @@ export function Footer({ navItems }) {
             <a className="footer-link" href={LINKS.mailto}>
               <Icon name="mail" size={16} /> {SITE.email}
             </a>
+            <a className="footer-link" href={LINKS.mailtoSupport}>
+              <Icon name="mail" size={16} /> {SITE.supportEmail}
+            </a>
             <a className="footer-link" href={LINKS.tel}>
               <Icon name="phone" size={16} /> {SITE.phoneDisplay}
             </a>
@@ -69,4 +72,3 @@ export function Footer({ navItems }) {
     </footer>
   );
 }
-

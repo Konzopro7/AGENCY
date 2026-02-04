@@ -15,6 +15,7 @@ export function Contact() {
   const quick = useMemo(
     () => [
       { label: SITE.email, href: LINKS.mailto, icon: "mail" },
+      { label: SITE.supportEmail, href: LINKS.mailtoSupport, icon: "mail" },
       { label: SITE.phoneDisplay, href: LINKS.tel, icon: "phone" },
       { label: "WhatsApp", href: LINKS.whatsapp, icon: "whatsapp", external: true }
     ],
