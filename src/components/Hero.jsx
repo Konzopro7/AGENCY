@@ -18,23 +18,12 @@ export function Hero() {
 
   return (
     <section id="top" className="hero" aria-label="Introduction">
-      <div className="hero-bg" aria-hidden="true">
-        <div className="orb orb-a" />
-        <div className="orb orb-b" />
-        <div className="orb orb-c" />
-        <div className="noise" />
-      </div>
-
       <div className="container hero-inner">
         <Reveal as="div" className="hero-left">
           <div className="hero-kicker">
             <span className="tag">
               <span className="dot" aria-hidden="true" />
-              Agence web mini, impact maxi
-            </span>
-            <span className="tag">
-              <Icon name="check" size={16} />
-              Support rapide
+              Agence de Digitalisation Technique et Web
             </span>
           </div>
 
@@ -55,21 +44,6 @@ export function Hero() {
               Voir nos réalisations
               <Icon name="external" size={18} />
             </button>
-          </div>
-
-          <div className="hero-trust" aria-label="Indicateurs de confiance">
-            <div className="trust-item">
-              <Icon name="bolt" size={18} />
-              Performance
-            </div>
-            <div className="trust-item">
-              <Icon name="spark" size={18} />
-              Design premium
-            </div>
-            <div className="trust-item">
-              <Icon name="shield" size={18} />
-              SEO prêt
-            </div>
           </div>
 
           <div className="hero-mini">
@@ -105,26 +79,26 @@ export function Hero() {
 
             <div className="panel-grid">
               <div className="panel-stat">
-                <div className="stat-k">Rapidité</div>
-                <div className="stat-v">Core Web Vitals</div>
+                <div className="stat-k">Écoute</div>
+                <div className="stat-v">On comprend votre besoin</div>
               </div>
               <div className="panel-stat">
-                <div className="stat-k">SEO</div>
-                <div className="stat-v">Structure + contenus</div>
+                <div className="stat-k">Transparence</div>
+                <div className="stat-v">Devis & délais clairs</div>
               </div>
               <div className="panel-stat">
-                <div className="stat-k">Design</div>
-                <div className="stat-v">Premium & moderne</div>
+                <div className="stat-k">Rigueur</div>
+                <div className="stat-v">Travail propre & soigné</div>
               </div>
               <div className="panel-stat">
-                <div className="stat-k">Support</div>
-                <div className="stat-v">Réactif et clair</div>
+                <div className="stat-k">Engagement</div>
+                <div className="stat-v">Suivi du début à la fin</div>
               </div>
             </div>
 
             <div className="panel-cta">
               <button className="btn btn-primary" type="button" onClick={onQuote}>
-                Obtenir un devis
+                Faire une demande
                 <Icon name="arrow-right" size={18} />
               </button>
               <a className="btn btn-ghost" href={LINKS.whatsapp} target="_blank" rel="noreferrer">

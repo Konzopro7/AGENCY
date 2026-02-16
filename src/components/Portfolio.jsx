@@ -98,6 +98,20 @@ export function Portfolio() {
                 <div className="pm-k">Résultat</div>
                 <div className="pm-v">{selected.result}</div>
               </div>
+              {selected.teacherFeedback?.length ? (
+                <div className="pm-row">
+                  <div className="pm-k">Avis du professeur</div>
+                  <div className="pm-v">
+                    <ul className="pm-list">
+                      {selected.teacherFeedback.map((item) => (
+                        <li key={`${item.title}-${item.score}`}>
+                          <strong>{item.title}</strong> {item.score} — {item.note}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ) : null}
 
               <div className="pm-cta">
                 <button

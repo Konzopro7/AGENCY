@@ -67,7 +67,19 @@ export function Header({ navItems, activeId }) {
     <header className="header" role="banner">
       <div className="container header-inner">
         <a className="logo" href="#top" onClick={(e) => (e.preventDefault(), scrollToId("top"))}>
-          <span className="logo-mark" aria-hidden="true" />
+          <span className="logo-mark" aria-hidden="true">
+            <span className="logo-mark-inner">
+              <img
+                className="logo-img"
+                src="/logo.svg"
+                alt=""
+                width="100"
+                height="100"
+                decoding="async"
+                draggable="false"
+              />
+            </span>
+          </span>
           <span className="logo-text">{SITE.name}</span>
         </a>
 

@@ -3,8 +3,8 @@ import { Header } from "./components/Header.jsx";
 import { Hero } from "./components/Hero.jsx";
 import { TrustBar } from "./components/TrustBar.jsx";
 import { Services } from "./components/Services.jsx";
+import { Pricing } from "./components/Pricing.jsx";
 import { Portfolio } from "./components/Portfolio.jsx";
-import { Process } from "./components/Process.jsx";
 import { Testimonials } from "./components/Testimonials.jsx";
 import { FAQ } from "./components/FAQ.jsx";
 import { Contact } from "./components/Contact.jsx";
@@ -17,8 +17,8 @@ export default function App() {
   const navItems = useMemo(
     () => [
       { id: "services", label: "Services" },
+      { id: "pricing", label: "Tarification" },
       { id: "realisations", label: "Réalisations" },
-      { id: "process", label: "Process" },
       { id: "avis", label: "Avis" },
       { id: "faq", label: "FAQ" },
       { id: "contact", label: "Contact" }
@@ -41,8 +41,8 @@ export default function App() {
         <Hero />
         <TrustBar />
         <Services />
+        <Pricing />
         <Portfolio />
-        <Process />
         <Testimonials />
         <FAQ />
         <Contact />

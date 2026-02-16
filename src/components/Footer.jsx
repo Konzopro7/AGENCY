@@ -15,7 +15,19 @@ export function Footer({ navItems }) {
       <div className="container footer-inner">
         <div className="footer-col">
           <div className="footer-brand">
-            <span className="logo-mark" aria-hidden="true" />
+            <span className="logo-mark" aria-hidden="true">
+              <span className="logo-mark-inner">
+                <img
+                  className="logo-img"
+                  src="/logo.svg"
+                  alt=""
+                  width="100"
+                  height="100"
+                  decoding="async"
+                  draggable="false"
+                />
+              </span>
+            </span>
             <div>
               <div className="footer-name">{SITE.name}</div>
               <div className="footer-domain muted">{SITE.domain}</div>
@@ -58,6 +70,7 @@ export function Footer({ navItems }) {
               <Icon name="whatsapp" size={16} /> WhatsApp
             </a>
           </div>
+
           <button className="btn btn-primary footer-cta" type="button" onClick={() => scrollToId("contact")}>
             Demander un devis
             <Icon name="arrow-right" size={18} />
@@ -67,7 +80,7 @@ export function Footer({ navItems }) {
 
       <div className="container footer-bottom">
         <div className="muted">© {year} {SITE.name}. Tous droits réservés.</div>
-        <div className="muted">Montréal • Canada</div>
+        <div className="muted">Montréal - Canada</div>
       </div>
     </footer>
   );
