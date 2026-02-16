@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { LINKS, SITE } from "../config/site.js";
+import { CONTACT, LINKS, SITE } from "../config/site.js";
 import { Icon } from "./icons.jsx";
 import { Reveal } from "./Reveal.jsx";
 
@@ -7,10 +7,13 @@ function isEmail(v) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || "").trim());
 }
 
+const INITIAL_FORM = { name: "", email: "", message: "" };
+
 export function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [form, setForm] = useState(INITIAL_FORM);
   const [errors, setErrors] = useState({});
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState("idle");
+  const [submitError, setSubmitError] = useState("");
 
   const quick = useMemo(
     () => [
@@ -31,19 +34,66 @@ export function Contact() {
   };
 
   const onChange = (key) => (e) => {
-    setSent(false);
+    if (status !== "idle") {
+      setStatus("idle");
+      setSubmitError("");
+    }
     setForm((prev) => ({ ...prev, [key]: e.target.value }));
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const nextErrors = validate();
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) return;
 
-    setSent(true);
-    setForm({ name: "", email: "", message: "" });
+    if (!CONTACT.endpoint) {
+      setStatus("error");
+      setSubmitError("Configuration manquante: ajoutez VITE_CONTACT_ENDPOINT dans l'environnement.");
+      return;
+    }
+
+    setStatus("submitting");
+    setSubmitError("");
+
+    try {
+      const response = await fetch(CONTACT.endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify({
+          name: String(form.name).trim(),
+          email: String(form.email).trim(),
+          message: String(form.message).trim(),
+          source: SITE.name,
+          page: window.location.href,
+          submittedAt: new Date().toISOString()
+        })
+      });
+
+      if (!response.ok) {
+        let details = `Erreur d'envoi (${response.status}).`;
+        try {
+          const payload = await response.json();
+          const message = payload?.message || payload?.error || payload?.errors?.[0]?.message;
+          if (message) details = message;
+        } catch {
+        }
+        throw new Error(details);
+      }
+
+      setStatus("success");
+      setErrors({});
+      setForm(INITIAL_FORM);
+    } catch (err) {
+      setStatus("error");
+      setSubmitError(err instanceof Error ? err.message : "Une erreur est survenue. Réessayez.");
+    }
   };
+
+  const isSubmitting = status === "submitting";
 
   return (
     <section id="contact" className="section" aria-label="Contact">
@@ -112,6 +162,7 @@ export function Contact() {
                   placeholder="Votre nom"
                   autoComplete="name"
                   required
+                  disabled={isSubmitting}
                   aria-invalid={Boolean(errors.name)}
                 />
                 {errors.name ? <div className="error">{errors.name}</div> : null}
@@ -130,6 +181,7 @@ export function Contact() {
                   autoComplete="email"
                   inputMode="email"
                   required
+                  disabled={isSubmitting}
                   aria-invalid={Boolean(errors.email)}
                 />
                 {errors.email ? <div className="error">{errors.email}</div> : null}
@@ -144,17 +196,18 @@ export function Contact() {
                   className={`input textarea ${errors.message ? "is-error" : ""}`}
                   value={form.message}
                   onChange={onChange("message")}
-                  placeholder="Objectif du site, pages, exemples, budget/délai si possible…"
+                  placeholder="Objectif du site, pages, exemples, budget/délai si possible..."
                   rows={5}
                   required
+                  disabled={isSubmitting}
                   aria-invalid={Boolean(errors.message)}
                 />
                 {errors.message ? <div className="error">{errors.message}</div> : null}
               </div>
 
               <div className="form-actions">
-                <button className="btn btn-primary" type="submit">
-                  Envoyer
+                <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? "Envoi..." : "Envoyer"}
                   <Icon name="arrow-right" size={18} />
                 </button>
                 <a className="btn btn-ghost" href={LINKS.tel}>
@@ -163,15 +216,21 @@ export function Contact() {
                 </a>
               </div>
 
-              {sent ? (
+              {status === "success" ? (
                 <div className="success" role="status">
-                  Merci ! Votre message est bien envoyé. On vous répond sous 24h.
+                  Merci. Votre message est bien envoyé. On vous répond sous 24h.
                 </div>
-              ) : (
-                <div className="hint muted">
-                  Réponse sous 24h (jours ouvrés).
+              ) : null}
+
+              {status === "error" ? (
+                <div className="error form-status-error" role="alert">
+                  {submitError || "Une erreur est survenue. Réessayez."}
                 </div>
-              )}
+              ) : null}
+
+              {status === "idle" || status === "submitting" ? (
+                <div className="hint muted">Réponse sous 24h (jours ouvrés).</div>
+              ) : null}
             </form>
           </Reveal>
         </div>

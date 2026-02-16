@@ -173,6 +173,13 @@ textarea {
   transform: translateY(0);
 }
 
+.btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 .btn-primary {
   border-color: var(--accent);
   background: var(--accent);
@@ -1135,66 +1142,6 @@ html[data-theme="dark"] .modal-overlay {
   margin-top: 6px;
 }
 
-.timeline {
-  padding: 18px;
-  border-radius: var(--radius-lg);
-  position: relative;
-  overflow: hidden;
-  display: grid;
-  gap: 12px;
-}
-
-.timeline-line {
-  position: absolute;
-  left: 18px;
-  top: 18px;
-  bottom: 18px;
-  width: 2px;
-  background: linear-gradient(180deg, rgba(110, 231, 255, 0.0), rgba(110, 231, 255, 0.5), rgba(52, 211, 153, 0.0));
-  opacity: 0.8;
-}
-
-.timeline-item {
-  position: relative;
-  display: grid;
-  grid-template-columns: 44px 1fr;
-  gap: 12px;
-  padding: 12px;
-  border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.timeline-dot {
-  width: 44px;
-  height: 44px;
-  border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.04);
-  display: grid;
-  place-items: center;
-}
-
-.timeline-title {
-  font-family: var(--font-display);
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-}
-
-.timeline-index {
-  font-size: 12px;
-  color: rgba(110, 231, 255, 0.9);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.timeline-desc {
-  margin-top: 6px;
-  color: var(--muted);
-  line-height: 1.6;
-}
-
 .t-wrap {
   padding: 14px;
   border-radius: var(--radius-lg);
@@ -1479,6 +1426,10 @@ html[data-theme="dark"] .modal-overlay {
 .error {
   color: rgba(225, 29, 72, 0.92);
   font-size: 13px;
+}
+
+.form-status-error {
+  margin-top: 10px;
 }
 
 .form-actions {

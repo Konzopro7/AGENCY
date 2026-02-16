@@ -7,6 +7,10 @@ export const SITE = {
   phoneE164: "+15147727758"
 };
 
+export const CONTACT = {
+  endpoint: import.meta.env.VITE_CONTACT_ENDPOINT || ""
+};
+
 export const LINKS = {
   mailto: `mailto:${SITE.email}`,
   mailtoSupport: `mailto:${SITE.supportEmail}`,

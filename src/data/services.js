@@ -82,5 +82,3 @@ export const SERVICE_GROUPS = [
     ]
   }
 ];
-
-export const SERVICES = SERVICE_GROUPS.flatMap((g) => g.items);
