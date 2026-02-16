@@ -29,6 +29,8 @@ jobs:
           server: ${{ secrets.FTP_HOST || secrets.FTP_SERVER || vars.FTP_HOST || vars.FTP_SERVER }}
           username: ${{ secrets.FTP_USER || secrets.FTP_USERNAME || vars.FTP_USER || vars.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD || secrets.FTP_PASS || vars.FTP_PASSWORD || vars.FTP_PASS }}
+          protocol: ${{ secrets.FTP_PROTOCOL || vars.FTP_PROTOCOL || 'ftp' }}
+          port: ${{ secrets.FTP_PORT || vars.FTP_PORT || 21 }}
           local-dir: ./dist/
-          server-dir: ./public_html/
+          server-dir: ${{ vars.FTP_SERVER_DIR || '/public_html/' }}
           dangerous-clean-slate: false
