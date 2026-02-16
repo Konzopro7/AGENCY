@@ -46,7 +46,9 @@ jobs:
           fi
           echo "FTP config detected. protocol=$FTP_PROTOCOL_VALUE port=$FTP_PORT_VALUE server_dir=$FTP_SERVER_DIR_VALUE"
 
-      - name: Deploy to FTP
+      - name: Deploy (FTP)
+        id: deploy_ftp
+        continue-on-error: true
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_HOST || secrets.FTP_SERVER || vars.FTP_HOST || vars.FTP_SERVER }}
@@ -57,3 +59,24 @@ jobs:
           local-dir: ./dist/
           server-dir: ${{ vars.FTP_SERVER_DIR || '/public_html/' }}
           dangerous-clean-slate: false
+
+      - name: Deploy (FTPS fallback)
+        id: deploy_ftps
+        if: steps.deploy_ftp.outcome == 'failure'
+        continue-on-error: true
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST || secrets.FTP_SERVER || vars.FTP_HOST || vars.FTP_SERVER }}
+          username: ${{ secrets.FTP_USER || secrets.FTP_USERNAME || vars.FTP_USER || vars.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD || secrets.FTP_PASS || vars.FTP_PASSWORD || vars.FTP_PASS }}
+          protocol: ftps
+          port: ${{ secrets.FTP_PORT || vars.FTP_PORT || 21 }}
+          local-dir: ./dist/
+          server-dir: ${{ vars.FTP_SERVER_DIR || '/public_html/' }}
+          dangerous-clean-slate: false
+
+      - name: Fail if all deploy attempts failed
+        if: steps.deploy_ftp.outcome == 'failure' && steps.deploy_ftps.outcome == 'failure'
+        run: |
+          echo "FTP and FTPS deploy attempts failed. Check FTP host/user/password, protocol and server directory."
+          exit 1
