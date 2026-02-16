@@ -23,6 +23,29 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Validate FTP configuration
+        env:
+          FTP_HOST_VALUE: ${{ secrets.FTP_HOST || secrets.FTP_SERVER || vars.FTP_HOST || vars.FTP_SERVER }}
+          FTP_USER_VALUE: ${{ secrets.FTP_USER || secrets.FTP_USERNAME || vars.FTP_USER || vars.FTP_USERNAME }}
+          FTP_PASSWORD_VALUE: ${{ secrets.FTP_PASSWORD || secrets.FTP_PASS || vars.FTP_PASSWORD || vars.FTP_PASS }}
+          FTP_PROTOCOL_VALUE: ${{ secrets.FTP_PROTOCOL || vars.FTP_PROTOCOL || 'ftp' }}
+          FTP_PORT_VALUE: ${{ secrets.FTP_PORT || vars.FTP_PORT || 21 }}
+          FTP_SERVER_DIR_VALUE: ${{ vars.FTP_SERVER_DIR || '/public_html/' }}
+        run: |
+          if [ -z "$FTP_HOST_VALUE" ]; then
+            echo "Missing FTP host. Set FTP_HOST (or FTP_SERVER)."
+            exit 1
+          fi
+          if [ -z "$FTP_USER_VALUE" ]; then
+            echo "Missing FTP user. Set FTP_USER (or FTP_USERNAME)."
+            exit 1
+          fi
+          if [ -z "$FTP_PASSWORD_VALUE" ]; then
+            echo "Missing FTP password. Set FTP_PASSWORD (or FTP_PASS)."
+            exit 1
+          fi
+          echo "FTP config detected. protocol=$FTP_PROTOCOL_VALUE port=$FTP_PORT_VALUE server_dir=$FTP_SERVER_DIR_VALUE"
+
       - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
