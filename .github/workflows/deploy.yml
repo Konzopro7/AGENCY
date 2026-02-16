@@ -26,9 +26,9 @@ jobs:
       - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.FTP_HOST || secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USER || secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD || secrets.FTP_PASS }}
+          server: ${{ secrets.FTP_HOST || secrets.FTP_SERVER || vars.FTP_HOST || vars.FTP_SERVER }}
+          username: ${{ secrets.FTP_USER || secrets.FTP_USERNAME || vars.FTP_USER || vars.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD || secrets.FTP_PASS || vars.FTP_PASSWORD || vars.FTP_PASS }}
           local-dir: ./dist/
           server-dir: ./public_html/
           dangerous-clean-slate: false
