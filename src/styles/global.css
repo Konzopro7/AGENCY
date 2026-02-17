@@ -300,6 +300,7 @@ code {
   align-items: center;
   gap: 10px;
   min-width: 0;
+  flex: 0 0 auto;
 }
 
 .logo-mark {
@@ -341,8 +342,8 @@ html[data-theme="dark"] .logo-img {
   letter-spacing: 0.2px;
   font-size: 15px;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: visible;
+  text-overflow: clip;
 }
 
 .nav {
