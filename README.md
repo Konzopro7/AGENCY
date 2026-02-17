@@ -15,7 +15,10 @@ Créez un fichier `.env.local` à la racine:
 VITE_CONTACT_ENDPOINT=https://votre-endpoint-formulaire
 ```
 
-Exemple d'endpoint possible: Formspree (`https://formspree.io/f/xxxxxxx`) ou webhook maison.
+`VITE_CONTACT_ENDPOINT` est optionnel.
+
+Par défaut, le formulaire utilise FormSubmit vers `SITE.email`.
+Vous pouvez remplacer cet endpoint par Formspree (`https://formspree.io/f/xxxxxxx`) ou votre webhook.
 
 ## Build production
 

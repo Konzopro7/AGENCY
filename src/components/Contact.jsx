@@ -47,30 +47,40 @@ export function Contact() {
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) return;
 
-    if (!CONTACT.endpoint) {
-      setStatus("error");
-      setSubmitError("Configuration manquante: ajoutez VITE_CONTACT_ENDPOINT dans l'environnement.");
-      return;
-    }
-
     setStatus("submitting");
     setSubmitError("");
 
     try {
-      const response = await fetch(CONTACT.endpoint, {
+      const endpoint = String(CONTACT.endpoint || "").trim();
+      if (!endpoint) throw new Error("Configuration de contact introuvable.");
+
+      const isFormSubmit = endpoint.includes("formsubmit.co");
+      const payload = isFormSubmit
+        ? {
+            name: String(form.name).trim(),
+            email: String(form.email).trim(),
+            message: String(form.message).trim(),
+            _subject: `Nouveau message - ${SITE.name}`,
+            _captcha: "false",
+            _template: "table",
+            _replyto: String(form.email).trim()
+          }
+        : {
+            name: String(form.name).trim(),
+            email: String(form.email).trim(),
+            message: String(form.message).trim(),
+            source: SITE.name,
+            page: window.location.href,
+            submittedAt: new Date().toISOString()
+          };
+
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json"
         },
-        body: JSON.stringify({
-          name: String(form.name).trim(),
-          email: String(form.email).trim(),
-          message: String(form.message).trim(),
-          source: SITE.name,
-          page: window.location.href,
-          submittedAt: new Date().toISOString()
-        })
+        body: JSON.stringify(payload)
       });
 
       if (!response.ok) {

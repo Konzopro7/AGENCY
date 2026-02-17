@@ -21,6 +21,8 @@ jobs:
         run: npm ci
 
       - name: Build project
+        env:
+          VITE_CONTACT_ENDPOINT: ${{ secrets.VITE_CONTACT_ENDPOINT || vars.VITE_CONTACT_ENDPOINT }}
         run: npm run build
 
       - name: Validate FTP configuration
@@ -62,7 +64,7 @@ jobs:
 
       - name: Deploy (FTPS fallback)
         id: deploy_ftps
-        if: steps.deploy_ftp.outcome == 'failure'
+        if: ${{ steps.deploy_ftp.outcome == 'failure' }}
         continue-on-error: true
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -76,7 +78,7 @@ jobs:
           dangerous-clean-slate: false
 
       - name: Fail if all deploy attempts failed
-        if: steps.deploy_ftp.outcome == 'failure' && steps.deploy_ftps.outcome == 'failure'
+        if: ${{ steps.deploy_ftp.outcome == 'failure' && steps.deploy_ftps.outcome == 'failure' }}
         run: |
           echo "FTP and FTPS deploy attempts failed. Check FTP host/user/password, protocol and server directory."
           exit 1
