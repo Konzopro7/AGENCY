@@ -1,11 +1,18 @@
-import { useEffect, useId, useRef } from "react";
+﻿import { useEffect, useId, useRef } from "react";
 import { useLockBodyScroll } from "../hooks/useLockBodyScroll.js";
 import { Icon } from "./icons.jsx";
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), textarea, input, select, details, [tabindex]:not([tabindex="-1"])';
 
-export function Modal({ open, title, children, onClose }) {
+export function Modal({
+  open,
+  title,
+  children,
+  onClose,
+  overlayLabel = "Close",
+  closeLabel = "Close window"
+}) {
   const titleId = useId();
   const panelRef = useRef(null);
   const closeRef = useRef(null);
@@ -41,11 +48,9 @@ export function Modal({ open, title, children, onClose }) {
             e.preventDefault();
             last.focus();
           }
-        } else {
-          if (active === last) {
-            e.preventDefault();
-            first.focus();
-          }
+        } else if (active === last) {
+          e.preventDefault();
+          first.focus();
         }
       }
     };
@@ -61,19 +66,13 @@ export function Modal({ open, title, children, onClose }) {
 
   return (
     <div className="modal" role="dialog" aria-modal="true" aria-labelledby={titleId}>
-      <button className="modal-overlay" type="button" aria-label="Fermer" onClick={onClose} />
+      <button className="modal-overlay" type="button" aria-label={overlayLabel} onClick={onClose} />
       <div className="modal-panel card" ref={panelRef}>
         <div className="modal-head">
           <h3 className="modal-title" id={titleId}>
             {title}
           </h3>
-          <button
-            ref={closeRef}
-            className="icon-btn"
-            type="button"
-            aria-label="Fermer la fenêtre"
-            onClick={onClose}
-          >
+          <button ref={closeRef} className="icon-btn" type="button" aria-label={closeLabel} onClick={onClose}>
             <Icon name="close" size={18} />
           </button>
         </div>

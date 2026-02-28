@@ -1,4 +1,4 @@
-import { PRICING_SECTIONS } from "../data/pricing.js";
+﻿import { PRICING_SECTIONS_BY_LANG } from "../data/pricing.js";
 import { Icon } from "./icons.jsx";
 import { Reveal } from "./Reveal.jsx";
 
@@ -8,21 +8,37 @@ function scrollToId(id) {
   el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-export function Pricing() {
+export function Pricing({ lang = "fr" }) {
+  const copy =
+    lang === "en"
+      ? {
+          aria: "Pricing",
+          eyebrow: "Pricing",
+          title: "Transparent and fair plans",
+          subtitle: "Choose the plan that matches your needs. All plans include client support and room to scale.",
+          mostSelected: "Most selected"
+        }
+      : {
+          aria: "Tarification",
+          eyebrow: "Tarification",
+          title: "Des plans transparents et justes",
+          subtitle: "Choisissez le plan adapte a vos besoins. Tous les plans incluent support client et flexibilite.",
+          mostSelected: "Le plus choisi"
+        };
+
+  const sections = PRICING_SECTIONS_BY_LANG[lang] ?? PRICING_SECTIONS_BY_LANG.fr;
+
   return (
-    <section id="pricing" className="section" aria-label="Tarification">
+    <section id="pricing" className="section" aria-label={copy.aria}>
       <div className="container">
         <div className="section-head">
-          <div className="eyebrow">Tarification</div>
-          <h2 className="h2">Des plans transparents et justes</h2>
-          <p className="sub">
-            Choisissez le plan qui correspond à vos besoins. Tous les plans incluent le support cliente et la flexibilité
-            d'évoluer.
-          </p>
+          <div className="eyebrow">{copy.eyebrow}</div>
+          <h2 className="h2">{copy.title}</h2>
+          <p className="sub">{copy.subtitle}</p>
         </div>
 
         <div className="pricing-sections">
-          {PRICING_SECTIONS.map((section) => (
+          {sections.map((section) => (
             <div key={section.id} className="pricing-section">
               <h3 className="pricing-section-title">{section.title}</h3>
               <div className="pricing-grid">
@@ -33,7 +49,7 @@ export function Pricing() {
                     className={`card pricing-card lift ${plan.highlighted ? "pricing-card--highlighted" : ""}`}
                     delay={idx * 80}
                   >
-                    {plan.highlighted && <div className="pricing-badge">Le plus choisi</div>}
+                    {plan.highlighted && <div className="pricing-badge">{copy.mostSelected}</div>}
                     <div className="pricing-header">
                       <h4 className="pricing-name">{plan.name}</h4>
                       <p className="pricing-description">{plan.description}</p>
@@ -55,11 +71,7 @@ export function Pricing() {
                     </ul>
 
                     <div className="pricing-footer">
-                      <button
-                        className="btn btn-primary btn-block"
-                        type="button"
-                        onClick={() => scrollToId("contact")}
-                      >
+                      <button className="btn btn-primary btn-block" type="button" onClick={() => scrollToId("contact")}>
                         {plan.cta}
                         <Icon name="arrow-right" size={16} />
                       </button>

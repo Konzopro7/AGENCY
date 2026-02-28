@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { Icon } from "./icons.jsx";
 
-export function ScrollToTop() {
+export function ScrollToTop({ lang = "fr" }) {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -13,15 +13,16 @@ export function ScrollToTop() {
 
   if (!show) return null;
 
+  const label = lang === "en" ? "Back to top" : "Revenir en haut";
+
   return (
     <button
       className="scrolltop"
       type="button"
-      aria-label="Revenir en haut"
+      aria-label={label}
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
     >
       <Icon name="up" size={18} />
     </button>
   );
 }
-

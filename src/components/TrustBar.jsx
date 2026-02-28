@@ -1,20 +1,32 @@
-import { Icon } from "./icons.jsx";
+﻿import { Icon } from "./icons.jsx";
 import { Reveal } from "./Reveal.jsx";
 
-const BADGES = [
-  { label: "Performance", icon: "bolt" },
-  { label: "Sécurité", icon: "shield" },
-  { label: "Responsive", icon: "check" },
-  { label: "SEO", icon: "spark" },
-  { label: "Maintenance", icon: "wand" }
-];
+const BADGES_BY_LANG = {
+  fr: [
+    { label: "Performance", icon: "bolt" },
+    { label: "Securite", icon: "shield" },
+    { label: "Responsive", icon: "check" },
+    { label: "SEO", icon: "spark" },
+    { label: "Maintenance", icon: "wand" }
+  ],
+  en: [
+    { label: "Performance", icon: "bolt" },
+    { label: "Security", icon: "shield" },
+    { label: "Responsive", icon: "check" },
+    { label: "SEO", icon: "spark" },
+    { label: "Maintenance", icon: "wand" }
+  ]
+};
 
-export function TrustBar() {
+export function TrustBar({ lang = "fr" }) {
+  const badges = BADGES_BY_LANG[lang] ?? BADGES_BY_LANG.fr;
+  const aria = lang === "en" ? "Trust bar" : "Bande de confiance";
+
   return (
-    <section className="trustbar" aria-label="Bande de confiance">
+    <section className="trustbar" aria-label={aria}>
       <div className="container">
         <Reveal as="div" className="trustbar-inner card" delay={60}>
-          {BADGES.map((b) => (
+          {badges.map((b) => (
             <div key={b.label} className="trustbadge">
               <span className="trustbadge-ic">
                 <Icon name={b.icon} size={18} />
@@ -27,4 +39,3 @@ export function TrustBar() {
     </section>
   );
 }
-

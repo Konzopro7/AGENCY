@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import { LINKS, SITE } from "../config/site.js";
 import { useLockBodyScroll } from "../hooks/useLockBodyScroll.js";
 import { Icon } from "./icons.jsx";
@@ -22,13 +22,43 @@ function setTheme(next) {
   }
 }
 
-export function Header({ navItems, activeId }) {
+export function Header({ navItems, activeId, lang = "fr", onLangChange }) {
   const [open, setOpen] = useState(false);
   useLockBodyScroll(open);
 
   const [theme, setThemeState] = useState(() => getTheme());
+
+  const copy =
+    lang === "en"
+      ? {
+          themeToLight: "Switch to light theme",
+          themeToDark: "Switch to dark theme",
+          navAria: "Main navigation",
+          quickAria: "Quick contact",
+          quote: "Get a quote",
+          requestCall: "Book a call",
+          menuOpen: "Open menu",
+          menuClose: "Close menu",
+          menuTitle: "Menu",
+          switchLanguage: "Switch to French",
+          languageButton: "FR"
+        }
+      : {
+          themeToLight: "Passer en theme clair",
+          themeToDark: "Passer en theme sombre",
+          navAria: "Navigation principale",
+          quickAria: "Contact rapide",
+          quote: "Demander un devis",
+          requestCall: "Reserver un appel",
+          menuOpen: "Ouvrir le menu",
+          menuClose: "Fermer le menu",
+          menuTitle: "Menu",
+          switchLanguage: "Switch to English",
+          languageButton: "EN"
+        };
+
   const themeIcon = theme === "dark" ? "sun" : "moon";
-  const themeLabel = theme === "dark" ? "Passer en thème clair" : "Passer en thème sombre";
+  const themeLabel = theme === "dark" ? copy.themeToLight : copy.themeToDark;
 
   useEffect(() => {
     const onKeyDown = (e) => {
@@ -57,6 +87,11 @@ export function Header({ navItems, activeId }) {
     window.setTimeout(() => document.getElementById("contact-name")?.focus(), 450);
   };
 
+  const onToggleLanguage = () => {
+    const next = lang === "fr" ? "en" : "fr";
+    onLangChange?.(next);
+  };
+
   const toggleTheme = () => {
     const next = theme === "dark" ? "light" : "dark";
     setTheme(next);
@@ -83,7 +118,7 @@ export function Header({ navItems, activeId }) {
           <span className="logo-text">{SITE.name}</span>
         </a>
 
-        <nav className="nav" aria-label="Navigation principale">
+        <nav className="nav" aria-label={copy.navAria}>
           {navItems.map((item) => {
             const isActive = item.id === activeId;
             return (
@@ -101,7 +136,11 @@ export function Header({ navItems, activeId }) {
         </nav>
 
         <div className="header-actions">
-          <div className="quick" aria-label="Contact rapide">
+          <button className="btn btn-sm btn-ghost lang-btn" type="button" onClick={onToggleLanguage} aria-label={copy.switchLanguage}>
+            {copy.languageButton}
+          </button>
+
+          <div className="quick" aria-label={copy.quickAria}>
             {quickLinks.map((l) => (
               <a key={l.href} className="icon-btn" href={l.href} aria-label={l.label}>
                 <Icon name={l.icon} size={18} />
@@ -114,14 +153,14 @@ export function Header({ navItems, activeId }) {
           </button>
 
           <button className="btn btn-primary header-cta" type="button" onClick={onQuote}>
-            Demander un devis
+            {copy.quote}
             <Icon name="arrow-right" size={18} />
           </button>
 
           <button
             className="icon-btn nav-toggle"
             type="button"
-            aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-label={open ? copy.menuClose : copy.menuOpen}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
           >
@@ -133,8 +172,8 @@ export function Header({ navItems, activeId }) {
       <div className={`mobile ${open ? "is-open" : ""}`} aria-hidden={!open}>
         <div className="container mobile-panel">
           <div className="mobile-top">
-            <div className="mobile-title">Menu</div>
-            <button className="icon-btn" type="button" onClick={() => setOpen(false)} aria-label="Fermer">
+            <div className="mobile-title">{copy.menuTitle}</div>
+            <button className="icon-btn" type="button" onClick={() => setOpen(false)} aria-label={copy.menuClose}>
               <Icon name="close" size={20} />
             </button>
           </div>
@@ -152,11 +191,14 @@ export function Header({ navItems, activeId }) {
           </div>
           <div className="mobile-cta">
             <button className="btn btn-primary" type="button" onClick={onQuote}>
-              Demander un devis
+              {copy.quote}
               <Icon name="arrow-right" size={18} />
             </button>
+            <button className="btn btn-ghost" type="button" onClick={onToggleLanguage}>
+              {copy.switchLanguage}
+            </button>
             <a className="btn btn-ghost" href={LINKS.tel}>
-              Réserver un appel
+              {copy.requestCall}
               <Icon name="phone" size={18} />
             </a>
           </div>

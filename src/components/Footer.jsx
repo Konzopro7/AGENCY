@@ -1,4 +1,4 @@
-import { LINKS, SITE } from "../config/site.js";
+﻿import { LINKS, SITE } from "../config/site.js";
 import { Icon } from "./icons.jsx";
 
 function scrollToId(id) {
@@ -7,11 +7,32 @@ function scrollToId(id) {
   el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-export function Footer({ navItems }) {
+export function Footer({ navItems, lang = "fr" }) {
   const year = new Date().getFullYear();
 
+  const copy =
+    lang === "en"
+      ? {
+          aria: "Footer",
+          description: "Modern, fast and profitable websites. Premium design, SEO-ready, performance and support.",
+          links: "Links",
+          contact: "Contact",
+          quote: "Get a quote",
+          rights: "All rights reserved.",
+          location: "Montreal - Canada"
+        }
+      : {
+          aria: "Pied de page",
+          description: "Sites web modernes, rapides et rentables. Design premium, SEO pret, performance et support.",
+          links: "Liens",
+          contact: "Contact",
+          quote: "Demander un devis",
+          rights: "Tous droits reserves.",
+          location: "Montreal - Canada"
+        };
+
   return (
-    <footer className="footer" aria-label="Pied de page">
+    <footer className="footer" aria-label={copy.aria}>
       <div className="container footer-inner">
         <div className="footer-col">
           <div className="footer-brand">
@@ -33,21 +54,14 @@ export function Footer({ navItems }) {
               <div className="footer-domain muted">{SITE.domain}</div>
             </div>
           </div>
-          <p className="footer-desc muted">
-            Sites web modernes, rapides et rentables. Design premium, SEO prêt, performance et support.
-          </p>
+          <p className="footer-desc muted">{copy.description}</p>
         </div>
 
         <div className="footer-col">
-          <div className="footer-title">Liens</div>
+          <div className="footer-title">{copy.links}</div>
           <div className="footer-links">
             {navItems.map((i) => (
-              <a
-                key={i.id}
-                href={`#${i.id}`}
-                className="footer-link"
-                onClick={(e) => (e.preventDefault(), scrollToId(i.id))}
-              >
+              <a key={i.id} href={`#${i.id}`} className="footer-link" onClick={(e) => (e.preventDefault(), scrollToId(i.id))}>
                 {i.label}
               </a>
             ))}
@@ -55,7 +69,7 @@ export function Footer({ navItems }) {
         </div>
 
         <div className="footer-col">
-          <div className="footer-title">Contact</div>
+          <div className="footer-title">{copy.contact}</div>
           <div className="footer-links">
             <a className="footer-link" href={LINKS.mailto}>
               <Icon name="mail" size={16} /> {SITE.email}
@@ -72,15 +86,15 @@ export function Footer({ navItems }) {
           </div>
 
           <button className="btn btn-primary footer-cta" type="button" onClick={() => scrollToId("contact")}>
-            Demander un devis
+            {copy.quote}
             <Icon name="arrow-right" size={18} />
           </button>
         </div>
       </div>
 
       <div className="container footer-bottom">
-        <div className="muted">© {year} {SITE.name}. Tous droits réservés.</div>
-        <div className="muted">Montréal - Canada</div>
+        <div className="muted">(c) {year} {SITE.name}. {copy.rights}</div>
+        <div className="muted">{copy.location}</div>
       </div>
     </footer>
   );

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+﻿import { useMemo, useState } from "react";
 import { CONTACT, LINKS, SITE } from "../config/site.js";
 import { Icon } from "./icons.jsx";
 import { Reveal } from "./Reveal.jsx";
@@ -9,11 +9,70 @@ function isEmail(v) {
 
 const INITIAL_FORM = { name: "", email: "", message: "" };
 
-export function Contact() {
+export function Contact({ lang = "fr" }) {
   const [form, setForm] = useState(INITIAL_FORM);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle");
   const [submitError, setSubmitError] = useState("");
+
+  const copy =
+    lang === "en"
+      ? {
+          eyebrow: "Contact",
+          title: "Let's talk about your project",
+          subtitle:
+            "Tell us what you sell, who your customers are and what you want to improve. We get back to you quickly.",
+          directTitle: "Direct contact",
+          directSub: "Fast answer by email or phone.",
+          quoteTag: "Clear quote + options",
+          deadlineTag: "Clear timeline",
+          supportTag: "Post-launch support",
+          name: "Name",
+          email: "Email",
+          message: "Message",
+          namePlaceholder: "Your name",
+          emailPlaceholder: "you@example.com",
+          messagePlaceholder: "Project goal, pages, references, budget/timeline if possible...",
+          send: "Send",
+          sending: "Sending...",
+          call: "Book a call",
+          success: "Thanks. Your message was sent successfully. We reply within 24h.",
+          hint: "Reply within 24h (business days).",
+          invalidName: "Please enter your name.",
+          invalidEmail: "Invalid email address.",
+          invalidMessage: "Message too short (min. 10 characters).",
+          missingConfig: "Contact endpoint is missing.",
+          genericError: "An error occurred. Please try again.",
+          formSubmitSubject: `New message - ${SITE.name}`
+        }
+      : {
+          eyebrow: "Contact",
+          title: "Parlons de votre projet",
+          subtitle:
+            "Dites-nous ce que vous vendez, a qui, et ce que vous voulez ameliorer. On revient vers vous rapidement.",
+          directTitle: "Contact direct",
+          directSub: "Reponse rapide par email ou telephone.",
+          quoteTag: "Devis clair + options",
+          deadlineTag: "Delais annonces",
+          supportTag: "Suivi apres livraison",
+          name: "Nom",
+          email: "Email",
+          message: "Message",
+          namePlaceholder: "Votre nom",
+          emailPlaceholder: "vous@exemple.com",
+          messagePlaceholder: "Objectif du site, pages, exemples, budget/delai si possible...",
+          send: "Envoyer",
+          sending: "Envoi...",
+          call: "Reserver un appel",
+          success: "Merci. Votre message est bien envoye. On vous repond sous 24h.",
+          hint: "Reponse sous 24h (jours ouvres).",
+          invalidName: "Merci d'indiquer votre nom.",
+          invalidEmail: "Email invalide.",
+          invalidMessage: "Message trop court (min. 10 caracteres).",
+          missingConfig: "Configuration de contact introuvable.",
+          genericError: "Une erreur est survenue. Reessayez.",
+          formSubmitSubject: `Nouveau message - ${SITE.name}`
+        };
 
   const quick = useMemo(
     () => [
@@ -27,9 +86,9 @@ export function Contact() {
 
   const validate = () => {
     const next = {};
-    if (String(form.name).trim().length < 2) next.name = "Merci d'indiquer votre nom.";
-    if (!isEmail(form.email)) next.email = "Email invalide.";
-    if (String(form.message).trim().length < 10) next.message = "Message trop court (min. 10 caractères).";
+    if (String(form.name).trim().length < 2) next.name = copy.invalidName;
+    if (!isEmail(form.email)) next.email = copy.invalidEmail;
+    if (String(form.message).trim().length < 10) next.message = copy.invalidMessage;
     return next;
   };
 
@@ -52,7 +111,7 @@ export function Contact() {
 
     try {
       const endpoint = String(CONTACT.endpoint || "").trim();
-      if (!endpoint) throw new Error("Configuration de contact introuvable.");
+      if (!endpoint) throw new Error(copy.missingConfig);
 
       const isFormSubmit = endpoint.includes("formsubmit.co");
       const payload = isFormSubmit
@@ -60,7 +119,7 @@ export function Contact() {
             name: String(form.name).trim(),
             email: String(form.email).trim(),
             message: String(form.message).trim(),
-            _subject: `Nouveau message - ${SITE.name}`,
+            _subject: copy.formSubmitSubject,
             _captcha: "false",
             _template: "table",
             _replyto: String(form.email).trim()
@@ -84,10 +143,10 @@ export function Contact() {
       });
 
       if (!response.ok) {
-        let details = `Erreur d'envoi (${response.status}).`;
+        let details = `Error while sending (${response.status}).`;
         try {
-          const payload = await response.json();
-          const message = payload?.message || payload?.error || payload?.errors?.[0]?.message;
+          const data = await response.json();
+          const message = data?.message || data?.error || data?.errors?.[0]?.message;
           if (message) details = message;
         } catch {
         }
@@ -99,28 +158,26 @@ export function Contact() {
       setForm(INITIAL_FORM);
     } catch (err) {
       setStatus("error");
-      setSubmitError(err instanceof Error ? err.message : "Une erreur est survenue. Réessayez.");
+      setSubmitError(err instanceof Error ? err.message : copy.genericError);
     }
   };
 
   const isSubmitting = status === "submitting";
 
   return (
-    <section id="contact" className="section" aria-label="Contact">
+    <section id="contact" className="section" aria-label={copy.eyebrow}>
       <div className="container">
         <div className="section-head">
-          <div className="eyebrow">Contact</div>
-          <h2 className="h2">Parlons de votre projet</h2>
-          <p className="sub">
-            Dites-nous ce que vous vendez, à qui, et ce que vous voulez améliorer. On revient vers vous rapidement.
-          </p>
+          <div className="eyebrow">{copy.eyebrow}</div>
+          <h2 className="h2">{copy.title}</h2>
+          <p className="sub">{copy.subtitle}</p>
         </div>
 
         <div className="contact-grid">
           <Reveal as="div" className="card contact-card" delay={60}>
             <div className="contact-card-head">
-              <div className="contact-card-title">Contact direct</div>
-              <div className="contact-card-sub muted">Réponse rapide par email ou téléphone.</div>
+              <div className="contact-card-title">{copy.directTitle}</div>
+              <div className="contact-card-sub muted">{copy.directSub}</div>
             </div>
             <div className="contact-quick">
               {quick.map((q) => (
@@ -145,15 +202,15 @@ export function Contact() {
             <div className="contact-note">
               <div className="tag">
                 <Icon name="check" size={16} />
-                Devis clair + options
+                {copy.quoteTag}
               </div>
               <div className="tag">
                 <Icon name="check" size={16} />
-                Délais annoncés
+                {copy.deadlineTag}
               </div>
               <div className="tag">
                 <Icon name="check" size={16} />
-                Suivi après livraison
+                {copy.supportTag}
               </div>
             </div>
           </Reveal>
@@ -162,14 +219,14 @@ export function Contact() {
             <form className="form" onSubmit={onSubmit} noValidate>
               <div className="field">
                 <label className="label" htmlFor="contact-name">
-                  Nom
+                  {copy.name}
                 </label>
                 <input
                   id="contact-name"
                   className={`input ${errors.name ? "is-error" : ""}`}
                   value={form.name}
                   onChange={onChange("name")}
-                  placeholder="Votre nom"
+                  placeholder={copy.namePlaceholder}
                   autoComplete="name"
                   required
                   disabled={isSubmitting}
@@ -180,14 +237,14 @@ export function Contact() {
 
               <div className="field">
                 <label className="label" htmlFor="contact-email">
-                  Email
+                  {copy.email}
                 </label>
                 <input
                   id="contact-email"
                   className={`input ${errors.email ? "is-error" : ""}`}
                   value={form.email}
                   onChange={onChange("email")}
-                  placeholder="vous@exemple.com"
+                  placeholder={copy.emailPlaceholder}
                   autoComplete="email"
                   inputMode="email"
                   required
@@ -199,14 +256,14 @@ export function Contact() {
 
               <div className="field">
                 <label className="label" htmlFor="contact-message">
-                  Message
+                  {copy.message}
                 </label>
                 <textarea
                   id="contact-message"
                   className={`input textarea ${errors.message ? "is-error" : ""}`}
                   value={form.message}
                   onChange={onChange("message")}
-                  placeholder="Objectif du site, pages, exemples, budget/délai si possible..."
+                  placeholder={copy.messagePlaceholder}
                   rows={5}
                   required
                   disabled={isSubmitting}
@@ -217,30 +274,28 @@ export function Contact() {
 
               <div className="form-actions">
                 <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? "Envoi..." : "Envoyer"}
+                  {isSubmitting ? copy.sending : copy.send}
                   <Icon name="arrow-right" size={18} />
                 </button>
                 <a className="btn btn-ghost" href={LINKS.tel}>
-                  Réserver un appel
+                  {copy.call}
                   <Icon name="phone" size={18} />
                 </a>
               </div>
 
               {status === "success" ? (
                 <div className="success" role="status">
-                  Merci. Votre message est bien envoyé. On vous répond sous 24h.
+                  {copy.success}
                 </div>
               ) : null}
 
               {status === "error" ? (
                 <div className="error form-status-error" role="alert">
-                  {submitError || "Une erreur est survenue. Réessayez."}
+                  {submitError || copy.genericError}
                 </div>
               ) : null}
 
-              {status === "idle" || status === "submitting" ? (
-                <div className="hint muted">Réponse sous 24h (jours ouvrés).</div>
-              ) : null}
+              {status === "idle" || status === "submitting" ? <div className="hint muted">{copy.hint}</div> : null}
             </form>
           </Reveal>
         </div>

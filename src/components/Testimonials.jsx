@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { TESTIMONIALS } from "../data/testimonials.js";
+﻿import { useEffect, useRef, useState } from "react";
+import { TESTIMONIALS_BY_LANG } from "../data/testimonials.js";
 import { Icon } from "./icons.jsx";
 import { Reveal } from "./Reveal.jsx";
 
@@ -7,11 +7,39 @@ function clamp(n, a, b) {
   return Math.max(a, Math.min(b, n));
 }
 
-export function Testimonials() {
+export function Testimonials({ lang = "fr" }) {
+  const testimonials = TESTIMONIALS_BY_LANG[lang] ?? TESTIMONIALS_BY_LANG.fr;
   const scrollerRef = useRef(null);
   const [index, setIndex] = useState(0);
-  const count = TESTIMONIALS.length;
+  const count = testimonials.length;
   const hasMany = count > 1;
+
+  const copy =
+    lang === "en"
+      ? {
+          aria: "Reviews",
+          eyebrow: "Reviews",
+          title: "They asked for premium. They got premium.",
+          subtitle: "Short testimonials focused on outcomes.",
+          blockTitle: "Client reviews",
+          previous: "Previous review",
+          next: "Next review",
+          dots: "Pagination",
+          starsSuffix: "stars out of 5",
+          goTo: "Go to review"
+        }
+      : {
+          aria: "Avis",
+          eyebrow: "Avis",
+          title: "Ils voulaient du premium. Ils ont eu du premium.",
+          subtitle: "Temoignages courts, orientes resultat.",
+          blockTitle: "Avis clients",
+          previous: "Avis precedent",
+          next: "Avis suivant",
+          dots: "Pagination",
+          starsSuffix: "etoiles sur 5",
+          goTo: "Aller a l'avis"
+        };
 
   const scrollToIndex = (i) => {
     const el = scrollerRef.current;
@@ -42,25 +70,23 @@ export function Testimonials() {
   }, [count]);
 
   return (
-    <section id="avis" className="section" aria-label="Avis">
+    <section id="avis" className="section" aria-label={copy.aria}>
       <div className="container">
         <div className="section-head">
-          <div className="eyebrow">Avis</div>
-          <h2 className="h2">Ils voulaient du premium. Ils ont eu du premium.</h2>
-          <p className="sub">
-            Témoignages courts, orientés résultat.
-          </p>
+          <div className="eyebrow">{copy.eyebrow}</div>
+          <h2 className="h2">{copy.title}</h2>
+          <p className="sub">{copy.subtitle}</p>
         </div>
 
         <Reveal as="div" className="t-wrap card" delay={80}>
           <div className="t-head">
-            <div className="t-title">Avis clients</div>
+            <div className="t-title">{copy.blockTitle}</div>
             {hasMany ? (
               <div className="t-actions">
                 <button
                   className="icon-btn"
                   type="button"
-                  aria-label="Avis précédent"
+                  aria-label={copy.previous}
                   onClick={() => scrollToIndex(clamp(index - 1, 0, count - 1))}
                 >
                   <span className="flip">
@@ -70,7 +96,7 @@ export function Testimonials() {
                 <button
                   className="icon-btn"
                   type="button"
-                  aria-label="Avis suivant"
+                  aria-label={copy.next}
                   onClick={() => scrollToIndex(clamp(index + 1, 0, count - 1))}
                 >
                   <Icon name="arrow-right" size={18} />
@@ -80,16 +106,16 @@ export function Testimonials() {
           </div>
 
           <div className="t-slider" ref={scrollerRef}>
-            {TESTIMONIALS.map((t) => (
+            {testimonials.map((t) => (
               <article key={t.name} className="t-card">
-                <div className="t-stars" aria-label={`${t.rating} étoiles sur 5`}>
+                <div className="t-stars" aria-label={`${t.rating} ${copy.starsSuffix}`}>
                   {Array.from({ length: 5 }).map((_, i) => (
                     <span key={i} className={`t-star ${i < t.rating ? "is-on" : ""}`} aria-hidden="true">
                       <Icon name={i < t.rating ? "star-fill" : "star"} size={18} />
                     </span>
                   ))}
                 </div>
-                <p className="t-quote">“{t.quote}”</p>
+                <p className="t-quote">"{t.quote}"</p>
                 <div className="t-meta">
                   <div className="t-name">{t.name}</div>
                   <div className="t-role muted">{t.role}</div>
@@ -99,13 +125,13 @@ export function Testimonials() {
           </div>
 
           {hasMany ? (
-            <div className="t-dots" aria-label="Pagination">
-              {TESTIMONIALS.map((_, i) => (
+            <div className="t-dots" aria-label={copy.dots}>
+              {testimonials.map((_, i) => (
                 <button
                   key={i}
                   className={`dot-btn ${i === index ? "is-active" : ""}`}
                   type="button"
-                  aria-label={`Aller à l'avis ${i + 1}`}
+                  aria-label={`${copy.goTo} ${i + 1}`}
                   onClick={() => scrollToIndex(i)}
                 />
               ))}

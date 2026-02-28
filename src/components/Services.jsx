@@ -1,4 +1,4 @@
-import { SERVICE_GROUPS } from "../data/services.js";
+﻿import { SERVICE_GROUPS_BY_LANG } from "../data/services.js";
 import { Icon } from "./icons.jsx";
 import { Reveal } from "./Reveal.jsx";
 
@@ -8,21 +8,37 @@ function scrollToId(id) {
   el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-export function Services() {
+export function Services({ lang = "fr" }) {
+  const copy =
+    lang === "en"
+      ? {
+          eyebrow: "Services",
+          title: "Everything you need to convert",
+          subtitle:
+            "Clean execution, fast delivery and premium design that builds trust. Goal: turn visitors into customers.",
+          learnMore: "Learn more"
+        }
+      : {
+          eyebrow: "Services",
+          title: "Tout ce qu'il faut pour convertir",
+          subtitle:
+            "Une execution propre, rapide, et un design premium qui rassure. Objectif: transformer les visiteurs en clients.",
+          learnMore: "En savoir plus"
+        };
+
+  const groups = SERVICE_GROUPS_BY_LANG[lang] ?? SERVICE_GROUPS_BY_LANG.fr;
+
   return (
-    <section id="services" className="section" aria-label="Services">
+    <section id="services" className="section" aria-label={copy.eyebrow}>
       <div className="container">
         <div className="section-head">
-          <div className="eyebrow">Services</div>
-          <h2 className="h2">Tout ce qu'il faut pour convertir</h2>
-          <p className="sub">
-            Une exécution propre, rapide, et un design premium qui rassure. Objectif: transformer les
-            visiteurs en clients.
-          </p>
+          <div className="eyebrow">{copy.eyebrow}</div>
+          <h2 className="h2">{copy.title}</h2>
+          <p className="sub">{copy.subtitle}</p>
         </div>
 
         <div className="services-groups">
-          {SERVICE_GROUPS.map((group) => (
+          {groups.map((group) => (
             <div key={group.id} className="services-group" aria-label={group.title}>
               <h3 className="services-group-title">{group.title}</h3>
               <div className="grid services-grid">
@@ -45,7 +61,7 @@ export function Services() {
                     </div>
                     <div className="service-foot">
                       <button className="btn btn-sm btn-primary" type="button" onClick={() => scrollToId("contact")}>
-                        En savoir plus
+                        {copy.learnMore}
                         <Icon name="arrow-right" size={16} />
                       </button>
                     </div>
