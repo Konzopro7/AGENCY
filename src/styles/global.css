@@ -670,11 +670,14 @@ html[data-theme="dark"] .logo-img {
   gap: 10px;
   align-items: center;
   color: var(--muted);
+  appearance: none;
   padding: 10px 12px;
   border-radius: 14px;
   border: 1px dashed var(--border);
   background: var(--surface);
   width: fit-content;
+  cursor: pointer;
+  text-align: left;
 }
 
 .mini-link:hover {
@@ -1399,9 +1402,44 @@ html[data-theme="dark"] .modal-overlay {
   gap: 12px;
 }
 
+.contact-mode {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.mode-pill {
+  padding: 9px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease, background 160ms ease, color 160ms ease;
+}
+
+.mode-pill:hover {
+  transform: translateY(-1px);
+  color: var(--text);
+  border-color: var(--accent-border);
+  box-shadow: var(--glow);
+}
+
+.mode-pill.is-active {
+  color: var(--text);
+  border-color: var(--accent-border);
+  background: var(--accent-soft);
+}
+
 .field {
   display: grid;
   gap: 8px;
+}
+
+.form-row-2 {
+  display: grid;
+  gap: 12px;
 }
 
 .label {
@@ -1468,6 +1506,12 @@ html[data-theme="dark"] .modal-overlay {
 @media (min-width: 980px) {
   .contact-grid {
     grid-template-columns: 0.95fr 1.05fr;
+  }
+}
+
+@media (min-width: 720px) {
+  .form-row-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

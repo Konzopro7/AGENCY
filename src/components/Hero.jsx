@@ -8,6 +8,11 @@ function scrollToId(id) {
   el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+function openBookingForm() {
+  scrollToId("contact");
+  window.dispatchEvent(new CustomEvent("kt:open-booking"));
+}
+
 export function Hero({ lang = "fr" }) {
   const copy =
     lang === "en"
@@ -89,10 +94,10 @@ export function Hero({ lang = "fr" }) {
           </div>
 
           <div className="hero-mini">
-            <a className="mini-link" href={LINKS.tel}>
+            <button className="mini-link" type="button" onClick={openBookingForm}>
               <Icon name="phone" size={18} />
               {copy.call}
-            </a>
+            </button>
             <a className="mini-link" href={LINKS.mailto}>
               <Icon name="mail" size={18} />
               {SITE.email}

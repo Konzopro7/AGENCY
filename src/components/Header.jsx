@@ -9,6 +9,11 @@ function scrollToId(id) {
   el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+function openBookingForm() {
+  scrollToId("contact");
+  window.dispatchEvent(new CustomEvent("kt:open-booking"));
+}
+
 function getTheme() {
   const t = document.documentElement.dataset.theme;
   return t === "light" ? "light" : "dark";
@@ -85,6 +90,11 @@ export function Header({ navItems, activeId, lang = "fr", onLangChange }) {
     setOpen(false);
     scrollToId("contact");
     window.setTimeout(() => document.getElementById("contact-name")?.focus(), 450);
+  };
+
+  const onBookCall = () => {
+    setOpen(false);
+    openBookingForm();
   };
 
   const onToggleLanguage = () => {
@@ -197,10 +207,10 @@ export function Header({ navItems, activeId, lang = "fr", onLangChange }) {
             <button className="btn btn-ghost" type="button" onClick={onToggleLanguage}>
               {copy.switchLanguage}
             </button>
-            <a className="btn btn-ghost" href={LINKS.tel}>
+            <button className="btn btn-ghost" type="button" onClick={onBookCall}>
               {copy.requestCall}
               <Icon name="phone" size={18} />
-            </a>
+            </button>
           </div>
         </div>
       </div>
