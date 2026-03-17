@@ -2,45 +2,45 @@
   fr: [
     {
       id: "website-creation",
-      title: "Creation de site web",
+      title: "Packs site web",
       plans: [
         {
           id: "starter",
           name: "Starter",
-          price: "549",
+          price: "550",
           currency: "C$",
           description: "Parfait pour debuter",
-          features: ["One Page WordPress", "Design responsive", "Hebergement + SSL (1 an)", "Formulaire de contact"],
+          features: ["1 page", "Formulaire + Maps", "Design responsive", "SSL + hebergement (1 an)"],
           cta: "Choisir ce pack",
           highlighted: false
         },
         {
           id: "business",
           name: "Business",
-          price: "1 349",
+          price: "1 250",
           currency: "C$",
           description: "Pour croitre",
-          features: ["5-7 pages", "WordPress optimise", "SEO de base", "Analytics"],
+          features: ["5-7 pages", "SEO de base", "Analytics (GA4)", "1 cycle de contenu"],
           cta: "Choisir ce pack",
           highlighted: true
         },
         {
           id: "ecommerce",
           name: "eCommerce",
-          price: "2 499",
+          price: "2 500",
           currency: "C$",
           description: "Pour vendre en ligne",
-          features: ["WooCommerce", "Paiements en ligne", "Jusqu'a 20 produits", "Securite eCommerce"],
+          features: ["WooCommerce", "Jusqu'a 20 produits", "Stripe/PayPal", "Livraison + taxes"],
           cta: "Choisir ce pack",
           highlighted: false
         },
         {
           id: "custom-saas",
           name: "Custom / SaaS",
-          price: "A partir de 4 900",
+          price: "Des 4 500",
           currency: "C$",
           description: "Solution sur mesure",
-          features: ["Web App / Mini SaaS", "UI/UX sur mesure", "API & logique metier", "Hebergement scalable"],
+          features: ["Cadrage MVP", "Auth + dashboard", "API / DB", "Deploiement scalable"],
           cta: "Discuter du projet",
           highlighted: false
         }
@@ -128,45 +128,45 @@
   en: [
     {
       id: "website-creation",
-      title: "Website creation",
+      title: "Website packs",
       plans: [
         {
           id: "starter",
           name: "Starter",
-          price: "549",
+          price: "550",
           currency: "C$",
           description: "Perfect to get started",
-          features: ["One-page WordPress", "Responsive design", "Hosting + SSL (1 year)", "Contact form"],
+          features: ["1 page", "Form + Maps", "Responsive design", "SSL + hosting (1 year)"],
           cta: "Choose this plan",
           highlighted: false
         },
         {
           id: "business",
           name: "Business",
-          price: "1 349",
+          price: "1 250",
           currency: "C$",
           description: "For growth",
-          features: ["5-7 pages", "Optimized WordPress", "Basic SEO", "Analytics"],
+          features: ["5-7 pages", "Basic SEO", "Analytics (GA4)", "1 content cycle"],
           cta: "Choose this plan",
           highlighted: true
         },
         {
           id: "ecommerce",
           name: "eCommerce",
-          price: "2 499",
+          price: "2 500",
           currency: "C$",
           description: "To sell online",
-          features: ["WooCommerce", "Online payments", "Up to 20 products", "eCommerce security"],
+          features: ["WooCommerce", "Up to 20 products", "Stripe/PayPal", "Shipping + tax setup"],
           cta: "Choose this plan",
           highlighted: false
         },
         {
           id: "custom-saas",
           name: "Custom / SaaS",
-          price: "From 4 900",
+          price: "From 4 500",
           currency: "C$",
           description: "Tailor-made solution",
-          features: ["Web app / Mini SaaS", "Custom UI/UX", "API and business logic", "Scalable hosting"],
+          features: ["MVP framing", "Auth + dashboard", "API / DB", "Scalable deployment"],
           cta: "Discuss your project",
           highlighted: false
         }

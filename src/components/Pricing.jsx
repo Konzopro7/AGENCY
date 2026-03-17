@@ -13,17 +13,17 @@ export function Pricing({ lang = "fr" }) {
     lang === "en"
       ? {
           aria: "Pricing",
-          eyebrow: "Pricing",
-          title: "Transparent and fair plans",
-          subtitle: "Choose the plan that matches your needs. All plans include client support and room to scale.",
-          mostSelected: "Most selected"
+          eyebrow: "Website Packs",
+          title: "Clear packages built to scale",
+          subtitle: "Plans aligned with your growth stage, from starter website to custom platform.",
+          mostSelected: "Best seller"
         }
       : {
           aria: "Tarification",
-          eyebrow: "Tarification",
-          title: "Des plans transparents et justes",
-          subtitle: "Choisissez le plan adapte a vos besoins. Tous les plans incluent support client et flexibilite.",
-          mostSelected: "Le plus choisi"
+          eyebrow: "Packs Website",
+          title: "Des packs clairs et evolutifs",
+          subtitle: "Des offres alignees sur votre stade de croissance, du site vitrine a la plateforme sur mesure.",
+          mostSelected: "Best seller"
         };
 
   const sections = PRICING_SECTIONS_BY_LANG[lang] ?? PRICING_SECTIONS_BY_LANG.fr;
