@@ -48,8 +48,44 @@ jobs:
           fi
           echo "FTP config detected. protocol=$FTP_PROTOCOL_VALUE port=$FTP_PORT_VALUE server_dir=$FTP_SERVER_DIR_VALUE"
 
-      - name: Deploy (FTP)
-        id: deploy_ftp
+      - name: Resolve FTP server directory variants
+        id: ftp_dir
+        shell: bash
+        env:
+          FTP_SERVER_DIR_RAW: ${{ secrets.FTP_SERVER_DIR || vars.FTP_SERVER_DIR || '/public_html/' }}
+        run: |
+          primary="$(echo "$FTP_SERVER_DIR_RAW" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+          if [ -z "$primary" ]; then
+            primary="/public_html/"
+          fi
+
+          case "$primary" in
+            */) ;;
+            *) primary="${primary}/" ;;
+          esac
+
+          if [ "${primary#/}" != "$primary" ]; then
+            alt="${primary#/}"
+          else
+            alt="/${primary}"
+          fi
+
+          has_alt="true"
+          if [ "$alt" = "$primary" ]; then
+            has_alt="false"
+          fi
+
+          echo "primary=$primary" >> "$GITHUB_OUTPUT"
+          echo "alt=$alt" >> "$GITHUB_OUTPUT"
+          echo "has_alt=$has_alt" >> "$GITHUB_OUTPUT"
+
+          echo "Resolved server-dir primary=$primary"
+          if [ "$has_alt" = "true" ]; then
+            echo "Resolved server-dir alt=$alt"
+          fi
+
+      - name: Deploy (FTP primary dir)
+        id: deploy_ftp_primary
         continue-on-error: true
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -59,12 +95,27 @@ jobs:
           protocol: ${{ secrets.FTP_PROTOCOL || vars.FTP_PROTOCOL || 'ftp' }}
           port: ${{ secrets.FTP_PORT || vars.FTP_PORT || 21 }}
           local-dir: ./dist/
-          server-dir: ${{ secrets.FTP_SERVER_DIR || vars.FTP_SERVER_DIR || '/public_html/' }}
+          server-dir: ${{ steps.ftp_dir.outputs.primary }}
           dangerous-clean-slate: false
 
-      - name: Deploy (FTPS fallback)
-        id: deploy_ftps
-        if: steps.deploy_ftp.outcome == 'failure'
+      - name: Deploy (FTP alt dir fallback)
+        id: deploy_ftp_alt
+        if: steps.deploy_ftp_primary.outcome == 'failure' && steps.ftp_dir.outputs.has_alt == 'true'
+        continue-on-error: true
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST || secrets.FTP_SERVER || vars.FTP_HOST || vars.FTP_SERVER }}
+          username: ${{ secrets.FTP_USER || secrets.FTP_USERNAME || vars.FTP_USER || vars.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD || secrets.FTP_PASS || vars.FTP_PASSWORD || vars.FTP_PASS }}
+          protocol: ${{ secrets.FTP_PROTOCOL || vars.FTP_PROTOCOL || 'ftp' }}
+          port: ${{ secrets.FTP_PORT || vars.FTP_PORT || 21 }}
+          local-dir: ./dist/
+          server-dir: ${{ steps.ftp_dir.outputs.alt }}
+          dangerous-clean-slate: false
+
+      - name: Deploy (FTPS primary dir fallback)
+        id: deploy_ftps_primary
+        if: steps.deploy_ftp_primary.outcome == 'failure' && (steps.deploy_ftp_alt.outcome == 'failure' || steps.deploy_ftp_alt.outcome == 'skipped')
         continue-on-error: true
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -74,11 +125,26 @@ jobs:
           protocol: ftps
           port: ${{ secrets.FTP_PORT || vars.FTP_PORT || 21 }}
           local-dir: ./dist/
-          server-dir: ${{ secrets.FTP_SERVER_DIR || vars.FTP_SERVER_DIR || '/public_html/' }}
+          server-dir: ${{ steps.ftp_dir.outputs.primary }}
+          dangerous-clean-slate: false
+
+      - name: Deploy (FTPS alt dir fallback)
+        id: deploy_ftps_alt
+        if: steps.deploy_ftps_primary.outcome == 'failure' && steps.ftp_dir.outputs.has_alt == 'true'
+        continue-on-error: true
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST || secrets.FTP_SERVER || vars.FTP_HOST || vars.FTP_SERVER }}
+          username: ${{ secrets.FTP_USER || secrets.FTP_USERNAME || vars.FTP_USER || vars.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD || secrets.FTP_PASS || vars.FTP_PASSWORD || vars.FTP_PASS }}
+          protocol: ftps
+          port: ${{ secrets.FTP_PORT || vars.FTP_PORT || 21 }}
+          local-dir: ./dist/
+          server-dir: ${{ steps.ftp_dir.outputs.alt }}
           dangerous-clean-slate: false
 
       - name: Fail if all deploy attempts failed
-        if: steps.deploy_ftp.outcome == 'failure' && steps.deploy_ftps.outcome == 'failure'
+        if: steps.deploy_ftp_primary.outcome == 'failure' && (steps.deploy_ftp_alt.outcome == 'failure' || steps.deploy_ftp_alt.outcome == 'skipped') && steps.deploy_ftps_primary.outcome == 'failure' && (steps.deploy_ftps_alt.outcome == 'failure' || steps.deploy_ftps_alt.outcome == 'skipped')
         run: |
-          echo "FTP and FTPS deploy attempts failed. Check FTP host/user/password, protocol and server directory."
+          echo "All deploy attempts failed (FTP/FTPS with primary/alt directories). Check FTP host/user/password and server directory."
           exit 1
