@@ -1,11 +1,16 @@
 import { LINKS, SITE } from "../config/site.js";
 import { Icon } from "./icons.jsx";
 import { SocialIcon } from "./SocialIcon.jsx";
+import { Newsletter } from "./Newsletter.jsx";
 
 function scrollToId(id) {
   const el = document.getElementById(id);
   if (!el) return;
   el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function openCookieSettings() {
+  window.dispatchEvent(new CustomEvent("kt:open-cookie-settings"));
 }
 
 export function Footer({ navItems, lang = "fr" }) {
@@ -19,6 +24,7 @@ export function Footer({ navItems, lang = "fr" }) {
           links: "Links",
           contact: "Contact",
           quote: "Get a quote",
+          cookies: "Cookie settings",
           rights: "All rights reserved.",
           location: "Montreal - Canada"
         }
@@ -28,12 +34,17 @@ export function Footer({ navItems, lang = "fr" }) {
           links: "Liens",
           contact: "Contact",
           quote: "Demander un devis",
+          cookies: "Parametres cookies",
           rights: "Tous droits reserves.",
           location: "Montreal - Canada"
         };
 
   return (
     <footer className="footer" aria-label={copy.aria}>
+      <div className="container footer-newsletter-wrap">
+        <Newsletter lang={lang} compact />
+      </div>
+
       <div className="container footer-inner">
         <div className="footer-col">
           <div className="footer-brand">
@@ -91,6 +102,9 @@ export function Footer({ navItems, lang = "fr" }) {
             <a className="footer-link" href={LINKS.instagram} target="_blank" rel="noreferrer">
               <SocialIcon network="instagram" src="/social/instagram.svg" size={16} className="footer-social-ic" /> Instagram
             </a>
+            <button className="footer-link footer-link-btn" type="button" onClick={openCookieSettings}>
+              <Icon name="shield" size={16} /> {copy.cookies}
+            </button>
           </div>
 
           <button className="btn btn-primary footer-cta" type="button" onClick={() => scrollToId("contact")}>

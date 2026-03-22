@@ -13,7 +13,6 @@ export function CookieBanner({ lang = "fr" }) {
             "We use essential cookies for site operation and optional analytics cookies to measure visitor traffic.",
           essential: "Essential only",
           all: "Accept all",
-          manage: "Cookies",
           activeEssential: "Current mode: essential cookies only",
           activeAll: "Current mode: analytics cookies enabled"
         }
@@ -23,7 +22,6 @@ export function CookieBanner({ lang = "fr" }) {
             "Nous utilisons des cookies essentiels pour le site et des cookies analytiques optionnels pour mesurer les visiteurs.",
           essential: "Essentiels seulement",
           all: "Tout accepter",
-          manage: "Cookies",
           activeEssential: "Mode actuel: cookies essentiels uniquement",
           activeAll: "Mode actuel: cookies analytiques actives"
         };
@@ -52,31 +50,21 @@ export function CookieBanner({ lang = "fr" }) {
     setOpen(false);
   };
 
-  return (
-    <>
-      {!open ? (
-        <button className="cookie-manage" type="button" onClick={() => setOpen(true)}>
-          {copy.manage}
-        </button>
-      ) : null}
+  if (!open) return null;
 
-      {open ? (
-        <div className="cookie-banner" role="dialog" aria-live="polite" aria-label={copy.title}>
-          <div className="cookie-title">{copy.title}</div>
-          <p className="cookie-desc">{copy.description}</p>
-          <div className="cookie-actions">
-            <button className="btn btn-ghost btn-sm" type="button" onClick={() => onChoose(COOKIE_CONSENT.essential)}>
-              {copy.essential}
-            </button>
-            <button className="btn btn-primary btn-sm" type="button" onClick={() => onChoose(COOKIE_CONSENT.all)}>
-              {copy.all}
-            </button>
-          </div>
-          <div className="cookie-state muted">
-            {consent === COOKIE_CONSENT.all ? copy.activeAll : copy.activeEssential}
-          </div>
-        </div>
-      ) : null}
-    </>
+  return (
+    <div className="cookie-banner" role="dialog" aria-live="polite" aria-label={copy.title}>
+      <div className="cookie-title">{copy.title}</div>
+      <p className="cookie-desc">{copy.description}</p>
+      <div className="cookie-actions">
+        <button className="btn btn-ghost btn-sm" type="button" onClick={() => onChoose(COOKIE_CONSENT.essential)}>
+          {copy.essential}
+        </button>
+        <button className="btn btn-primary btn-sm" type="button" onClick={() => onChoose(COOKIE_CONSENT.all)}>
+          {copy.all}
+        </button>
+      </div>
+      <div className="cookie-state muted">{consent === COOKIE_CONSENT.all ? copy.activeAll : copy.activeEssential}</div>
+    </div>
   );
 }

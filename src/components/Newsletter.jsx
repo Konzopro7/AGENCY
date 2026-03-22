@@ -8,7 +8,7 @@ function isEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "").trim());
 }
 
-export function Newsletter({ lang = "fr" }) {
+export function Newsletter({ lang = "fr", compact = false }) {
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState("idle");
@@ -34,7 +34,10 @@ export function Newsletter({ lang = "fr" }) {
           missingConfig: "Newsletter endpoint is not configured.",
           genericError: "Could not subscribe right now. Please retry.",
           policy: "You can unsubscribe at any time.",
-          subject: `Newsletter signup - ${SITE.name}`
+          subject: `Newsletter signup - ${SITE.name}`,
+          barTitle: "Monthly growth newsletter",
+          barSubtitle: "Tips, SEO alerts and launch offers.",
+          barSubmit: "Subscribe"
         }
       : {
           eyebrow: "Newsletter",
@@ -54,7 +57,10 @@ export function Newsletter({ lang = "fr" }) {
           missingConfig: "Endpoint newsletter non configure.",
           genericError: "Inscription impossible pour le moment. Reessayez.",
           policy: "Desinscription possible a tout moment.",
-          subject: `Inscription newsletter - ${SITE.name}`
+          subject: `Inscription newsletter - ${SITE.name}`,
+          barTitle: "Newsletter croissance mensuelle",
+          barSubtitle: "Conseils, alertes SEO et offres de lancement.",
+          barSubmit: "S'inscrire"
         };
 
   const isSubmitting = status === "submitting";
@@ -117,6 +123,59 @@ export function Newsletter({ lang = "fr" }) {
       setStatus("error");
       setError(err instanceof Error ? err.message : copy.genericError);
     }
+  }
+
+  if (compact) {
+    return (
+      <div className="newsletter-bar card" aria-label={copy.eyebrow}>
+        <div className="newsletter-bar-head">
+          <div className="newsletter-bar-title">{copy.barTitle}</div>
+          <div className="newsletter-bar-sub muted">{copy.barSubtitle}</div>
+        </div>
+
+        <form className="newsletter-bar-form" onSubmit={onSubmit} noValidate>
+          <label className="sr-only" htmlFor="newsletter-email-compact">
+            {copy.email}
+          </label>
+          <input
+            id="newsletter-email-compact"
+            className={`input newsletter-bar-input ${error ? "is-error" : ""}`}
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (status !== "idle") setStatus("idle");
+              if (error) setError("");
+            }}
+            placeholder={copy.emailPlaceholder}
+            autoComplete="email"
+            inputMode="email"
+            disabled={isSubmitting}
+            required
+          />
+
+          <label className="newsletter-bar-consent">
+            <input
+              type="checkbox"
+              checked={consent}
+              onChange={(e) => {
+                setConsent(e.target.checked);
+                if (error) setError("");
+              }}
+              disabled={isSubmitting}
+            />
+            <span>{copy.consent}</span>
+          </label>
+
+          <button className="btn btn-primary btn-sm" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? copy.sending : copy.barSubmit}
+            <Icon name="arrow-right" size={16} />
+          </button>
+        </form>
+
+        {status === "success" ? <div className="success newsletter-bar-status">{copy.success}</div> : null}
+        {error ? <div className="error newsletter-bar-status">{error}</div> : null}
+      </div>
+    );
   }
 
   return (

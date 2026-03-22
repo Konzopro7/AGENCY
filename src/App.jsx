@@ -8,7 +8,6 @@ import { Dashboard } from "./components/Dashboard.jsx";
 import { Portfolio } from "./components/Portfolio.jsx";
 import { Testimonials } from "./components/Testimonials.jsx";
 import { FAQ } from "./components/FAQ.jsx";
-import { Newsletter } from "./components/Newsletter.jsx";
 import { Contact } from "./components/Contact.jsx";
 import { Footer } from "./components/Footer.jsx";
 import { ScrollToTop } from "./components/ScrollToTop.jsx";
@@ -18,6 +17,8 @@ import { useScrollSpy } from "./hooks/useScrollSpy.js";
 import { COOKIE_CONSENT, recordSessionVisit } from "./lib/analyticsStore.js";
 
 const LANG_KEY = "kt-lang";
+const ADMIN_MODE_KEY = "kt-admin-dashboard-enabled";
+const ADMIN_TOKEN = String(import.meta.env.VITE_ADMIN_DASHBOARD_TOKEN || "").trim();
 
 function getInitialLang() {
   try {
@@ -28,8 +29,42 @@ function getInitialLang() {
   }
 }
 
+function removeAdminParamFromUrl() {
+  if (typeof window === "undefined") return;
+  const url = new URL(window.location.href);
+  if (!url.searchParams.has("admin")) return;
+  url.searchParams.delete("admin");
+  window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+}
+
+function getInitialAdminMode() {
+  if (typeof window === "undefined") return false;
+
+  try {
+    const url = new URL(window.location.href);
+    const adminParam = url.searchParams.get("admin");
+
+    if (adminParam === "off") {
+      localStorage.removeItem(ADMIN_MODE_KEY);
+      removeAdminParamFromUrl();
+      return false;
+    }
+
+    if (ADMIN_TOKEN && adminParam === ADMIN_TOKEN) {
+      localStorage.setItem(ADMIN_MODE_KEY, "1");
+      removeAdminParamFromUrl();
+      return true;
+    }
+
+    return localStorage.getItem(ADMIN_MODE_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
 export default function App() {
   const [lang, setLang] = useState(getInitialLang);
+  const [isAdminMode] = useState(getInitialAdminMode);
 
   useEffect(() => {
     document.documentElement.lang = lang;
@@ -55,9 +90,8 @@ export default function App() {
       return [
         { id: "services", label: "Services" },
         { id: "pricing", label: "Pricing" },
-        { id: "dashboard", label: "Dashboard" },
+        ...(isAdminMode ? [{ id: "dashboard", label: "Dashboard" }] : []),
         { id: "realisations", label: "Work" },
-        { id: "newsletter", label: "Newsletter" },
         { id: "avis", label: "Reviews" },
         { id: "faq", label: "FAQ" },
         { id: "contact", label: "Contact" }
@@ -67,14 +101,13 @@ export default function App() {
     return [
       { id: "services", label: "Services" },
       { id: "pricing", label: "Tarification" },
-      { id: "dashboard", label: "Dashboard" },
+      ...(isAdminMode ? [{ id: "dashboard", label: "Dashboard" }] : []),
       { id: "realisations", label: "Realisations" },
-      { id: "newsletter", label: "Newsletter" },
       { id: "avis", label: "Avis" },
       { id: "faq", label: "FAQ" },
       { id: "contact", label: "Contact" }
     ];
-  }, [lang]);
+  }, [isAdminMode, lang]);
 
   const sectionIds = useMemo(() => navItems.map((i) => i.id), [navItems]);
 
@@ -89,11 +122,10 @@ export default function App() {
         <TrustBar lang={lang} />
         <Services lang={lang} />
         <Pricing lang={lang} />
-        <Dashboard lang={lang} />
+        {isAdminMode ? <Dashboard lang={lang} /> : null}
         <Portfolio lang={lang} />
         <Testimonials lang={lang} />
         <FAQ lang={lang} />
-        <Newsletter lang={lang} />
         <Contact lang={lang} />
       </main>
 
