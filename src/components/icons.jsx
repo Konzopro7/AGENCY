@@ -127,6 +127,28 @@ export function Icon({ name, size = 20, ...props }) {
           <path d="M9.5 8.8c.2-.4.4-.4.6-.4h.5c.2 0 .4 0 .6.4l.8 1.8c.1.2.1.4 0 .6l-.5.6c-.1.1-.2.3-.1.5.4.8 1.1 1.5 1.9 1.9.2.1.4 0 .5-.1l.6-.5c.2-.1.4-.1.6 0l1.8.8c.4.2.4.4.4.6v.5c0 .2 0 .4-.4.6-.5.3-1.4.5-2.4.2-1.1-.3-2.3-1.1-3.3-2.1-1-1-1.8-2.2-2.1-3.3-.3-1 .0-1.9.2-2.4z" />
         </svg>
       );
+    case "facebook":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          stroke="none"
+          aria-hidden="true"
+          {...props}
+        >
+          <path d="M13.5 8H16V5h-2.5C11.6 5 10 6.6 10 8.5V11H8v3h2v5h3v-5h2.3l.7-3H13V8.6c0-.3.2-.6.5-.6z" />
+        </svg>
+      );
+    case "instagram":
+      return (
+        <svg {...p} aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="5" />
+          <circle cx="12" cy="12" r="4" />
+          <circle cx="17.5" cy="6.5" r="1" />
+        </svg>
+      );
     case "up":
       return (
         <svg {...p} aria-hidden="true">

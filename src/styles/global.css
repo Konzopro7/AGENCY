@@ -1569,6 +1569,27 @@ html[data-theme="dark"] .modal-overlay {
   color: var(--muted);
 }
 
+.social-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+}
+
+.social-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 999px;
+}
+
+.footer-social-ic {
+  width: 16px;
+  height: 16px;
+}
+
 .footer-link:hover {
   color: var(--text);
 }
@@ -1623,6 +1644,26 @@ html[data-theme="dark"] .modal-overlay {
   transform: translateY(-1px);
   border-color: var(--accent-border);
   box-shadow: var(--glow);
+}
+
+.fab--facebook {
+  border-color: rgba(24, 119, 242, 0.4);
+  color: #1877f2;
+}
+
+.fab--facebook:hover {
+  border-color: rgba(24, 119, 242, 0.7);
+  box-shadow: 0 0 0 4px rgba(24, 119, 242, 0.18);
+}
+
+.fab--instagram {
+  border-color: rgba(225, 48, 108, 0.36);
+  color: #e1306c;
+}
+
+.fab--instagram:hover {
+  border-color: rgba(225, 48, 108, 0.65);
+  box-shadow: 0 0 0 4px rgba(225, 48, 108, 0.16);
 }
 
 .fab-tip {

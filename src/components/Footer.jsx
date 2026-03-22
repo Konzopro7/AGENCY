@@ -1,5 +1,6 @@
 ﻿import { LINKS, SITE } from "../config/site.js";
 import { Icon } from "./icons.jsx";
+import { SocialIcon } from "./SocialIcon.jsx";
 
 function scrollToId(id) {
   const el = document.getElementById(id);
@@ -82,6 +83,12 @@ export function Footer({ navItems, lang = "fr" }) {
             </a>
             <a className="footer-link" href={LINKS.whatsapp} target="_blank" rel="noreferrer">
               <Icon name="whatsapp" size={16} /> WhatsApp
+            </a>
+            <a className="footer-link" href={LINKS.facebook} target="_blank" rel="noreferrer">
+              <SocialIcon network="facebook" src="/social/facebook.webp" size={16} className="footer-social-ic" /> Facebook
+            </a>
+            <a className="footer-link" href={LINKS.instagram} target="_blank" rel="noreferrer">
+              <SocialIcon network="instagram" src="/social/instagram.webp" size={16} className="footer-social-ic" /> Instagram
             </a>
           </div>
 
