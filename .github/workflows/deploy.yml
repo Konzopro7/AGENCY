@@ -29,12 +29,16 @@ jobs:
         run: npm run build
 
       - name: Inject Brevo config for server endpoint (optional)
-        if: ${{ secrets.BREVO_API_KEY != '' || vars.BREVO_API_KEY != '' }}
         shell: bash
         env:
           BREVO_API_KEY: ${{ secrets.BREVO_API_KEY || vars.BREVO_API_KEY }}
           BREVO_LIST_ID: ${{ secrets.BREVO_LIST_ID || vars.BREVO_LIST_ID }}
         run: |
+          if [ -z "${BREVO_API_KEY:-}" ]; then
+            echo "BREVO_API_KEY not set. Skipping Brevo config injection."
+            exit 0
+          fi
+
           mkdir -p dist/api
           api_key_b64="$(printf '%s' "$BREVO_API_KEY" | base64 -w 0)"
           list_id="$(echo "${BREVO_LIST_ID:-}" | tr -d '[:space:]')"
