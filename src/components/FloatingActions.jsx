@@ -33,11 +33,11 @@ export function FloatingActions({ lang = "fr" }) {
         <span className="fab-tip">WhatsApp</span>
       </a>
       <a className="fab fab--facebook" href={LINKS.facebook} target="_blank" rel="noreferrer" aria-label={copy.facebookAria}>
-        <SocialIcon network="facebook" src="/social/facebook.webp" size={18} />
+        <SocialIcon network="facebook" src="/social/facebook.svg" size={18} />
         <span className="fab-tip">{copy.facebookTip}</span>
       </a>
       <a className="fab fab--instagram" href={LINKS.instagram} target="_blank" rel="noreferrer" aria-label={copy.instagramAria}>
-        <SocialIcon network="instagram" src="/social/instagram.webp" size={18} />
+        <SocialIcon network="instagram" src="/social/instagram.svg" size={18} />
         <span className="fab-tip">{copy.instagramTip}</span>
       </a>
       <a className="fab" href={LINKS.tel} aria-label={copy.callAria}>

@@ -85,10 +85,10 @@ export function Footer({ navItems, lang = "fr" }) {
               <Icon name="whatsapp" size={16} /> WhatsApp
             </a>
             <a className="footer-link" href={LINKS.facebook} target="_blank" rel="noreferrer">
-              <SocialIcon network="facebook" src="/social/facebook.webp" size={16} className="footer-social-ic" /> Facebook
+              <SocialIcon network="facebook" src="/social/facebook.svg" size={16} className="footer-social-ic" /> Facebook
             </a>
             <a className="footer-link" href={LINKS.instagram} target="_blank" rel="noreferrer">
-              <SocialIcon network="instagram" src="/social/instagram.webp" size={16} className="footer-social-ic" /> Instagram
+              <SocialIcon network="instagram" src="/social/instagram.svg" size={16} className="footer-social-ic" /> Instagram
             </a>
           </div>
 
