@@ -11,6 +11,10 @@ export const CONTACT = {
   endpoint: import.meta.env.VITE_CONTACT_ENDPOINT || `https://formsubmit.co/ajax/${SITE.email}`
 };
 
+export const NEWSLETTER = {
+  endpoint: import.meta.env.VITE_NEWSLETTER_ENDPOINT || `https://formsubmit.co/ajax/${SITE.email}`
+};
+
 export const LINKS = {
   mailto: `mailto:${SITE.email}`,
   mailtoSupport: `mailto:${SITE.supportEmail}`,
