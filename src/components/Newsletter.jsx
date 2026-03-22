@@ -1,11 +1,81 @@
 import { useState } from "react";
-import { NEWSLETTER, SITE } from "../config/site.js";
+import { CONTACT, NEWSLETTER, SITE } from "../config/site.js";
 import { Icon } from "./icons.jsx";
 import { Reveal } from "./Reveal.jsx";
 import { recordAnalyticsEvent } from "../lib/analyticsStore.js";
 
 function isEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "").trim());
+}
+
+function isPlaceholderEndpoint(value) {
+  const lower = String(value || "").trim().toLowerCase();
+  if (!lower) return true;
+  return (
+    lower.includes("votre-endpoint") ||
+    lower.includes("xxxxxxxx") ||
+    lower.includes("example.com") ||
+    lower.includes("changez_ce") ||
+    lower.includes("changeme")
+  );
+}
+
+function getNewsletterEndpoints() {
+  const fallback = `https://formsubmit.co/ajax/${SITE.email}`;
+  const values = [NEWSLETTER.endpoint, CONTACT.endpoint, fallback];
+  const seen = new Set();
+  const endpoints = [];
+
+  for (const raw of values) {
+    const endpoint = String(raw || "").trim();
+    if (!endpoint || isPlaceholderEndpoint(endpoint)) continue;
+    if (seen.has(endpoint)) continue;
+    seen.add(endpoint);
+    endpoints.push(endpoint);
+  }
+
+  if (!endpoints.length) endpoints.push(fallback);
+  return endpoints;
+}
+
+async function submitNewsletter(endpoint, cleanEmail, copy) {
+  const isFormSubmit = endpoint.includes("formsubmit.co");
+  const payload = isFormSubmit
+    ? {
+        email: cleanEmail,
+        consent_marketing: "yes",
+        request_type: "newsletter_signup",
+        _subject: copy.subject,
+        _captcha: "false",
+        _template: "table"
+      }
+    : {
+        email: cleanEmail,
+        consentMarketing: true,
+        requestType: "newsletter_signup",
+        source: SITE.name,
+        submittedAt: new Date().toISOString()
+      };
+
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) {
+    let details = copy.genericError;
+    try {
+      const data = await response.json();
+      const message = data?.message || data?.error || data?.errors?.[0]?.message;
+      if (message) details = message;
+    } catch {
+    }
+    throw new Error(details);
+  }
 }
 
 export function Newsletter({ lang = "fr", compact = false }) {
@@ -33,6 +103,7 @@ export function Newsletter({ lang = "fr", compact = false }) {
           missingConsent: "You must accept marketing consent.",
           missingConfig: "Newsletter endpoint is not configured.",
           genericError: "Could not subscribe right now. Please retry.",
+          networkError: "Connection blocked. Check endpoint settings or disable ad blocker for this site.",
           policy: "You can unsubscribe at any time.",
           subject: `Newsletter signup - ${SITE.name}`,
           barTitle: "Monthly growth newsletter",
@@ -56,6 +127,7 @@ export function Newsletter({ lang = "fr", compact = false }) {
           missingConsent: "Le consentement marketing est requis.",
           missingConfig: "Endpoint newsletter non configure.",
           genericError: "Inscription impossible pour le moment. Reessayez.",
+          networkError: "Connexion bloquee. Verifiez l'endpoint ou desactivez le bloqueur de pub pour ce site.",
           policy: "Desinscription possible a tout moment.",
           subject: `Inscription newsletter - ${SITE.name}`,
           barTitle: "Newsletter croissance mensuelle",
@@ -83,37 +155,20 @@ export function Newsletter({ lang = "fr", compact = false }) {
     setStatus("submitting");
 
     try {
-      const endpoint = String(NEWSLETTER.endpoint || "").trim();
-      if (!endpoint) throw new Error(copy.missingConfig);
+      const endpoints = getNewsletterEndpoints();
+      if (!endpoints.length) throw new Error(copy.missingConfig);
 
-      const isFormSubmit = endpoint.includes("formsubmit.co");
-      const payload = isFormSubmit
-        ? {
-            email: cleanEmail,
-            consent_marketing: "yes",
-            request_type: "newsletter_signup",
-            _subject: copy.subject,
-            _captcha: "false",
-            _template: "table"
-          }
-        : {
-            email: cleanEmail,
-            consentMarketing: true,
-            requestType: "newsletter_signup",
-            source: SITE.name,
-            submittedAt: new Date().toISOString()
-          };
-
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify(payload)
-      });
-
-      if (!response.ok) throw new Error(copy.genericError);
+      let lastError = null;
+      for (const endpoint of endpoints) {
+        try {
+          await submitNewsletter(endpoint, cleanEmail, copy);
+          lastError = null;
+          break;
+        } catch (err) {
+          lastError = err;
+        }
+      }
+      if (lastError) throw lastError;
 
       recordAnalyticsEvent("newsletter_signup");
       setStatus("success");
@@ -121,7 +176,9 @@ export function Newsletter({ lang = "fr", compact = false }) {
       setConsent(false);
     } catch (err) {
       setStatus("error");
-      setError(err instanceof Error ? err.message : copy.genericError);
+      const message = err instanceof Error ? err.message : copy.genericError;
+      const isNetworkError = /failed to fetch|networkerror|load failed/i.test(message);
+      setError(isNetworkError ? copy.networkError : message);
     }
   }
 
