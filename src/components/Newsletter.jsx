@@ -171,7 +171,7 @@ export function Newsletter({ lang = "fr", compact = false }) {
       }
       if (lastError) throw lastError;
 
-      recordAnalyticsEvent("newsletter_signup");
+      recordAnalyticsEvent("newsletter_signup", { placement: compact ? "footer" : "section" });
       setStatus("success");
       setEmail("");
       setConsent(false);

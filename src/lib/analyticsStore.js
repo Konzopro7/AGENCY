@@ -164,14 +164,14 @@ export function recordSessionVisit(pathname = "/") {
   saveAnalyticsStore(store);
 }
 
-export function recordAnalyticsEvent(eventName) {
+export function recordAnalyticsEvent(eventName, params = {}) {
   if (typeof window === "undefined") return;
   if (!canTrackAnalytics()) return;
   const name = String(eventName || "").trim();
   if (!name) return;
   const store = getAnalyticsStore();
   increment(store.events, name);
-  trackProviderEvent(name);
+  trackProviderEvent(name, params);
   saveAnalyticsStore(store);
 }
 
@@ -214,6 +214,8 @@ export function getDashboardSnapshot(days = 14) {
     visitors7d: sumLastDays(daily, 7),
     visitors30d: sumLastDays(daily, 30),
     newsletterSignups: Number(store.events?.newsletter_signup || 0),
+    contactSubmits: Number(store.events?.contact_submit || 0),
+    appointmentRequests: Number(store.events?.appointment_request || 0),
     topPage,
     topPages,
     topSources,

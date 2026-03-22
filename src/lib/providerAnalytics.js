@@ -8,6 +8,22 @@ function hasGa4Config() {
   return Boolean(GA4_ID);
 }
 
+export function getProviderInfo() {
+  if (hasGa4Config()) {
+    return {
+      configured: true,
+      name: "Google Analytics 4",
+      measurementId: GA4_ID
+    };
+  }
+
+  return {
+    configured: false,
+    name: "",
+    measurementId: ""
+  };
+}
+
 function ensureDataLayer() {
   if (typeof window === "undefined") return;
   window.dataLayer = window.dataLayer || [];

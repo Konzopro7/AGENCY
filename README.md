@@ -31,6 +31,8 @@ Notes:
 - Si `VITE_GA4_MEASUREMENT_ID` est renseigne, les events sont aussi envoyes a GA4:
   - `page_view`
   - `newsletter_signup`
+  - `contact_submit`
+  - `appointment_request`
 
 ## Dashboard admin
 

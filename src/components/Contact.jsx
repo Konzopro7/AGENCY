@@ -3,6 +3,7 @@ import { CONTACT, LINKS, SITE } from "../config/site.js";
 import { Icon } from "./icons.jsx";
 import { Reveal } from "./Reveal.jsx";
 import { SocialIcon } from "./SocialIcon.jsx";
+import { recordAnalyticsEvent } from "../lib/analyticsStore.js";
 
 function isEmail(v) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || "").trim());
@@ -332,6 +333,11 @@ export function Contact({ lang = "fr" }) {
       }
 
       if (lastError) throw lastError;
+
+      recordAnalyticsEvent(isBooking ? "appointment_request" : "contact_submit", {
+        mode: isBooking ? "booking" : "message",
+        need: String(form.needs || "").trim() || "none"
+      });
 
       setStatus("success");
       setErrors({});

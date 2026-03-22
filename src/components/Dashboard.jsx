@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Icon } from "./icons.jsx";
 import { Reveal } from "./Reveal.jsx";
 import { COOKIE_CONSENT, getCookieConsent, getDashboardSnapshot } from "../lib/analyticsStore.js";
+import { getProviderInfo } from "../lib/providerAnalytics.js";
 
 function chartPoints(series) {
   if (!series.length) return [];
@@ -52,6 +53,8 @@ export function Dashboard({ lang = "fr" }) {
           visitors7d: "Visitors 7 days",
           visitors30d: "Visitors 30 days",
           newsletter: "Newsletter signups",
+          contact: "Contact requests",
+          appointments: "Appointment requests",
           chartTitle: "Traffic trend (14 days)",
           topPages: "Top pages",
           topSources: "Top sources",
@@ -62,7 +65,8 @@ export function Dashboard({ lang = "fr" }) {
           limitedData:
             "Analytics cookies are currently disabled. Visitor metrics stay paused until analytics cookies are accepted.",
           dashboardMode:
-            "This dashboard currently uses first-party local tracking. You can later connect a global analytics provider."
+            "This dashboard currently uses first-party local tracking. You can later connect a global analytics provider.",
+          dashboardModeConnected: "Global analytics provider connected:"
         }
       : {
           eyebrow: "Dashboard Performance",
@@ -72,6 +76,8 @@ export function Dashboard({ lang = "fr" }) {
           visitors7d: "Visiteurs 7 jours",
           visitors30d: "Visiteurs 30 jours",
           newsletter: "Inscriptions newsletter",
+          contact: "Demandes contact",
+          appointments: "Demandes rendez-vous",
           chartTitle: "Tendance du trafic (14 jours)",
           topPages: "Pages les plus visitees",
           topSources: "Sources principales",
@@ -82,7 +88,8 @@ export function Dashboard({ lang = "fr" }) {
           limitedData:
             "Les cookies analytiques sont desactives. Les metriques visiteurs restent en pause tant que les cookies analytiques ne sont pas acceptes.",
           dashboardMode:
-            "Ce dashboard utilise actuellement un tracking local first-party. Vous pourrez ensuite brancher un provider analytics global."
+            "Ce dashboard utilise actuellement un tracking local first-party. Vous pourrez ensuite brancher un provider analytics global.",
+          dashboardModeConnected: "Provider analytics global connecte:"
         };
 
   useEffect(() => {
@@ -108,12 +115,15 @@ export function Dashboard({ lang = "fr" }) {
   const chartArea = useMemo(() => areaPath(points), [points]);
   const startLabel = snapshot.series[0]?.date ? shortDateLabel(snapshot.series[0].date, lang) : "";
   const endLabel = snapshot.series.at(-1)?.date ? shortDateLabel(snapshot.series.at(-1).date, lang) : "";
+  const provider = useMemo(() => getProviderInfo(), []);
 
   const kpis = [
     { label: copy.visitorsToday, value: snapshot.visitorsToday },
     { label: copy.visitors7d, value: snapshot.visitors7d },
     { label: copy.visitors30d, value: snapshot.visitors30d },
-    { label: copy.newsletter, value: snapshot.newsletterSignups }
+    { label: copy.newsletter, value: snapshot.newsletterSignups },
+    { label: copy.contact, value: snapshot.contactSubmits },
+    { label: copy.appointments, value: snapshot.appointmentRequests }
   ];
 
   return (
@@ -210,7 +220,9 @@ export function Dashboard({ lang = "fr" }) {
           </Reveal>
         </div>
 
-        <p className="dashboard-footnote muted">{copy.dashboardMode}</p>
+        <p className="dashboard-footnote muted">
+          {provider.configured ? `${copy.dashboardModeConnected} ${provider.name}` : copy.dashboardMode}
+        </p>
       </div>
     </section>
   );
