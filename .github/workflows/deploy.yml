@@ -28,6 +28,25 @@ jobs:
           VITE_ADMIN_DASHBOARD_TOKEN: ${{ secrets.VITE_ADMIN_DASHBOARD_TOKEN || vars.VITE_ADMIN_DASHBOARD_TOKEN }}
         run: npm run build
 
+      - name: Inject Brevo config for server endpoint (optional)
+        if: ${{ secrets.BREVO_API_KEY != '' || vars.BREVO_API_KEY != '' }}
+        shell: bash
+        env:
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY || vars.BREVO_API_KEY }}
+          BREVO_LIST_ID: ${{ secrets.BREVO_LIST_ID || vars.BREVO_LIST_ID }}
+        run: |
+          mkdir -p dist/api
+          api_key_b64="$(printf '%s' "$BREVO_API_KEY" | base64 -w 0)"
+          list_id="$(echo "${BREVO_LIST_ID:-}" | tr -d '[:space:]')"
+
+          cat > dist/api/brevo.config.php <<EOF
+          <?php
+          return [
+              'api_key_b64' => '${api_key_b64}',
+              'list_id' => '${list_id}',
+          ];
+          EOF
+
       - name: Validate FTP configuration
         env:
           FTP_HOST_VALUE: ${{ secrets.FTP_HOST || secrets.FTP_SERVER || vars.FTP_HOST || vars.FTP_SERVER }}

@@ -23,6 +23,8 @@ Notes:
 - `VITE_NEWSLETTER_ENDPOINT` est optionnel. Par defaut, la newsletter utilise `/api/newsletter.php` (endpoint local).
 - `VITE_GA4_MEASUREMENT_ID` active Google Analytics 4.
 - `VITE_ADMIN_DASHBOARD_TOKEN` active l'acces admin au dashboard (visiteurs caches par defaut).
+- Option Brevo (recommande): ajouter les secrets GitHub `BREVO_API_KEY` et `BREVO_LIST_ID`.
+  Le workflow injecte automatiquement `dist/api/brevo.config.php` au deploy.
 
 ## Cookies et analytics
 
@@ -42,6 +44,22 @@ Notes:
   - l'acces est memorise en local sur ce navigateur.
 - Pour le desactiver:
   - ouvre `https://votredomaine.com/?admin=off`
+
+## Brancher Brevo (newsletter)
+
+1. Dans Brevo:
+   - Contacts -> Lists -> Create a list (ex: `KonzoTech Newsletter`).
+   - Recupere l'ID numerique de la liste (ex: `7`).
+   - SMTP & API -> API Keys -> Generate a new API key (permissions contacts).
+2. Dans GitHub (`Settings -> Secrets and variables -> Actions`), ajoute:
+   - `BREVO_API_KEY` = ta cle API Brevo.
+   - `BREVO_LIST_ID` = l'ID numerique de ta liste.
+3. Relance le workflow `Deploy to Hosting` (ou fais un push sur `main`).
+4. Test:
+   - Fais une inscription newsletter sur le site.
+   - Dans Brevo -> Contacts, verifie que le contact est ajoute dans la liste.
+5. Envoyer tes nouveautes:
+   - Brevo -> Campaigns -> Create an email campaign -> choisis la liste newsletter -> envoi/planification.
 
 ## Build production
 
