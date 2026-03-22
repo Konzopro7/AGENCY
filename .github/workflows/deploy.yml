@@ -23,6 +23,8 @@ jobs:
       - name: Build project
         env:
           VITE_CONTACT_ENDPOINT: ${{ secrets.VITE_CONTACT_ENDPOINT || vars.VITE_CONTACT_ENDPOINT }}
+          VITE_NEWSLETTER_ENDPOINT: ${{ secrets.VITE_NEWSLETTER_ENDPOINT || vars.VITE_NEWSLETTER_ENDPOINT }}
+          VITE_GA4_MEASUREMENT_ID: ${{ secrets.VITE_GA4_MEASUREMENT_ID || vars.VITE_GA4_MEASUREMENT_ID }}
         run: npm run build
 
       - name: Validate FTP configuration
