@@ -1,6 +1,7 @@
-﻿import { LINKS, SITE } from "../config/site.js";
+import { LINKS, SITE } from "../config/site.js";
 import { Icon } from "./icons.jsx";
 import { Reveal } from "./Reveal.jsx";
+import { SocialIcon } from "./SocialIcon.jsx";
 
 function scrollToId(id) {
   const el = document.getElementById(id);
@@ -95,7 +96,7 @@ export function Hero({ lang = "fr" }) {
 
           <div className="hero-mini">
             <button className="mini-link" type="button" onClick={openBookingForm}>
-              <Icon name="phone" size={18} />
+              <SocialIcon network="phone" src="/social/call.svg" size={18} />
               {copy.call}
             </button>
             <a className="mini-link" href={LINKS.mailto}>
@@ -150,7 +151,7 @@ export function Hero({ lang = "fr" }) {
               </button>
               <a className="btn btn-ghost" href={LINKS.whatsapp} target="_blank" rel="noreferrer">
                 WhatsApp
-                <Icon name="whatsapp" size={18} />
+                <SocialIcon network="whatsapp" src="/social/whatsapp.svg" size={18} />
               </a>
             </div>
           </div>
@@ -159,3 +160,4 @@ export function Hero({ lang = "fr" }) {
     </section>
   );
 }
+

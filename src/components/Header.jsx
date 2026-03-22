@@ -1,7 +1,8 @@
-﻿import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { LINKS, SITE } from "../config/site.js";
 import { useLockBodyScroll } from "../hooks/useLockBodyScroll.js";
 import { Icon } from "./icons.jsx";
+import { SocialIcon } from "./SocialIcon.jsx";
 
 function scrollToId(id) {
   const el = document.getElementById(id);
@@ -76,7 +77,7 @@ export function Header({ navItems, activeId, lang = "fr", onLangChange }) {
   const quickLinks = useMemo(
     () => [
       { href: LINKS.mailto, label: SITE.email, icon: "mail" },
-      { href: LINKS.tel, label: SITE.phoneDisplay, icon: "phone" }
+      { href: LINKS.tel, label: SITE.phoneDisplay, icon: "phone", socialSrc: "/social/call.svg" }
     ],
     []
   );
@@ -153,7 +154,7 @@ export function Header({ navItems, activeId, lang = "fr", onLangChange }) {
           <div className="quick" aria-label={copy.quickAria}>
             {quickLinks.map((l) => (
               <a key={l.href} className="icon-btn" href={l.href} aria-label={l.label}>
-                <Icon name={l.icon} size={18} />
+                {l.socialSrc ? <SocialIcon network={l.icon} src={l.socialSrc} size={18} /> : <Icon name={l.icon} size={18} />}
               </a>
             ))}
           </div>
@@ -209,7 +210,7 @@ export function Header({ navItems, activeId, lang = "fr", onLangChange }) {
             </button>
             <button className="btn btn-ghost" type="button" onClick={onBookCall}>
               {copy.requestCall}
-              <Icon name="phone" size={18} />
+              <SocialIcon network="phone" src="/social/call.svg" size={18} />
             </button>
           </div>
         </div>
@@ -217,3 +218,4 @@ export function Header({ navItems, activeId, lang = "fr", onLangChange }) {
     </header>
   );
 }
+

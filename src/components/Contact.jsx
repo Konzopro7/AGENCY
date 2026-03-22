@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { CONTACT, LINKS, SITE } from "../config/site.js";
 import { Icon } from "./icons.jsx";
 import { Reveal } from "./Reveal.jsx";
+import { SocialIcon } from "./SocialIcon.jsx";
 
 function isEmail(v) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || "").trim());
@@ -170,8 +171,8 @@ export function Contact({ lang = "fr" }) {
     () => [
       { label: SITE.email, href: LINKS.mailto, icon: "mail" },
       { label: SITE.supportEmail, href: LINKS.mailtoSupport, icon: "mail" },
-      { label: SITE.phoneDisplay, href: LINKS.tel, icon: "phone" },
-      { label: "WhatsApp", href: LINKS.whatsapp, icon: "whatsapp", external: true }
+      { label: SITE.phoneDisplay, href: LINKS.tel, icon: "phone", socialSrc: "/social/call.svg" },
+      { label: "WhatsApp", href: LINKS.whatsapp, icon: "whatsapp", socialSrc: "/social/whatsapp.svg", external: true }
     ],
     []
   );
@@ -326,7 +327,7 @@ export function Contact({ lang = "fr" }) {
                   rel={q.external ? "noreferrer" : undefined}
                 >
                   <span className="quick-ic">
-                    <Icon name={q.icon} size={18} />
+                    {q.socialSrc ? <SocialIcon network={q.icon} src={q.socialSrc} size={18} /> : <Icon name={q.icon} size={18} />}
                   </span>
                   <span className="quick-t">{q.label}</span>
                   <span className="quick-arrow" aria-hidden="true">
@@ -544,3 +545,4 @@ export function Contact({ lang = "fr" }) {
     </section>
   );
 }
+

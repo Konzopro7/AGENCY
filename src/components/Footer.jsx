@@ -1,4 +1,4 @@
-﻿import { LINKS, SITE } from "../config/site.js";
+import { LINKS, SITE } from "../config/site.js";
 import { Icon } from "./icons.jsx";
 import { SocialIcon } from "./SocialIcon.jsx";
 
@@ -79,10 +79,11 @@ export function Footer({ navItems, lang = "fr" }) {
               <Icon name="mail" size={16} /> {SITE.supportEmail}
             </a>
             <a className="footer-link" href={LINKS.tel}>
-              <Icon name="phone" size={16} /> {SITE.phoneDisplay}
+              <SocialIcon network="phone" src="/social/call.svg" size={16} className="footer-social-ic" />{" "}
+              {SITE.phoneDisplay}
             </a>
             <a className="footer-link" href={LINKS.whatsapp} target="_blank" rel="noreferrer">
-              <Icon name="whatsapp" size={16} /> WhatsApp
+              <SocialIcon network="whatsapp" src="/social/whatsapp.svg" size={16} className="footer-social-ic" /> WhatsApp
             </a>
             <a className="footer-link" href={LINKS.facebook} target="_blank" rel="noreferrer">
               <SocialIcon network="facebook" src="/social/facebook.svg" size={16} className="footer-social-ic" /> Facebook
@@ -106,3 +107,4 @@ export function Footer({ navItems, lang = "fr" }) {
     </footer>
   );
 }
+

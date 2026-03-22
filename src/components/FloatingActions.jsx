@@ -1,5 +1,4 @@
 ﻿import { LINKS } from "../config/site.js";
-import { Icon } from "./icons.jsx";
 import { SocialIcon } from "./SocialIcon.jsx";
 
 export function FloatingActions({ lang = "fr" }) {
@@ -29,7 +28,7 @@ export function FloatingActions({ lang = "fr" }) {
   return (
     <div className="float-actions" aria-label={copy.aria}>
       <a className="fab" href={LINKS.whatsapp} target="_blank" rel="noreferrer" aria-label={copy.whatsappAria}>
-        <Icon name="whatsapp" size={18} />
+        <SocialIcon network="whatsapp" src="/social/whatsapp.svg" size={18} />
         <span className="fab-tip">WhatsApp</span>
       </a>
       <a className="fab fab--facebook" href={LINKS.facebook} target="_blank" rel="noreferrer" aria-label={copy.facebookAria}>
@@ -41,7 +40,7 @@ export function FloatingActions({ lang = "fr" }) {
         <span className="fab-tip">{copy.instagramTip}</span>
       </a>
       <a className="fab" href={LINKS.tel} aria-label={copy.callAria}>
-        <Icon name="phone" size={18} />
+        <SocialIcon network="phone" src="/social/call.svg" size={18} />
         <span className="fab-tip">{copy.callTip}</span>
       </a>
     </div>
