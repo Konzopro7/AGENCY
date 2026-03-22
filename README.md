@@ -7,18 +7,28 @@ npm install
 npm run dev
 ```
 
-## Configurer le formulaire de contact
+## Variables d'environnement
 
-Créez un fichier `.env.local` à la racine:
+Creer un fichier `.env.local` a la racine:
 
 ```powershell
-VITE_CONTACT_ENDPOINT=https://votre-endpoint-formulaire
+VITE_CONTACT_ENDPOINT=https://votre-endpoint-contact
+VITE_NEWSLETTER_ENDPOINT=https://votre-endpoint-newsletter
+VITE_GA4_MEASUREMENT_ID=G-XXXXXXXXXX
 ```
 
-`VITE_CONTACT_ENDPOINT` est optionnel.
+Notes:
+- `VITE_CONTACT_ENDPOINT` est optionnel. Par defaut, le formulaire contact utilise FormSubmit vers `SITE.email`.
+- `VITE_NEWSLETTER_ENDPOINT` est optionnel. Par defaut, la newsletter utilise FormSubmit vers `SITE.email`.
+- `VITE_GA4_MEASUREMENT_ID` active Google Analytics 4.
 
-Par défaut, le formulaire utilise FormSubmit vers `SITE.email`.
-Vous pouvez remplacer cet endpoint par Formspree (`https://formspree.io/f/xxxxxxx`) ou votre webhook.
+## Cookies et analytics
+
+- Les analytics sont actifs uniquement si l'utilisateur accepte les cookies analytiques.
+- Le dashboard visiteurs affiche des stats first-party locales (consent-aware).
+- Si `VITE_GA4_MEASUREMENT_ID` est renseigne, les events sont aussi envoyes a GA4:
+  - `page_view`
+  - `newsletter_signup`
 
 ## Build production
 

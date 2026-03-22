@@ -1,3 +1,5 @@
+import { syncProviderConsent, trackProviderEvent, trackProviderPageView } from "./providerAnalytics.js";
+
 const CONSENT_KEY = "kt-cookie-consent";
 const STORE_KEY = "kt-analytics-v1";
 const SESSION_VISIT_KEY = "kt-session-visit-tracked";
@@ -100,6 +102,7 @@ export function setCookieConsent(next) {
     localStorage.setItem(CONSENT_KEY, value);
   } catch {
   }
+  syncProviderConsent(value === COOKIE_CONSENT.all);
   broadcast("kt:cookie-consent-changed", value);
 }
 
@@ -132,6 +135,7 @@ export function saveAnalyticsStore(nextStore) {
 export function recordSessionVisit(pathname = "/") {
   if (typeof window === "undefined") return;
   if (!canTrackAnalytics()) return;
+  syncProviderConsent(true);
 
   const path = String(pathname || "/").trim() || "/";
   const store = getAnalyticsStore();
@@ -156,6 +160,7 @@ export function recordSessionVisit(pathname = "/") {
   }
 
   increment(store.pages, path);
+  trackProviderPageView(path);
   saveAnalyticsStore(store);
 }
 
@@ -166,6 +171,7 @@ export function recordAnalyticsEvent(eventName) {
   if (!name) return;
   const store = getAnalyticsStore();
   increment(store.events, name);
+  trackProviderEvent(name);
   saveAnalyticsStore(store);
 }
 
