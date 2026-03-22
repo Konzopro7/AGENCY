@@ -8,11 +8,11 @@ export const SITE = {
 };
 
 export const CONTACT = {
-  endpoint: import.meta.env.VITE_CONTACT_ENDPOINT || `https://formsubmit.co/ajax/${SITE.email}`
+  endpoint: import.meta.env.VITE_CONTACT_ENDPOINT || "/api/contact.php"
 };
 
 export const NEWSLETTER = {
-  endpoint: import.meta.env.VITE_NEWSLETTER_ENDPOINT || `https://formsubmit.co/ajax/${SITE.email}`
+  endpoint: import.meta.env.VITE_NEWSLETTER_ENDPOINT || "/api/newsletter.php"
 };
 
 export const LINKS = {

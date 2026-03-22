@@ -21,8 +21,9 @@ function isPlaceholderEndpoint(value) {
 }
 
 function getNewsletterEndpoints() {
+  const firstParty = "/api/newsletter.php";
   const fallback = `https://formsubmit.co/ajax/${SITE.email}`;
-  const values = [NEWSLETTER.endpoint, CONTACT.endpoint, fallback];
+  const values = [firstParty, NEWSLETTER.endpoint, CONTACT.endpoint, fallback];
   const seen = new Set();
   const endpoints = [];
 
@@ -103,7 +104,7 @@ export function Newsletter({ lang = "fr", compact = false }) {
           missingConsent: "You must accept marketing consent.",
           missingConfig: "Newsletter endpoint is not configured.",
           genericError: "Could not subscribe right now. Please retry.",
-          networkError: "Connection blocked. Check endpoint settings or disable ad blocker for this site.",
+          networkError: "Connection blocked (network or SSL certificate). Try again in private mode or contact support.",
           policy: "You can unsubscribe at any time.",
           subject: `Newsletter signup - ${SITE.name}`,
           barTitle: "Monthly growth newsletter",
@@ -127,7 +128,7 @@ export function Newsletter({ lang = "fr", compact = false }) {
           missingConsent: "Le consentement marketing est requis.",
           missingConfig: "Endpoint newsletter non configure.",
           genericError: "Inscription impossible pour le moment. Reessayez.",
-          networkError: "Connexion bloquee. Verifiez l'endpoint ou desactivez le bloqueur de pub pour ce site.",
+          networkError: "Connexion bloquee (reseau ou certificat SSL). Reessayez en navigation privee ou contactez le support.",
           policy: "Desinscription possible a tout moment.",
           subject: `Inscription newsletter - ${SITE.name}`,
           barTitle: "Newsletter croissance mensuelle",
@@ -177,7 +178,7 @@ export function Newsletter({ lang = "fr", compact = false }) {
     } catch (err) {
       setStatus("error");
       const message = err instanceof Error ? err.message : copy.genericError;
-      const isNetworkError = /failed to fetch|networkerror|load failed/i.test(message);
+      const isNetworkError = /failed to fetch|networkerror|load failed|err_cert/i.test(message);
       setError(isNetworkError ? copy.networkError : message);
     }
   }

@@ -19,8 +19,8 @@ VITE_ADMIN_DASHBOARD_TOKEN=votre_token_admin_prive
 ```
 
 Notes:
-- `VITE_CONTACT_ENDPOINT` est optionnel. Par defaut, le formulaire contact utilise FormSubmit vers `SITE.email`.
-- `VITE_NEWSLETTER_ENDPOINT` est optionnel. Par defaut, la newsletter utilise FormSubmit vers `SITE.email`.
+- `VITE_CONTACT_ENDPOINT` est optionnel. Par defaut, le formulaire contact utilise `/api/contact.php` (endpoint local).
+- `VITE_NEWSLETTER_ENDPOINT` est optionnel. Par defaut, la newsletter utilise `/api/newsletter.php` (endpoint local).
 - `VITE_GA4_MEASUREMENT_ID` active Google Analytics 4.
 - `VITE_ADMIN_DASHBOARD_TOKEN` active l'acces admin au dashboard (visiteurs caches par defaut).
 

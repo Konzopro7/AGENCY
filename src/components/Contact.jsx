@@ -24,6 +24,37 @@ const INITIAL_FORM = {
   message: ""
 };
 
+function isPlaceholderEndpoint(value) {
+  const lower = String(value || "").trim().toLowerCase();
+  if (!lower) return true;
+  return (
+    lower.includes("votre-endpoint") ||
+    lower.includes("xxxxxxxx") ||
+    lower.includes("example.com") ||
+    lower.includes("changez_ce") ||
+    lower.includes("changeme")
+  );
+}
+
+function getContactEndpoints() {
+  const firstParty = "/api/contact.php";
+  const fallback = `https://formsubmit.co/ajax/${SITE.email}`;
+  const values = [firstParty, CONTACT.endpoint, fallback];
+  const seen = new Set();
+  const endpoints = [];
+
+  for (const raw of values) {
+    const endpoint = String(raw || "").trim();
+    if (!endpoint || isPlaceholderEndpoint(endpoint)) continue;
+    if (seen.has(endpoint)) continue;
+    seen.add(endpoint);
+    endpoints.push(endpoint);
+  }
+
+  if (!endpoints.length) endpoints.push(firstParty);
+  return endpoints;
+}
+
 export function Contact({ lang = "fr" }) {
   const [mode, setMode] = useState("message");
   const [form, setForm] = useState(INITIAL_FORM);
@@ -97,6 +128,7 @@ export function Contact({ lang = "fr" }) {
           invalidDetails: "Please provide a few details (min. 10 characters).",
           missingConfig: "Contact endpoint is missing.",
           genericError: "An error occurred. Please try again.",
+          networkError: "Connection blocked (network or SSL certificate). Try again in private mode or contact support.",
           formSubmitSubject: `New message - ${SITE.name}`,
           bookingSubmitSubject: `Appointment request - ${SITE.name}`,
           needOptions: [
@@ -155,6 +187,7 @@ export function Contact({ lang = "fr" }) {
           invalidDetails: "Merci d'ajouter des details (min. 10 caracteres).",
           missingConfig: "Configuration de contact introuvable.",
           genericError: "Une erreur est survenue. Reessayez.",
+          networkError: "Connexion bloquee (reseau ou certificat SSL). Reessayez en navigation privee ou contactez le support.",
           formSubmitSubject: `Nouveau message - ${SITE.name}`,
           bookingSubmitSubject: `Demande de rendez-vous - ${SITE.name}`,
           needOptions: [
@@ -233,67 +266,81 @@ export function Contact({ lang = "fr" }) {
     setSubmitError("");
 
     try {
-      const endpoint = String(CONTACT.endpoint || "").trim();
-      if (!endpoint) throw new Error(copy.missingConfig);
-
       const requestType = isBooking ? "appointment_request" : "message_request";
-      const isFormSubmit = endpoint.includes("formsubmit.co");
-      const payload = isFormSubmit
-        ? {
-            name: String(form.name).trim(),
-            email: String(form.email).trim(),
-            phone: String(form.phone).trim() || "-",
-            request_type: requestType,
-            preferred_date: String(form.appointmentDate).trim() || "-",
-            preferred_time: String(form.appointmentTime).trim() || "-",
-            primary_need: String(form.needs).trim() || "-",
-            message: String(form.message).trim(),
-            _subject: isBooking ? copy.bookingSubmitSubject : copy.formSubmitSubject,
-            _captcha: "false",
-            _template: "table",
-            _replyto: String(form.email).trim()
-          }
-        : {
-            name: String(form.name).trim(),
-            email: String(form.email).trim(),
-            phone: String(form.phone).trim() || "",
-            requestType,
-            preferredDate: String(form.appointmentDate).trim() || "",
-            preferredTime: String(form.appointmentTime).trim() || "",
-            primaryNeed: String(form.needs).trim() || "",
-            message: String(form.message).trim(),
-            source: SITE.name,
-            lang,
-            page: window.location.href,
-            submittedAt: new Date().toISOString()
-          };
+      const endpoints = getContactEndpoints();
+      if (!endpoints.length) throw new Error(copy.missingConfig);
 
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify(payload)
-      });
-
-      if (!response.ok) {
-        let details = `Error while sending (${response.status}).`;
+      let lastError = null;
+      for (const endpoint of endpoints) {
         try {
-          const data = await response.json();
-          const message = data?.message || data?.error || data?.errors?.[0]?.message;
-          if (message) details = message;
-        } catch {
+          const isFormSubmit = endpoint.includes("formsubmit.co");
+          const payload = isFormSubmit
+            ? {
+                name: String(form.name).trim(),
+                email: String(form.email).trim(),
+                phone: String(form.phone).trim() || "-",
+                request_type: requestType,
+                preferred_date: String(form.appointmentDate).trim() || "-",
+                preferred_time: String(form.appointmentTime).trim() || "-",
+                primary_need: String(form.needs).trim() || "-",
+                message: String(form.message).trim(),
+                _subject: isBooking ? copy.bookingSubmitSubject : copy.formSubmitSubject,
+                _captcha: "false",
+                _template: "table",
+                _replyto: String(form.email).trim()
+              }
+            : {
+                name: String(form.name).trim(),
+                email: String(form.email).trim(),
+                phone: String(form.phone).trim() || "",
+                requestType,
+                preferredDate: String(form.appointmentDate).trim() || "",
+                preferredTime: String(form.appointmentTime).trim() || "",
+                primaryNeed: String(form.needs).trim() || "",
+                message: String(form.message).trim(),
+                source: SITE.name,
+                lang,
+                page: window.location.href,
+                submittedAt: new Date().toISOString()
+              };
+
+          const response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json"
+            },
+            body: JSON.stringify(payload)
+          });
+
+          if (!response.ok) {
+            let details = `Error while sending (${response.status}).`;
+            try {
+              const data = await response.json();
+              const message = data?.message || data?.error || data?.errors?.[0]?.message;
+              if (message) details = message;
+            } catch {
+            }
+            throw new Error(details);
+          }
+
+          lastError = null;
+          break;
+        } catch (err) {
+          lastError = err;
         }
-        throw new Error(details);
       }
+
+      if (lastError) throw lastError;
 
       setStatus("success");
       setErrors({});
       setForm(INITIAL_FORM);
     } catch (err) {
       setStatus("error");
-      setSubmitError(err instanceof Error ? err.message : copy.genericError);
+      const message = err instanceof Error ? err.message : copy.genericError;
+      const isNetworkError = /failed to fetch|networkerror|load failed|err_cert/i.test(message);
+      setSubmitError(isNetworkError ? copy.networkError : message);
     }
   };
 
