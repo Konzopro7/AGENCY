@@ -41,7 +41,6 @@ export function Header({ navItems, activeId, lang = "fr", onLangChange }) {
           themeToDark: "Switch to dark theme",
           navAria: "Main navigation",
           quickAria: "Quick contact",
-          quote: "Get a quote",
           requestCall: "Book a call",
           menuOpen: "Open menu",
           menuClose: "Close menu",
@@ -54,7 +53,6 @@ export function Header({ navItems, activeId, lang = "fr", onLangChange }) {
           themeToDark: "Passer en theme sombre",
           navAria: "Navigation principale",
           quickAria: "Contact rapide",
-          quote: "Demander un devis",
           requestCall: "Reserver un appel",
           menuOpen: "Ouvrir le menu",
           menuClose: "Fermer le menu",
@@ -85,12 +83,6 @@ export function Header({ navItems, activeId, lang = "fr", onLangChange }) {
   const onNavClick = (id) => {
     setOpen(false);
     scrollToId(id);
-  };
-
-  const onQuote = () => {
-    setOpen(false);
-    scrollToId("contact");
-    window.setTimeout(() => document.getElementById("contact-name")?.focus(), 450);
   };
 
   const onBookCall = () => {
@@ -163,11 +155,6 @@ export function Header({ navItems, activeId, lang = "fr", onLangChange }) {
             <Icon name={themeIcon} size={18} />
           </button>
 
-          <button className="btn btn-primary header-cta" type="button" onClick={onQuote}>
-            {copy.quote}
-            <Icon name="arrow-right" size={18} />
-          </button>
-
           <button
             className="icon-btn nav-toggle"
             type="button"
@@ -201,10 +188,6 @@ export function Header({ navItems, activeId, lang = "fr", onLangChange }) {
             ))}
           </div>
           <div className="mobile-cta">
-            <button className="btn btn-primary" type="button" onClick={onQuote}>
-              {copy.quote}
-              <Icon name="arrow-right" size={18} />
-            </button>
             <button className="btn btn-ghost" type="button" onClick={onToggleLanguage}>
               {copy.switchLanguage}
             </button>
