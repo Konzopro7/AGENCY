@@ -19,7 +19,7 @@ export const LINKS = {
   mailto: `mailto:${SITE.email}`,
   mailtoSupport: `mailto:${SITE.supportEmail}`,
   tel: `tel:${SITE.phoneE164}`,
-  whatsapp: "https://wa.me/15147727758",
+  whatsapp: "https://wa.me/message/NEECNHRSDODPF1",
   facebook: "https://www.facebook.com/konzotechagency",
   instagram: "https://www.instagram.com/konzotechagency"
 };
