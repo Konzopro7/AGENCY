@@ -1,4 +1,4 @@
-﻿import { useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import { PROJECTS_BY_LANG } from "../data/projects.js";
 import { Icon } from "./icons.jsx";
 import { Modal } from "./Modal.jsx";
@@ -7,6 +7,13 @@ import { Reveal } from "./Reveal.jsx";
 const FILTERS_BY_LANG = {
   fr: ["Tous", "Vitrine", "E-commerce", "Application"],
   en: ["All", "Showcase", "E-commerce", "Application"]
+};
+
+const FILTER_EQUIVALENTS = {
+  Tous: "All",
+  All: "Tous",
+  Vitrine: "Showcase",
+  Showcase: "Vitrine"
 };
 
 function scrollToId(id) {
@@ -59,6 +66,15 @@ export function Portfolio({ lang = "fr" }) {
 
   const filters = FILTERS_BY_LANG[lang] ?? FILTERS_BY_LANG.fr;
   const projects = PROJECTS_BY_LANG[lang] ?? PROJECTS_BY_LANG.fr;
+
+  useEffect(() => {
+    setFilter((prev) => {
+      const translated = FILTER_EQUIVALENTS[prev] ?? prev;
+      if (filters.includes(translated)) return translated;
+      if (filters.includes(prev)) return prev;
+      return allLabel;
+    });
+  }, [allLabel, filters]);
 
   const items = useMemo(() => {
     if (filter === allLabel) return projects;
