@@ -33,6 +33,7 @@ $email = trim((string) ($payload["email"] ?? ""));
 $phone = trim((string) ($payload["phone"] ?? ""));
 $message = trim((string) ($payload["message"] ?? ""));
 $requestType = trim((string) ($payload["requestType"] ?? $payload["request_type"] ?? "message_request"));
+$country = trim((string) ($payload["country"] ?? ""));
 
 if ($name === "" || mb_strlen($name) < 2) {
     http_response_code(422);
@@ -75,6 +76,7 @@ $bodyLines = [
     "Preferred time: " . ($preferredTime !== "" ? $preferredTime : "-"),
     "Primary need: " . ($primaryNeed !== "" ? $primaryNeed : "-"),
     "Language: " . ($lang !== "" ? $lang : "-"),
+    "Country / routing: " . ($country !== "" ? $country : "-"),
     "Page: " . ($page !== "" ? $page : "-"),
     "",
     "Message:",

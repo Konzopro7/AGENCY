@@ -13,6 +13,7 @@ import { Footer } from "./components/Footer.jsx";
 import { ScrollToTop } from "./components/ScrollToTop.jsx";
 import { FloatingActions } from "./components/FloatingActions.jsx";
 import { CookieBanner } from "./components/CookieBanner.jsx";
+import { ContactAssistant } from "./components/ContactAssistant.jsx";
 import { useScrollSpy } from "./hooks/useScrollSpy.js";
 import { COOKIE_CONSENT, recordSessionVisit } from "./lib/analyticsStore.js";
 
@@ -133,6 +134,7 @@ export default function App() {
       <CookieBanner lang={lang} />
       <ScrollToTop lang={lang} />
       <FloatingActions lang={lang} />
+      <ContactAssistant lang={lang} />
     </>
   );
 }
