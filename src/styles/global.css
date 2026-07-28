@@ -1774,7 +1774,7 @@ html[data-theme="dark"] .modal-overlay {
 .assistant-head {
   padding: 15px;
   display: grid;
-  grid-template-columns: 46px 1fr 36px;
+  grid-template-columns: 46px 1fr auto;
   gap: 11px;
   align-items: center;
   color: #fff;
@@ -1811,35 +1811,172 @@ html[data-theme="dark"] .modal-overlay {
   background: #39dc8a;
 }
 
-.assistant-close {
-  width: 34px;
-  height: 34px;
+.assistant-head-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.assistant-head-actions button {
+  width: 30px;
+  height: 30px;
   border: 0;
-  border-radius: 11px;
+  border-radius: 10px;
   background: rgba(255, 255, 255, 0.12);
   color: #fff;
-  font-size: 24px;
+  font-size: 19px;
   line-height: 1;
   cursor: pointer;
 }
 
-.assistant-body {
+.assistant-chat-log {
+  height: min(460px, calc(100vh - 245px));
+  min-height: 320px;
   padding: 15px;
+  overflow-y: auto;
+  background:
+    radial-gradient(circle at 90% 10%, rgba(18, 181, 190, 0.06), transparent 32%),
+    var(--bg-2);
 }
 
-.assistant-message {
-  margin: 0 34px 14px 0;
-  padding: 11px 13px;
-  border-radius: 14px 14px 14px 4px;
+.assistant-bubble {
+  width: fit-content;
+  max-width: 88%;
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  font-size: 12.5px;
+  line-height: 1.52;
+  white-space: pre-line;
+}
+
+.assistant-bubble.is-assistant {
+  margin-right: auto;
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 4px;
   background: var(--bg-3);
   color: var(--muted);
+}
+
+.assistant-bubble.is-user {
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+  background: linear-gradient(135deg, #12b5be, #0d929b);
+  color: #fff;
+}
+
+.assistant-suggestions {
+  margin: 4px 0 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.assistant-suggestions button {
+  padding: 7px 10px;
+  border: 1px solid rgba(18, 181, 190, 0.35);
+  border-radius: 999px;
+  background: rgba(18, 181, 190, 0.08);
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 720;
+  cursor: pointer;
+}
+
+.assistant-suggestions button:hover {
+  border-color: var(--accent);
+  background: rgba(18, 181, 190, 0.14);
+}
+
+.assistant-typing {
+  margin: 0 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.assistant-typing i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: assistant-dot 900ms infinite alternate;
+}
+
+.assistant-typing i:nth-child(2) {
+  animation-delay: 150ms;
+}
+
+.assistant-typing i:nth-child(3) {
+  animation-delay: 300ms;
+}
+
+.assistant-typing span {
+  margin-left: 4px;
+}
+
+@keyframes assistant-dot {
+  from { opacity: 0.3; transform: translateY(1px); }
+  to { opacity: 1; transform: translateY(-1px); }
+}
+
+.assistant-composer {
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 1fr 42px;
+  gap: 8px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-2);
+}
+
+.assistant-composer input {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--text);
+  padding: 10px 11px;
+  font: inherit;
   font-size: 13px;
-  line-height: 1.55;
+  outline: none;
+}
+
+.assistant-composer input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(18, 181, 190, 0.12);
+}
+
+.assistant-composer button {
+  border: 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #12b5be, #0e8e97);
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.assistant-composer button:disabled {
+  opacity: 0.45;
+  cursor: default;
 }
 
 .assistant-form {
   display: grid;
   gap: 10px;
+}
+
+.assistant-lead-form {
+  margin-top: 12px;
+  padding: 13px;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  background: var(--bg-3);
+}
+
+.assistant-lead-form > strong {
+  font-family: var(--font-display);
+  font-size: 13px;
 }
 
 .assistant-form label {
