@@ -149,10 +149,6 @@ export function Hero({ lang = "fr" }) {
                 {copy.request}
                 <Icon name="arrow-right" size={18} />
               </button>
-              <a className="btn btn-ghost" href={LINKS.whatsapp} target="_blank" rel="noreferrer">
-                WhatsApp
-                <SocialIcon network="whatsapp" src="/social/whatsapp.svg" size={18} />
-              </a>
             </div>
           </div>
         </Reveal>
