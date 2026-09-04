@@ -2276,6 +2276,29 @@ html[data-theme="dark"] .modal-overlay {
   padding-top: 8px;
 }
 
+.pricing-payment-note {
+  max-width: 760px;
+  margin: 30px auto 0;
+  padding: 14px 18px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid var(--accent-border);
+  border-radius: 16px;
+  background: rgba(18, 181, 190, 0.08);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.pricing-payment-note svg {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  color: var(--accent);
+}
+
 .btn-block {
   width: 100%;
 }

@@ -16,6 +16,7 @@ export function Pricing({ lang = "fr" }) {
           eyebrow: "Website Packs",
           title: "Clear packages built to scale",
           subtitle: "Plans aligned with your growth stage, from starter website to custom platform.",
+          installments: "Installment payment options are available. The payment schedule is agreed upon before the project starts.",
           mostSelected: "Best seller"
         }
       : {
@@ -23,6 +24,7 @@ export function Pricing({ lang = "fr" }) {
           eyebrow: "Forfaits Web",
           title: "Des forfaits clairs et évolutifs",
           subtitle: "Des offres alignées sur votre stade de croissance, du site vitrine à la plateforme sur mesure.",
+          installments: "Le paiement en plusieurs versements est disponible. L’échéancier est convenu avant le début du projet.",
           mostSelected: "Le plus populaire"
         };
 
@@ -81,6 +83,11 @@ export function Pricing({ lang = "fr" }) {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="pricing-payment-note" role="note">
+          <Icon name="check" size={18} />
+          <span>{copy.installments}</span>
         </div>
       </div>
     </section>
