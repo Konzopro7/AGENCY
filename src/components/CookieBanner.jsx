@@ -17,13 +17,13 @@ export function CookieBanner({ lang = "fr" }) {
           activeAll: "Current mode: analytics cookies enabled"
         }
       : {
-          title: "Preferences cookies",
+          title: "Préférences relatives aux cookies",
           description:
             "Nous utilisons des cookies essentiels pour le site et des cookies analytiques optionnels pour mesurer les visiteurs.",
           essential: "Essentiels seulement",
           all: "Tout accepter",
-          activeEssential: "Mode actuel: cookies essentiels uniquement",
-          activeAll: "Mode actuel: cookies analytiques actives"
+          activeEssential: "Mode actuel : cookies essentiels uniquement",
+          activeAll: "Mode actuel : cookies analytiques activés"
         };
 
   useEffect(() => {

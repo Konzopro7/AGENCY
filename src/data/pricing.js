@@ -9,8 +9,8 @@
           name: "Starter",
           price: "550",
           currency: "C$",
-          description: "Parfait pour debuter",
-          features: ["1 page", "Formulaire + Maps", "Design responsive", "SSL + hebergement (1 an)"],
+          description: "Parfait pour débuter",
+          features: ["1 page", "Formulaire et carte", "Design adaptatif", "SSL et hébergement (1 an)"],
           cta: "Choisir ce pack",
           highlighted: false
         },
@@ -19,7 +19,7 @@
           name: "Business",
           price: "1 250",
           currency: "C$",
-          description: "Pour croitre",
+          description: "Pour croître",
           features: ["5-7 pages", "SEO de base", "Analytics (GA4)", "1 cycle de contenu"],
           cta: "Choisir ce pack",
           highlighted: true
@@ -30,17 +30,17 @@
           price: "2 500",
           currency: "C$",
           description: "Pour vendre en ligne",
-          features: ["WooCommerce", "Jusqu'a 20 produits", "Stripe/PayPal", "Livraison + taxes"],
+          features: ["WooCommerce", "Jusqu’à 20 produits", "Stripe/PayPal", "Livraison et taxes"],
           cta: "Choisir ce pack",
           highlighted: false
         },
         {
           id: "custom-saas",
           name: "Custom / SaaS",
-          price: "Des 4 500",
+          price: "Dès 4 500",
           currency: "C$",
           description: "Solution sur mesure",
-          features: ["Cadrage MVP", "Auth + dashboard", "API / DB", "Deploiement scalable"],
+          features: ["Cadrage du MVP", "Authentification et tableau de bord", "API et base de données", "Déploiement évolutif"],
           cta: "Discuter du projet",
           highlighted: false
         }
@@ -57,7 +57,7 @@
           currency: "C$",
           interval: "/ mois",
           description: "Le minimum",
-          features: ["Mises a jour WordPress", "Securite de base", "Sauvegardes hebdomadaires", "Monitoring"],
+          features: ["Mises à jour WordPress", "Sécurité de base", "Sauvegardes hebdomadaires", "Surveillance"],
           cta: "Choisir ce pack",
           highlighted: false
         },
@@ -68,7 +68,7 @@
           currency: "C$",
           interval: "/ mois",
           description: "Le plus populaire",
-          features: ["Tout Essential", "Optimisation performance", "Support prioritaire", "Modifications legeres"],
+          features: ["Tout le forfait Essential", "Optimisation des performances", "Support prioritaire", "Modifications légères"],
           cta: "Choisir ce pack",
           highlighted: true
         },
@@ -79,7 +79,7 @@
           currency: "C$",
           interval: "/ mois",
           description: "Pour boutiques",
-          features: ["Sauvegardes quotidiennes", "Securite renforcee", "Support incidents", "Checkout optimise"],
+          features: ["Sauvegardes quotidiennes", "Sécurité renforcée", "Gestion des incidents", "Paiement optimisé"],
           cta: "Choisir ce pack",
           highlighted: false
         },
@@ -90,7 +90,7 @@
           currency: "C$",
           interval: "",
           description: "Sur mesure",
-          features: ["Support technique", "Corrections de bugs", "Monitoring serveur", "SLA et priorite"],
+          features: ["Support technique", "Correction de bogues", "Surveillance du serveur", "SLA et priorité"],
           cta: "Discuter du projet",
           highlighted: false
         }
@@ -107,7 +107,7 @@
           currency: "C$",
           interval: "/ mois",
           description: "Les fondations",
-          features: ["Audit SEO", "Optimisation des pages cles", "Google Business"],
+          features: ["Audit SEO", "Optimisation des pages clés", "Google Business"],
           cta: "Choisir ce pack",
           highlighted: false
         },
@@ -118,7 +118,7 @@
           currency: "C$",
           interval: "/ mois",
           description: "Le plus choisi",
-          features: ["SEO technique", "Contenu optimise", "Backlinks", "Reporting"],
+          features: ["SEO technique", "Contenu optimisé", "Liens entrants", "Rapports"],
           cta: "Choisir ce pack",
           highlighted: true
         }

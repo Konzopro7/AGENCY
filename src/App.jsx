@@ -103,7 +103,7 @@ export default function App() {
       { id: "services", label: "Services" },
       { id: "pricing", label: "Tarification" },
       ...(isAdminMode ? [{ id: "dashboard", label: "Dashboard" }] : []),
-      { id: "realisations", label: "Realisations" },
+      { id: "realisations", label: "Réalisations" },
       { id: "avis", label: "Avis" },
       { id: "faq", label: "FAQ" },
       { id: "contact", label: "Contact" }

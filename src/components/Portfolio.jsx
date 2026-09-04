@@ -47,20 +47,20 @@ export function Portfolio({ lang = "fr" }) {
           closeOverlay: "Close"
         }
       : {
-          aria: "Realisations",
-          eyebrow: "Realisations",
-          title: "Des projets propres, rapides et orientes resultats",
-          subtitle: "Cliquez pour voir l'objectif, la stack et le resultat.",
-          seeDetails: "Voir les details",
-          empty: "Aucun projet dans cette categorie pour le moment.",
+          aria: "Réalisations",
+          eyebrow: "Réalisations",
+          title: "Des projets propres, rapides et orientés vers les résultats",
+          subtitle: "Cliquez pour voir l’objectif, les technologies utilisées et le résultat.",
+          seeDetails: "Voir les détails",
+          empty: "Aucun projet dans cette catégorie pour le moment.",
           objective: "Objectif",
           stack: "Stack",
-          result: "Resultat",
+          result: "Résultat",
           teacherReview: "Avis du professeur",
           quote: "Demander un devis",
           viewSite: "Voir le site",
           close: "Fermer",
-          closeModal: "Fermer la fenetre",
+          closeModal: "Fermer la fenêtre",
           closeOverlay: "Fermer"
         };
 

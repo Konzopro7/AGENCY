@@ -17,9 +17,9 @@ export function FAQ({ lang = "fr" }) {
         }
       : {
           eyebrow: "FAQ",
-          title: "Questions frequentes",
+          title: "Questions fréquentes",
           subtitle:
-            "Tarifs, delais, hebergement, modifications, support. Si vous ne trouvez pas votre reponse, ecrivez-nous."
+            "Tarifs, délais, hébergement, modifications et support. Si vous ne trouvez pas votre réponse, écrivez-nous."
         };
 
   const items = FAQS_BY_LANG[lang] ?? FAQS_BY_LANG.fr;

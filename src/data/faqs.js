@@ -1,24 +1,24 @@
 ﻿export const FAQS_BY_LANG = {
   fr: [
     {
-      q: "Combien coute un site ?",
-      a: "Le prix depend du perimetre (pages, contenus, animations, integrations). Nous proposons un devis clair avec options apres un rapide echange."
+      q: "Combien coûte un site ?",
+      a: "Le prix dépend du périmètre (pages, contenus, animations et intégrations). Nous proposons un devis clair avec plusieurs options après un rapide échange."
     },
     {
-      q: "Quels sont les delais ?",
-      a: "En moyenne: 1 a 3 semaines pour un site vitrine, 3 a 6 semaines pour un e-commerce ou une app simple. Le planning est valide des le depart."
+      q: "Quels sont les délais ?",
+      a: "En moyenne : 1 à 3 semaines pour un site vitrine et 3 à 6 semaines pour un site e-commerce ou une application simple. Le calendrier est validé dès le départ."
     },
     {
-      q: "Gerez-vous l'hebergement et le nom de domaine ?",
-      a: "Oui. Nous pouvons configurer hebergement, domaine et emails, puis assurer la maintenance (securite, sauvegardes, mises a jour)."
+      q: "Gérez-vous l’hébergement et le nom de domaine ?",
+      a: "Oui. Nous pouvons configurer l’hébergement, le domaine et les courriels, puis assurer la maintenance (sécurité, sauvegardes et mises à jour)."
     },
     {
-      q: "Puis-je demander des modifications apres livraison ?",
-      a: "Oui. Une phase de retours est prevue. Ensuite, nous pouvons fonctionner au ticket ou avec un forfait maintenance/evolutions."
+      q: "Puis-je demander des modifications après la livraison ?",
+      a: "Oui. Une phase de retours est prévue. Ensuite, nous pouvons intervenir à la demande ou dans le cadre d’un forfait de maintenance et d’évolution."
     },
     {
       q: "Proposez-vous un support rapide ?",
-      a: "Oui. Support reactif par email et telephone, avec priorisation selon l'urgence et suivi clair."
+      a: "Oui. Nous offrons un support réactif par courriel et par téléphone, avec une priorisation selon l’urgence et un suivi clair."
     }
   ],
   en: [

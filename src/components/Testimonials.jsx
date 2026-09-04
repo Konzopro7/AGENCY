@@ -32,13 +32,13 @@ export function Testimonials({ lang = "fr" }) {
           aria: "Avis",
           eyebrow: "Avis",
           title: "Ils voulaient du premium. Ils ont eu du premium.",
-          subtitle: "Temoignages courts, orientes resultat.",
+          subtitle: "Des témoignages courts, orientés vers les résultats.",
           blockTitle: "Avis clients",
           previous: "Avis precedent",
           next: "Avis suivant",
           dots: "Pagination",
-          starsSuffix: "etoiles sur 5",
-          goTo: "Aller a l'avis"
+          starsSuffix: "étoiles sur 5",
+          goTo: "Aller à l’avis"
         };
 
   const scrollToIndex = (i) => {

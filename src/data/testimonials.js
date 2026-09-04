@@ -4,7 +4,7 @@
       name: "Kinoush Store",
       role: "E-commerce",
       rating: 5,
-      quote: "Boutique moderne, rapide et facile a utiliser. Resultat premium et tres professionnel."
+      quote: "Boutique moderne, rapide et facile à utiliser. Résultat haut de gamme et très professionnel."
     }
   ],
   en: [

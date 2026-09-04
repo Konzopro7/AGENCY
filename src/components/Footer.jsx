@@ -30,13 +30,13 @@ export function Footer({ navItems, lang = "fr" }) {
         }
       : {
           aria: "Pied de page",
-          description: "Sites web modernes, rapides et rentables. Design premium, SEO pret, performance et support.",
+          description: "Sites Web modernes, rapides et rentables. Design haut de gamme, prêt pour le SEO, performance et support.",
           links: "Liens",
           contact: "Contact",
           quote: "Demander un devis",
-          cookies: "Parametres cookies",
-          rights: "Tous droits reserves.",
-          location: "Montreal - Canada"
+          cookies: "Paramètres des cookies",
+          rights: "Tous droits réservés.",
+          location: "Montréal - Canada"
         };
 
   return (

@@ -20,9 +20,9 @@ export function Services({ lang = "fr" }) {
         }
       : {
           eyebrow: "Services",
-          title: "Tout ce qu'il faut pour convertir",
+          title: "Tout ce qu’il faut pour convertir",
           subtitle:
-            "Une execution propre, rapide, et un design premium qui rassure. Objectif: transformer les visiteurs en clients.",
+            "Une exécution propre et rapide, ainsi qu’un design premium qui rassure. Objectif : transformer les visiteurs en clients.",
           learnMore: "En savoir plus"
         };
 

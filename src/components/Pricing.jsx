@@ -20,10 +20,10 @@ export function Pricing({ lang = "fr" }) {
         }
       : {
           aria: "Tarification",
-          eyebrow: "Packs Website",
-          title: "Des packs clairs et evolutifs",
-          subtitle: "Des offres alignees sur votre stade de croissance, du site vitrine a la plateforme sur mesure.",
-          mostSelected: "Best seller"
+          eyebrow: "Forfaits Web",
+          title: "Des forfaits clairs et évolutifs",
+          subtitle: "Des offres alignées sur votre stade de croissance, du site vitrine à la plateforme sur mesure.",
+          mostSelected: "Le plus populaire"
         };
 
   const sections = PRICING_SECTIONS_BY_LANG[lang] ?? PRICING_SECTIONS_BY_LANG.fr;

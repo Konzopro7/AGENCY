@@ -5,10 +5,10 @@
       title: "Kinoush Store",
       category: "E-commerce",
       url: "https://kinoushstore.com",
-      objective: "Creer une boutique en ligne claire, rapide et rassurante pour vendre efficacement.",
+      objective: "Créer une boutique en ligne claire, rapide et rassurante pour vendre efficacement.",
       stack: ["E-commerce", "UI/UX", "Responsive", "Performance", "SEO"],
-      result: "Site e-commerce mis en ligne, optimise pour mobile et conversion.",
-      highlight: "E-commerce (client reel)",
+      result: "Site e-commerce mis en ligne, optimisé pour les appareils mobiles et la conversion.",
+      highlight: "E-commerce (client réel)",
       year: "Live"
     }
   ],

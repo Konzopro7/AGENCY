@@ -4,7 +4,7 @@ import { Reveal } from "./Reveal.jsx";
 const BADGES_BY_LANG = {
   fr: [
     { label: "Performance", icon: "bolt" },
-    { label: "Securite", icon: "shield" },
+    { label: "Sécurité", icon: "shield" },
     { label: "Responsive", icon: "check" },
     { label: "SEO", icon: "spark" },
     { label: "Maintenance", icon: "wand" }

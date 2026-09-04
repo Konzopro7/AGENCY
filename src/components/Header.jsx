@@ -49,11 +49,11 @@ export function Header({ navItems, activeId, lang = "fr", onLangChange }) {
           languageButton: "FR"
         }
       : {
-          themeToLight: "Passer en theme clair",
-          themeToDark: "Passer en theme sombre",
+          themeToLight: "Passer en thème clair",
+          themeToDark: "Passer en thème sombre",
           navAria: "Navigation principale",
           quickAria: "Contact rapide",
-          requestCall: "Reserver un appel",
+          requestCall: "Réserver un appel",
           menuOpen: "Ouvrir le menu",
           menuClose: "Fermer le menu",
           menuTitle: "Menu",

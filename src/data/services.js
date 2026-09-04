@@ -2,43 +2,43 @@
   fr: [
     {
       id: "hosting",
-      title: "Hebergement site web",
+      title: "Hébergement de site Web",
       items: [
         {
           id: "maintenance",
-          title: "Maintenance + hebergement",
+          title: "Maintenance et hébergement",
           description:
-            "Mises a jour, monitoring, sauvegardes et assistance pour garder un site fiable, securise et stable.",
-          points: ["Support", "Securite", "Sauvegardes", "Evolutions"],
+            "Mises à jour, surveillance, sauvegardes et assistance pour conserver un site fiable, sécurisé et stable.",
+          points: ["Support", "Sécurité", "Sauvegardes", "Évolutions"],
           icon: "shield"
         }
       ]
     },
     {
       id: "creation",
-      title: "Creation de site",
+      title: "Création de site",
       items: [
         {
           id: "logo",
-          title: "Creation de logo",
+          title: "Création de logo",
           description:
-            "Un logo sur mesure avec ses declinaisons, utilisable partout (web, reseaux, impression).",
-          points: ["Logo unique", "Variantes couleur/mono", "Fichiers SVG/PNG", "Mini charte"],
+            "Un logo sur mesure avec ses déclinaisons, utilisable partout (Web, réseaux sociaux et impression).",
+          points: ["Logo unique", "Variantes couleur et monochrome", "Fichiers SVG et PNG", "Mini-charte"],
           icon: "spark"
         },
         {
           id: "vitrine",
           title: "Site vitrine",
           description:
-            "Un site rapide et premium pour presenter votre offre, rassurer et convertir (UX, copy, CTA).",
-          points: ["Design premium", "SEO pret", "Performance", "Analytics"],
+            "Un site rapide et haut de gamme pour présenter votre offre, rassurer et convertir (UX, contenu et appels à l’action).",
+          points: ["Design haut de gamme", "Prêt pour le SEO", "Performance", "Analyse des données"],
           icon: "spark"
         },
         {
           id: "ecommerce",
           title: "E-commerce",
           description:
-            "Une boutique optimisee pour vendre: tunnel clair, fiches produits efficaces, vitesse et confiance.",
+            "Une boutique optimisée pour vendre : parcours clair, fiches produits efficaces, rapidité et confiance.",
           points: ["Paiements", "Produits", "Optimisation conversion", "Maintenance"],
           icon: "cart"
         },
@@ -46,8 +46,8 @@
           id: "site_web_app",
           title: "Site web / application",
           description:
-            "Un produit web sur mesure: fonctionnalites utiles, parcours clair et base technique solide.",
-          points: ["Fonctionnalites", "Formulaires", "Integrations", "Deploiement"],
+            "Un produit Web sur mesure : fonctionnalités utiles, parcours clair et base technique solide.",
+          points: ["Fonctionnalités", "Formulaires", "Intégrations", "Déploiement"],
           icon: "bolt"
         }
       ]
@@ -60,15 +60,15 @@
           id: "affiches",
           title: "Affiche publicitaire",
           description:
-            "Affiches et visuels pour vos campagnes et evenements, avec un message clair et impactant.",
-          points: ["Formats print et web", "Declinaisons", "Pret a imprimer", "Livraison rapide"],
+            "Affiches et visuels pour vos campagnes et événements, avec un message clair et percutant.",
+          points: ["Formats imprimés et Web", "Déclinaisons", "Prêt à imprimer", "Livraison rapide"],
           icon: "wand"
         },
         {
           id: "seo",
           title: "SEO et performance",
           description:
-            "Un site visible et rapide: structure, balises, vitesse, bonnes pratiques et contenus orientes intent.",
+            "Un site visible et rapide : structure, balises, vitesse, bonnes pratiques et contenus adaptés aux intentions de recherche.",
           points: ["Core Web Vitals", "On-page", "Structure", "Schema (option)"],
           icon: "bolt"
         },
@@ -76,8 +76,8 @@
           id: "refonte",
           title: "Refonte et optimisation",
           description:
-            "Modernisation, correction UX, refonte UI, nettoyage technique et amelioration des conversions.",
-          points: ["Audit", "UI/UX", "Performance", "Accessibilite"],
+            "Modernisation, correction de l’UX, refonte de l’interface, nettoyage technique et amélioration des conversions.",
+          points: ["Audit", "UI/UX", "Performance", "Accessibilité"],
           icon: "wand"
         }
       ]

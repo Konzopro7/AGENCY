@@ -69,9 +69,9 @@ export function Dashboard({ lang = "fr" }) {
           dashboardModeConnected: "Global analytics provider connected:"
         }
       : {
-          eyebrow: "Dashboard Performance",
+          eyebrow: "Tableau de bord des performances",
           title: "Tableau de bord visiteurs",
-          subtitle: "Une vue operations moderne inspiree de Shopify: trafic, pages et sources d'acquisition.",
+          subtitle: "Une vue opérationnelle moderne inspirée de Shopify : trafic, pages et sources d’acquisition.",
           visitorsToday: "Visiteurs aujourd'hui",
           visitors7d: "Visiteurs 7 jours",
           visitors30d: "Visiteurs 30 jours",
@@ -79,17 +79,17 @@ export function Dashboard({ lang = "fr" }) {
           contact: "Demandes contact",
           appointments: "Demandes rendez-vous",
           chartTitle: "Tendance du trafic (14 jours)",
-          topPages: "Pages les plus visitees",
+          topPages: "Pages les plus visitées",
           topSources: "Sources principales",
-          updated: "Mise a jour",
+          updated: "Mise à jour",
           visits: "visites",
-          noData: "Aucune donnee pour le moment",
+          noData: "Aucune donnée pour le moment",
           direct: "direct",
           limitedData:
-            "Les cookies analytiques sont desactives. Les metriques visiteurs restent en pause tant que les cookies analytiques ne sont pas acceptes.",
+            "Les cookies analytiques sont désactivés. Les statistiques de visite restent en pause tant que les cookies analytiques ne sont pas acceptés.",
           dashboardMode:
-            "Ce dashboard utilise actuellement un tracking local first-party. Vous pourrez ensuite brancher un provider analytics global.",
-          dashboardModeConnected: "Provider analytics global connecte:"
+            "Ce tableau de bord utilise actuellement un suivi local propriétaire. Vous pourrez ensuite connecter un service d’analyse global.",
+          dashboardModeConnected: "Service d’analyse global connecté :"
         };
 
   useEffect(() => {
