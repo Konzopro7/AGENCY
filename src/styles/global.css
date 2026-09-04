@@ -2174,6 +2174,7 @@ html[data-theme="dark"] .modal-overlay {
 }
 
 .pricing-card--highlighted {
+  padding-top: 58px;
   border-color: #1cb6bc;
   box-shadow: 0 0 0 1px #1cb6bc, 0 18px 38px rgba(2, 17, 33, 0.6);
 }
