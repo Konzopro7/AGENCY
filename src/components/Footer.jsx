@@ -73,7 +73,11 @@ export function Footer({ navItems, lang = "fr" }) {
           <div className="footer-title">{copy.links}</div>
           <div className="footer-links">
             {navItems.map((i) => (
-              <a key={i.id} href={`#${i.id}`} className="footer-link" onClick={(e) => (e.preventDefault(), scrollToId(i.id))}>
+              <a key={i.id} href={i.href || `#${i.id}`} className="footer-link" onClick={(e) => {
+                if (i.href && !i.href.startsWith("#")) return;
+                e.preventDefault();
+                scrollToId(i.id);
+              }}>
                 {i.label}
               </a>
             ))}
@@ -107,10 +111,10 @@ export function Footer({ navItems, lang = "fr" }) {
             </button>
           </div>
 
-          <button className="btn btn-primary footer-cta" type="button" onClick={() => scrollToId("contact")}>
+          <a className="btn btn-primary footer-cta" href="/#contact">
             {copy.quote}
             <Icon name="arrow-right" size={18} />
-          </button>
+          </a>
         </div>
       </div>
 

@@ -15,6 +15,10 @@ export const NEWSLETTER = {
   endpoint: import.meta.env.VITE_NEWSLETTER_ENDPOINT || "/api/newsletter.php"
 };
 
+export const REVIEWS = {
+  endpoint: import.meta.env.VITE_REVIEWS_ENDPOINT || "/api/reviews.php"
+};
+
 export const LINKS = {
   mailto: `mailto:${SITE.email}`,
   mailtoSupport: `mailto:${SITE.supportEmail}`,

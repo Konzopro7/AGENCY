@@ -6,12 +6,16 @@ import { SocialIcon } from "./SocialIcon.jsx";
 
 function scrollToId(id) {
   const el = document.getElementById(id);
-  if (!el) return;
+  if (!el) return false;
   el.scrollIntoView({ behavior: "smooth", block: "start" });
+  return true;
 }
 
 function openBookingForm() {
-  scrollToId("contact");
+  if (!scrollToId("contact")) {
+    window.location.href = "/#contact";
+    return;
+  }
   window.dispatchEvent(new CustomEvent("kt:open-booking"));
 }
 
@@ -85,6 +89,15 @@ export function Header({ navItems, activeId, lang = "fr", onLangChange }) {
     scrollToId(id);
   };
 
+  const onLinkClick = (event, item) => {
+    if (item.href && !item.href.startsWith("#")) {
+      setOpen(false);
+      return;
+    }
+    event.preventDefault();
+    onNavClick(item.id);
+  };
+
   const onBookCall = () => {
     setOpen(false);
     openBookingForm();
@@ -104,7 +117,11 @@ export function Header({ navItems, activeId, lang = "fr", onLangChange }) {
   return (
     <header className="header" role="banner">
       <div className="container header-inner">
-        <a className="logo" href="#top" onClick={(e) => (e.preventDefault(), scrollToId("top"))}>
+        <a className="logo" href="/" onClick={(event) => {
+          if (!document.getElementById("top")) return;
+          event.preventDefault();
+          scrollToId("top");
+        }}>
           <span className="logo-mark" aria-hidden="true">
             <span className="logo-mark-inner">
               <img
@@ -127,8 +144,8 @@ export function Header({ navItems, activeId, lang = "fr", onLangChange }) {
             return (
               <a
                 key={item.id}
-                href={`#${item.id}`}
-                onClick={(e) => (e.preventDefault(), onNavClick(item.id))}
+                href={item.href || `#${item.id}`}
+                onClick={(event) => onLinkClick(event, item)}
                 className={`nav-link ${isActive ? "is-active" : ""}`}
                 aria-current={isActive ? "true" : undefined}
               >
@@ -177,14 +194,14 @@ export function Header({ navItems, activeId, lang = "fr", onLangChange }) {
           </div>
           <div className="mobile-links">
             {navItems.map((item) => (
-              <button
+              <a
                 key={item.id}
                 className={`mobile-link ${item.id === activeId ? "is-active" : ""}`}
-                type="button"
-                onClick={() => onNavClick(item.id)}
+                href={item.href || `#${item.id}`}
+                onClick={(event) => onLinkClick(event, item)}
               >
                 {item.label}
-              </button>
+              </a>
             ))}
           </div>
           <div className="mobile-cta">

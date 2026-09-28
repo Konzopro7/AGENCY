@@ -14,7 +14,9 @@ import { ScrollToTop } from "./components/ScrollToTop.jsx";
 import { FloatingActions } from "./components/FloatingActions.jsx";
 import { CookieBanner } from "./components/CookieBanner.jsx";
 import { ContactAssistant } from "./components/ContactAssistant.jsx";
+import { ReviewsPage } from "./components/ReviewsPage.jsx";
 import { useScrollSpy } from "./hooks/useScrollSpy.js";
+import { usePageSeo } from "./hooks/usePageSeo.js";
 import { COOKIE_CONSENT, recordSessionVisit } from "./lib/analyticsStore.js";
 
 const LANG_KEY = "kt-lang";
@@ -66,6 +68,7 @@ function getInitialAdminMode() {
 export default function App() {
   const [lang, setLang] = useState(getInitialLang);
   const [isAdminMode] = useState(getInitialAdminMode);
+  const isReviewsPage = window.location.pathname.replace(/\/+$/, "") === "/avis";
 
   useEffect(() => {
     document.documentElement.lang = lang;
@@ -93,7 +96,7 @@ export default function App() {
         { id: "pricing", label: "Pricing" },
         ...(isAdminMode ? [{ id: "dashboard", label: "Dashboard" }] : []),
         { id: "realisations", label: "Work" },
-        { id: "avis", label: "Reviews" },
+        { id: "avis", label: "Reviews", href: "/avis" },
         { id: "faq", label: "FAQ" },
         { id: "contact", label: "Contact" }
       ];
@@ -104,7 +107,7 @@ export default function App() {
       { id: "pricing", label: "Tarification" },
       ...(isAdminMode ? [{ id: "dashboard", label: "Dashboard" }] : []),
       { id: "realisations", label: "Réalisations" },
-      { id: "avis", label: "Avis" },
+      { id: "avis", label: "Avis", href: "/avis" },
       { id: "faq", label: "FAQ" },
       { id: "contact", label: "Contact" }
     ];
@@ -113,6 +116,34 @@ export default function App() {
   const sectionIds = useMemo(() => navItems.map((i) => i.id), [navItems]);
 
   const activeSection = useScrollSpy(sectionIds, { rootMargin: "-45% 0px -50% 0px" });
+
+  const homeSeo = useMemo(() => ({
+    title: lang === "en" ? "KonzoTech Agency | High-performance websites and SEO" : "KonzoTech Agency | Sites Web performants et SEO à Montréal",
+    description: lang === "en"
+      ? "Montreal web agency specializing in business websites, e-commerce, web applications, SEO, performance and conversion."
+      : "Agence Web à Montréal spécialisée en sites vitrines, commerce électronique, applications Web, SEO, performance et conversion.",
+    schema: {
+      "@context": "https://schema.org", "@type": "ProfessionalService", name: "KonzoTech Agency",
+      url: "https://konzotechagency.com/", telephone: "+1-514-772-7758", email: "info@konzotechagency.com",
+      address: { "@type": "PostalAddress", addressLocality: "Montréal", addressRegion: "QC", addressCountry: "CA" },
+      areaServed: "Canada"
+    }
+  }), [lang]);
+  usePageSeo({ ...homeSeo, path: "/" });
+
+  const reviewsNavItems = useMemo(() => navItems.map((item) => item.id === "avis" ? item : { ...item, href: `/#${item.id}` }), [navItems]);
+
+  if (isReviewsPage) {
+    return (
+      <>
+        <Header navItems={reviewsNavItems} activeId="avis" lang={lang} onLangChange={setLang} />
+        <ReviewsPage lang={lang} />
+        <Footer navItems={reviewsNavItems} lang={lang} />
+        <CookieBanner lang={lang} />
+        <ScrollToTop lang={lang} />
+      </>
+    );
+  }
 
   return (
     <>
