@@ -44,10 +44,10 @@ export function ReviewsPage({ lang = "fr" }) {
 
   const schema = useMemo(() => ({
     "@context": "https://schema.org", "@type": "WebPage", name: seo.title,
-    url: "https://konzotechagency.com/avis", description: seo.description,
+    url: "https://konzotechagency.com/avis/", description: seo.description,
     isPartOf: { "@type": "WebSite", name: SITE.name, url: "https://konzotechagency.com/" }
   }), [seo]);
-  usePageSeo({ ...seo, path: "/avis", schema });
+  usePageSeo({ ...seo, path: "/avis/", schema });
 
   const update = (key) => (event) => {
     const value = event.target.type === "checkbox" ? event.target.checked : event.target.value;

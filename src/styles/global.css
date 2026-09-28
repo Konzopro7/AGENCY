@@ -2326,18 +2326,21 @@ html[data-theme="dark"] .modal-overlay {
   }
 }
 
-.reviews-page {
+.reviews-page,
+.indexed-page {
   min-height: 100vh;
   padding-top: 76px;
 }
 
-.reviews-hero {
+.reviews-hero,
+.indexed-page-hero {
   padding: 72px 0 54px;
   border-bottom: 1px solid var(--border);
   background: radial-gradient(circle at 80% 0%, rgba(18, 181, 190, 0.16), transparent 34%);
 }
 
-.reviews-hero-inner {
+.reviews-hero-inner,
+.indexed-page-hero-inner {
   max-width: 900px;
   text-align: center;
 }
@@ -2507,11 +2510,13 @@ html[data-theme="dark"] .modal-overlay {
 }
 
 @media (max-width: 820px) {
-  .reviews-page {
+  .reviews-page,
+  .indexed-page {
     padding-top: 68px;
   }
 
-  .reviews-hero {
+  .reviews-hero,
+  .indexed-page-hero {
     padding: 46px 0 38px;
   }
 
