@@ -97,7 +97,7 @@ export function Contact({ lang = "fr" }) {
           switchToMessage: "Send a message",
           call: "Book a call",
           name: "Name",
-          email: "Courriel",
+          email: "Email",
           phone: "Phone",
           date: "Preferred date",
           time: "Preferred time",

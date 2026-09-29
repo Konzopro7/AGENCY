@@ -34,7 +34,7 @@ export function Testimonials({ lang = "fr" }) {
           title: "Ils voulaient du premium. Ils ont eu du premium.",
           subtitle: "Des témoignages courts, orientés vers les résultats.",
           blockTitle: "Avis clients",
-          previous: "Avis precedent",
+          previous: "Avis précédent",
           next: "Avis suivant",
           dots: "Pagination",
           starsSuffix: "étoiles sur 5",
