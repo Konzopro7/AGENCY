@@ -113,7 +113,7 @@ jobs:
       - name: Deploy (FTP primary dir)
         id: deploy_ftp_primary
         continue-on-error: true
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FTP_HOST || secrets.FTP_SERVER || vars.FTP_HOST || vars.FTP_SERVER }}
           username: ${{ secrets.FTP_USER || secrets.FTP_USERNAME || vars.FTP_USER || vars.FTP_USERNAME }}
@@ -128,7 +128,7 @@ jobs:
         id: deploy_ftp_alt
         if: steps.deploy_ftp_primary.outcome == 'failure' && steps.ftp_dir.outputs.has_alt == 'true'
         continue-on-error: true
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FTP_HOST || secrets.FTP_SERVER || vars.FTP_HOST || vars.FTP_SERVER }}
           username: ${{ secrets.FTP_USER || secrets.FTP_USERNAME || vars.FTP_USER || vars.FTP_USERNAME }}
@@ -143,7 +143,7 @@ jobs:
         id: deploy_ftps_primary
         if: steps.deploy_ftp_primary.outcome == 'failure' && (steps.deploy_ftp_alt.outcome == 'failure' || steps.deploy_ftp_alt.outcome == 'skipped')
         continue-on-error: true
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FTP_HOST || secrets.FTP_SERVER || vars.FTP_HOST || vars.FTP_SERVER }}
           username: ${{ secrets.FTP_USER || secrets.FTP_USERNAME || vars.FTP_USER || vars.FTP_USERNAME }}
@@ -158,7 +158,7 @@ jobs:
         id: deploy_ftps_alt
         if: steps.deploy_ftps_primary.outcome == 'failure' && steps.ftp_dir.outputs.has_alt == 'true'
         continue-on-error: true
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FTP_HOST || secrets.FTP_SERVER || vars.FTP_HOST || vars.FTP_SERVER }}
           username: ${{ secrets.FTP_USER || secrets.FTP_USERNAME || vars.FTP_USER || vars.FTP_USERNAME }}
