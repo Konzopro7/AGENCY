@@ -16,6 +16,7 @@ import { CookieBanner } from "./components/CookieBanner.jsx";
 import { ContactAssistant } from "./components/ContactAssistant.jsx";
 import { ReviewsPage } from "./components/ReviewsPage.jsx";
 import { IndexedSectionPage } from "./components/IndexedSectionPage.jsx";
+import { ServiceDetailPage } from "./components/ServiceDetailPage.jsx";
 import { useScrollSpy } from "./hooks/useScrollSpy.js";
 import { usePageSeo } from "./hooks/usePageSeo.js";
 import { COOKIE_CONSENT, recordSessionVisit } from "./lib/analyticsStore.js";
@@ -29,6 +30,21 @@ const INDEXED_PAGES = {
     id: "services", component: Services,
     fr: { eyebrow: "Services", title: "Services Web, créatifs et techniques", metaTitle: "Services numériques et informatiques | KonzoTech Agency", description: "Création de sites Web, montage vidéo, affiches publicitaires, réparation et maintenance d’ordinateurs à Saint-Hippolyte, Montréal et partout dans le monde." },
     en: { eyebrow: "Services", title: "Web, creative and technical services", metaTitle: "Digital and Computer Services | KonzoTech Agency", description: "Website creation, video editing, advertising poster design, computer repair and maintenance from Quebec for clients worldwide." }
+  },
+  "/services/montage-video": {
+    id: "services", component: ServiceDetailPage, serviceKey: "montage-video",
+    fr: { eyebrow: "Montage vidéo", title: "Montage vidéo professionnel", metaTitle: "Montage vidéo professionnel au Québec | KonzoTech", description: "Montage vidéo pour réseaux sociaux, entreprises, promotions et événements à Saint-Hippolyte, Montréal et à distance partout dans le monde." },
+    en: { eyebrow: "Video editing", title: "Professional video editing", metaTitle: "Professional Video Editing in Quebec | KonzoTech", description: "Video editing for social media, businesses, promotions and events from Quebec, with remote service available worldwide." }
+  },
+  "/services/reparation-ordinateur": {
+    id: "services", component: ServiceDetailPage, serviceKey: "reparation-ordinateur",
+    fr: { eyebrow: "Assistance informatique", title: "Réparation et maintenance d’ordinateur", metaTitle: "Réparation d’ordinateur à Saint-Hippolyte | KonzoTech", description: "Diagnostic, dépannage, nettoyage et optimisation d’ordinateurs à Saint-Hippolyte et dans la région de Montréal. Service clair et adapté au problème." },
+    en: { eyebrow: "Computer support", title: "Computer repair and maintenance", metaTitle: "Computer Repair in Saint-Hippolyte | KonzoTech", description: "Computer diagnostics, troubleshooting, cleanup and optimization in Saint-Hippolyte and the Montreal area, with clear recommendations." }
+  },
+  "/services/creation-affiches-publicitaires": {
+    id: "services", component: ServiceDetailPage, serviceKey: "creation-affiches-publicitaires",
+    fr: { eyebrow: "Design graphique", title: "Création d’affiches publicitaires", metaTitle: "Création d’affiches publicitaires | KonzoTech", description: "Création d’affiches pour anniversaires, événements, annonces et promotions, dans des formats adaptés à l’impression, au Web et aux réseaux sociaux." },
+    en: { eyebrow: "Graphic design", title: "Advertising poster design", metaTitle: "Advertising Poster Design | KonzoTech", description: "Custom poster design for birthdays, events, announcements and promotions, prepared for print, the Web and social media." }
   },
   "/tarification": {
     id: "pricing", component: Pricing,
@@ -193,7 +209,7 @@ export default function App() {
       <>
         <Header navItems={navItems} activeId={indexedPage.id} lang={lang} onLangChange={setLang} />
         <IndexedSectionPage lang={lang} page={{ ...indexedPage, path: `${currentPath}/` }}>
-          <PageComponent lang={lang} />
+          <PageComponent lang={lang} serviceKey={indexedPage.serviceKey} />
         </IndexedSectionPage>
         <Footer navItems={navItems} lang={lang} />
         <CookieBanner lang={lang} />

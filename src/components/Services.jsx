@@ -60,10 +60,15 @@ export function Services({ lang = "fr" }) {
                       </ul>
                     </div>
                     <div className="service-foot">
-                      <button className="btn btn-sm btn-primary" type="button" onClick={() => scrollToId("contact")}>
-                        {copy.learnMore}
-                        <Icon name="arrow-right" size={16} />
-                      </button>
+                      {s.detailUrl ? (
+                        <a className="btn btn-sm btn-primary" href={s.detailUrl}>
+                          {copy.learnMore}<Icon name="arrow-right" size={16} />
+                        </a>
+                      ) : (
+                        <button className="btn btn-sm btn-primary" type="button" onClick={() => scrollToId("contact")}>
+                          {copy.learnMore}<Icon name="arrow-right" size={16} />
+                        </button>
+                      )}
                     </div>
                   </Reveal>
                 ))}

@@ -58,6 +58,7 @@
       items: [
         {
           id: "montage-video",
+          detailUrl: "/services/montage-video/",
           title: "Montage vidéo",
           description:
             "Montage professionnel pour les réseaux sociaux, entreprises, événements et contenus promotionnels, avec un rythme fluide et un rendu adapté à votre audience.",
@@ -66,6 +67,7 @@
         },
         {
           id: "reparation-ordinateur",
+          detailUrl: "/services/reparation-ordinateur/",
           title: "Réparation et maintenance d’ordinateur",
           description:
             "Diagnostic, dépannage et entretien d’ordinateurs pour corriger les problèmes courants, améliorer les performances et protéger vos données.",
@@ -80,6 +82,7 @@
       items: [
         {
           id: "affiches",
+          detailUrl: "/services/creation-affiches-publicitaires/",
           title: "Création d’affiches publicitaires",
           description:
             "Affiches personnalisées pour anniversaires, événements, annonces, promotions et campagnes, avec une composition claire et un visuel adapté à votre public.",
@@ -164,6 +167,7 @@
       items: [
         {
           id: "video-editing",
+          detailUrl: "/services/montage-video/",
           title: "Video editing",
           description:
             "Professional editing for social media, businesses, events and promotional content, with smooth pacing and a final cut tailored to your audience.",
@@ -172,6 +176,7 @@
         },
         {
           id: "computer-repair",
+          detailUrl: "/services/reparation-ordinateur/",
           title: "Computer repair and maintenance",
           description:
             "Computer diagnostics, troubleshooting and maintenance to resolve common issues, improve performance and help protect your data.",
@@ -186,6 +191,7 @@
       items: [
         {
           id: "affiches",
+          detailUrl: "/services/creation-affiches-publicitaires/",
           title: "Advertising poster design",
           description:
             "Custom posters for birthdays, events, announcements, promotions and campaigns, with a clear layout tailored to your audience.",

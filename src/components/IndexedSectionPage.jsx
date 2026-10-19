@@ -1,30 +1,46 @@
 import { useMemo } from "react";
 import { SITE } from "../config/site.js";
+import { SERVICE_DETAILS } from "../data/serviceDetails.js";
 import { usePageSeo } from "../hooks/usePageSeo.js";
 import { Icon } from "./icons.jsx";
 
 export function IndexedSectionPage({ lang = "fr", page, children }) {
   const content = page[lang] ?? page.fr;
-  const schema = useMemo(() => ({
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    name: content.title,
-    description: content.description,
-    url: `https://konzotechagency.com${page.path}`,
-    inLanguage: lang === "en" ? "en-CA" : "fr-CA",
-    isPartOf: {
-      "@type": "WebSite",
-      name: SITE.name,
-      url: "https://konzotechagency.com/"
-    },
-    breadcrumb: {
+  const schema = useMemo(() => {
+    const url = `https://konzotechagency.com${page.path}`;
+    const graph = [{
+      "@type": "WebPage",
+      "@id": `${url}#webpage`,
+      name: content.title,
+      description: content.description,
+      url,
+      inLanguage: lang === "en" ? "en-CA" : "fr-CA",
+      isPartOf: { "@type": "WebSite", name: SITE.name, url: "https://konzotechagency.com/" }
+    }, {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: lang === "en" ? "Home" : "Accueil", item: "https://konzotechagency.com/" },
-        { "@type": "ListItem", position: 2, name: content.eyebrow, item: `https://konzotechagency.com${page.path}` }
+        { "@type": "ListItem", position: 2, name: content.eyebrow, item: url }
       ]
+    }];
+
+    const service = SERVICE_DETAILS[page.serviceKey]?.[lang] ?? SERVICE_DETAILS[page.serviceKey]?.fr;
+    if (service) {
+      graph.push({
+        "@type": "Service", name: service.title, description: content.description, url,
+        provider: { "@type": "Organization", name: SITE.name, url: "https://konzotechagency.com/" },
+        areaServed: ["Saint-Hippolyte", "Montréal", "Québec", "Worldwide"]
+      });
+      graph.push({
+        "@type": "FAQPage",
+        mainEntity: service.faq.map(([question, answer]) => ({
+          "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer }
+        }))
+      });
     }
-  }), [content, lang, page.path]);
+
+    return { "@context": "https://schema.org", "@graph": graph };
+  }, [content, lang, page.path, page.serviceKey]);
 
   usePageSeo({
     title: content.metaTitle,

@@ -1,7 +1,13 @@
 import { access, readFile } from "node:fs/promises";
 import { join } from "node:path";
 
-const routes = ["services", "tarification", "realisations", "avis", "faq", "contact"];
+const routes = [
+  "services",
+  "services/montage-video",
+  "services/reparation-ordinateur",
+  "services/creation-affiches-publicitaires",
+  "tarification", "realisations", "avis", "faq", "contact"
+];
 const expectedUrls = ["https://konzotechagency.com/", ...routes.map((route) => `https://konzotechagency.com/${route}/`)];
 const errors = [];
 

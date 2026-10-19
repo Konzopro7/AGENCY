@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import { SERVICE_DETAILS } from "../src/data/serviceDetails.js";
 
 const baseUrl = "https://konzotechagency.com";
 const pages = [
@@ -62,6 +63,39 @@ const pages = [
   }
 ];
 
+const serviceLandingPages = [
+  {
+    path: "/services/montage-video", serviceKey: "montage-video",
+    title: "Montage vidéo professionnel au Québec | KonzoTech",
+    description: "Montage vidéo pour réseaux sociaux, entreprises, promotions et événements à Saint-Hippolyte, Montréal et à distance partout dans le monde."
+  },
+  {
+    path: "/services/reparation-ordinateur", serviceKey: "reparation-ordinateur",
+    title: "Réparation d’ordinateur à Saint-Hippolyte | KonzoTech",
+    description: "Diagnostic, dépannage, nettoyage et optimisation d’ordinateurs à Saint-Hippolyte et dans la région de Montréal. Service clair et adapté au problème."
+  },
+  {
+    path: "/services/creation-affiches-publicitaires", serviceKey: "creation-affiches-publicitaires",
+    title: "Création d’affiches publicitaires | KonzoTech",
+    description: "Création d’affiches pour anniversaires, événements, annonces et promotions, dans des formats adaptés à l’impression, au Web et aux réseaux sociaux."
+  }
+];
+
+pages.push(...serviceLandingPages.map((page) => {
+  const service = SERVICE_DETAILS[page.serviceKey].fr;
+  return {
+    ...page,
+    heading: service.title,
+    service,
+    sections: [
+      ["À qui s’adresse ce service", service.audience],
+      ["Ce qui peut être inclus", service.deliverables.join("; ")],
+      ["Comment ça fonctionne", service.process.join("; ")],
+      ...service.faq
+    ]
+  };
+}));
+
 const navigation = [
   ["Services", "/services/"], ["Tarification", "/tarification/"], ["Réalisations", "/realisations/"],
   ["Avis", "/avis/"], ["FAQ", "/faq/"], ["Contact", "/contact/"]
@@ -105,6 +139,19 @@ for (const page of pages) {
       itemListElement: page.sections.map(([name, description], index) => ({
         "@type": "ListItem", position: index + 1,
         item: { "@type": "Service", name, description, provider: { "@id": `${baseUrl}/#organization` }, areaServed: "Worldwide" }
+      }))
+    });
+  }
+  if (page.service) {
+    graph.push({
+      "@type": "Service", name: page.service.title, description: page.description, url: canonical,
+      provider: { "@id": `${baseUrl}/#organization` },
+      areaServed: ["Saint-Hippolyte", "Montréal", "Québec", "Worldwide"]
+    });
+    graph.push({
+      "@type": "FAQPage",
+      mainEntity: page.service.faq.map(([question, answer]) => ({
+        "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer }
       }))
     });
   }
