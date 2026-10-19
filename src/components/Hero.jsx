@@ -22,6 +22,7 @@ export function Hero({ lang = "fr" }) {
           titleStart: "Modern, fast and profitable",
           titleAccent: "websites",
           subtitle: "We build business websites, e-commerce stores and web apps that convert.",
+          serviceArea: "Based in Saint-Hippolyte, Quebec, near Montreal — serving clients worldwide.",
           quote: "Get a quote",
           portfolio: "See our work",
           call: "Book a call",
@@ -43,6 +44,7 @@ export function Hero({ lang = "fr" }) {
           titleStart: "Sites web",
           titleAccent: "modernes, rapides et rentables",
           subtitle: "Nous créons des sites vitrines, des boutiques e-commerce et des applications web qui convertissent.",
+          serviceArea: "Établie à Saint-Hippolyte, Québec, près de Montréal — services offerts partout dans le monde.",
           quote: "Demander un devis",
           portfolio: "Voir nos réalisations",
           call: "Réserver un appel",
@@ -82,6 +84,7 @@ export function Hero({ lang = "fr" }) {
             {copy.titleStart} <span className="grad-text">{copy.titleAccent}</span>.
           </h1>
           <p className="hero-sub">{copy.subtitle}</p>
+          <p className="hero-service-area"><Icon name="globe" size={17} /> {copy.serviceArea}</p>
 
           <div className="hero-cta">
             <button className="btn btn-primary" type="button" onClick={onQuote}>

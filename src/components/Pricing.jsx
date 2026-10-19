@@ -1,6 +1,7 @@
 ﻿import { PRICING_SECTIONS_BY_LANG } from "../data/pricing.js";
 import { Icon } from "./icons.jsx";
 import { Reveal } from "./Reveal.jsx";
+import { useLocalizedCurrency } from "../hooks/useLocalizedCurrency.js";
 
 function scrollToId(id) {
   const el = document.getElementById(id);
@@ -17,6 +18,7 @@ export function Pricing({ lang = "fr" }) {
           title: "Clear packages built to scale",
           subtitle: "Plans aligned with your growth stage, from starter website to custom platform.",
           installments: "Installment payment options are available. The payment schedule is agreed upon before the project starts.",
+          localized: (currency) => `Prices shown in ${currency}, automatically adapted to your country. Final pricing is confirmed in your quote.`,
           mostSelected: "Best seller"
         }
       : {
@@ -25,10 +27,12 @@ export function Pricing({ lang = "fr" }) {
           title: "Des forfaits clairs et évolutifs",
           subtitle: "Des offres alignées sur votre stade de croissance, du site vitrine à la plateforme sur mesure.",
           installments: "Le paiement en plusieurs versements est disponible. L’échéancier est convenu avant le début du projet.",
+          localized: (currency) => `Prix affichés en ${currency}, adaptés automatiquement à votre pays. Le montant final est confirmé dans votre devis.`,
           mostSelected: "Le plus populaire"
         };
 
-  const sections = PRICING_SECTIONS_BY_LANG[lang] ?? PRICING_SECTIONS_BY_LANG.fr;
+  const baseSections = PRICING_SECTIONS_BY_LANG[lang] ?? PRICING_SECTIONS_BY_LANG.fr;
+  const { sections, currency } = useLocalizedCurrency(baseSections, lang);
 
   return (
     <section id="pricing" className="section" aria-label={copy.aria}>
@@ -89,6 +93,7 @@ export function Pricing({ lang = "fr" }) {
           <Icon name="check" size={18} />
           <span>{copy.installments}</span>
         </div>
+        <p className="pricing-localization-note">{copy.localized(currency)}</p>
       </div>
     </section>
   );

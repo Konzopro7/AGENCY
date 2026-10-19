@@ -689,6 +689,20 @@ html[data-theme="dark"] .logo-img {
   max-width: 62ch;
 }
 
+.hero-service-area {
+  margin: 10px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.hero-service-area svg {
+  flex: 0 0 auto;
+  color: var(--accent);
+}
+
 .hero-cta {
   display: flex;
   flex-wrap: wrap;
@@ -2353,6 +2367,13 @@ html[data-theme="dark"] .modal-overlay {
   flex: 0 0 auto;
   margin-top: 2px;
   color: var(--accent);
+}
+
+.pricing-localization-note {
+  margin: 12px auto 0;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
 }
 
 .btn-block {

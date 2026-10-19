@@ -4,7 +4,9 @@ export const SITE = {
   email: "info@konzotechagency.com",
   supportEmail: "support@konzotechagency.com",
   phoneDisplay: "514-772-7758",
-  phoneE164: "+15147727758"
+  phoneE164: "+15147727758",
+  location: "Saint-Hippolyte, Québec, Canada",
+  serviceArea: "Worldwide"
 };
 
 export const CONTACT = {

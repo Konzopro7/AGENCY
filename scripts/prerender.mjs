@@ -5,7 +5,7 @@ const baseUrl = "https://konzotechagency.com";
 const pages = [
   {
     path: "/services", title: "Services Web à Montréal | KonzoTech Agency", heading: "Services Web pour développer votre entreprise",
-    description: "Création de sites vitrines, boutiques en ligne, applications Web, optimisation SEO et maintenance pour les entreprises de Montréal et du Canada.",
+    description: "Création de sites vitrines, boutiques en ligne, applications Web, optimisation SEO et maintenance à Saint-Hippolyte, Montréal et partout dans le monde.",
     sections: [
       ["Création de sites Web", "Sites vitrines rapides, accessibles et adaptés aux mobiles pour présenter votre offre et convertir vos visiteurs."],
       ["Commerce électronique", "Boutiques en ligne structurées pour vendre, avec paiements, produits, livraison, taxes et optimisation du parcours d’achat."],
@@ -68,7 +68,8 @@ const organization = {
   "@type": "Organization", "@id": `${baseUrl}/#organization`, name: "KonzoTech Agency",
   url: `${baseUrl}/`, logo: `${baseUrl}/logo.svg`, email: "info@konzotechagency.com", telephone: "+1-514-772-7758",
   sameAs: ["https://www.facebook.com/konzotechagency", "https://www.instagram.com/konzotechagency"],
-  areaServed: [{ "@type": "City", name: "Montréal" }, { "@type": "Country", name: "Canada" }]
+  address: { "@type": "PostalAddress", addressLocality: "Saint-Hippolyte", addressRegion: "Québec", addressCountry: "CA" },
+  areaServed: [{ "@type": "City", name: "Saint-Hippolyte" }, { "@type": "City", name: "Montréal" }, { "@type": "Place", name: "Worldwide" }]
 };
 
 const faqEntities = pages.find((page) => page.path === "/faq").sections.map(([question, answer]) => ({
@@ -100,7 +101,7 @@ for (const page of pages) {
       "@type": "ItemList", name: "Services Web de KonzoTech Agency",
       itemListElement: page.sections.map(([name, description], index) => ({
         "@type": "ListItem", position: index + 1,
-        item: { "@type": "Service", name, description, provider: { "@id": `${baseUrl}/#organization` }, areaServed: "Canada" }
+        item: { "@type": "Service", name, description, provider: { "@id": `${baseUrl}/#organization` }, areaServed: "Worldwide" }
       }))
     });
   }
@@ -109,7 +110,7 @@ for (const page of pages) {
   const schema = JSON.stringify({ "@context": "https://schema.org", "@graph": graph });
   const pageNavigation = navigation.map(([label, href]) => `<a href="${href}">${label}</a>`).join("");
   const pageSections = page.sections.map(([heading, text]) => `<section><h2>${heading}</h2><p>${text}</p></section>`).join("");
-  const prerenderedContent = `<main class="seo-prerender" aria-label="Contenu principal"><nav aria-label="Pages principales"><a href="/">Accueil</a>${pageNavigation}</nav><article><p class="seo-prerender-kicker">KonzoTech Agency · Montréal, Canada</p><h1>${page.heading}</h1><p>${page.description}</p>${pageSections}<p><a href="/contact/">Discuter de votre projet avec notre agence Web</a></p></article></main>`;
+  const prerenderedContent = `<main class="seo-prerender" aria-label="Contenu principal"><nav aria-label="Pages principales"><a href="/">Accueil</a>${pageNavigation}</nav><article><p class="seo-prerender-kicker">KonzoTech Agency · Saint-Hippolyte, Québec · Montréal · International</p><h1>${page.heading}</h1><p>${page.description}</p>${pageSections}<p><a href="/contact/">Discuter de votre projet avec notre agence Web</a></p></article></main>`;
 
   const html = template
     .replace(/<title>[^<]*<\/title>/, `<title>${page.title}</title>`)

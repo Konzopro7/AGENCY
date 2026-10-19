@@ -27,8 +27,8 @@ const ADMIN_TOKEN = String(import.meta.env.VITE_ADMIN_DASHBOARD_TOKEN || "").tri
 const INDEXED_PAGES = {
   "/services": {
     id: "services", component: Services,
-    fr: { eyebrow: "Services", title: "Services Web pour développer votre entreprise", metaTitle: "Services Web à Montréal | KonzoTech Agency", description: "Création de sites vitrines, boutiques en ligne, applications Web, optimisation SEO et maintenance pour les entreprises de Montréal et du Canada." },
-    en: { eyebrow: "Services", title: "Web services built to grow your business", metaTitle: "Web Services in Montreal | KonzoTech Agency", description: "Business websites, online stores, web applications, SEO optimization and maintenance for companies in Montreal and across Canada." }
+    fr: { eyebrow: "Services", title: "Services Web pour développer votre entreprise", metaTitle: "Services Web à Saint-Hippolyte et Montréal | KonzoTech Agency", description: "Création de sites vitrines, boutiques en ligne, applications Web, optimisation SEO et maintenance à Saint-Hippolyte, Montréal et partout dans le monde." },
+    en: { eyebrow: "Services", title: "Worldwide Web Services | KonzoTech Agency", metaTitle: "Web Services in Quebec and Worldwide | KonzoTech Agency", description: "Business websites, online stores, web applications, SEO optimization and maintenance from Quebec for clients worldwide." }
   },
   "/tarification": {
     id: "pricing", component: Pricing,
@@ -151,8 +151,8 @@ export default function App() {
   const homeSeo = useMemo(() => ({
     title: lang === "en" ? "KonzoTech Agency | High-performance websites and SEO" : "KonzoTech Agency | Sites Web performants et SEO à Montréal",
     description: lang === "en"
-      ? "Montreal web agency specializing in business websites, e-commerce, web applications, SEO, performance and conversion."
-      : "Agence Web à Montréal spécialisée en sites vitrines, commerce électronique, applications Web, SEO, performance et conversion.",
+      ? "Web agency based in Saint-Hippolyte, Quebec, near Montreal, serving clients worldwide with websites, e-commerce, SEO and web applications."
+      : "Agence Web établie à Saint-Hippolyte, Québec, près de Montréal, offrant partout dans le monde des sites Web, boutiques en ligne, services SEO et applications.",
     schema: {
       "@context": "https://schema.org",
       "@graph": [
@@ -161,7 +161,8 @@ export default function App() {
           url: "https://konzotechagency.com/", logo: "https://konzotechagency.com/logo.svg",
           telephone: "+1-514-772-7758", email: "info@konzotechagency.com",
           sameAs: ["https://www.facebook.com/konzotechagency", "https://www.instagram.com/konzotechagency"],
-          areaServed: [{ "@type": "City", name: "Montréal" }, { "@type": "Country", name: "Canada" }],
+          address: { "@type": "PostalAddress", addressLocality: "Saint-Hippolyte", addressRegion: "Québec", addressCountry: "CA" },
+          areaServed: [{ "@type": "City", name: "Saint-Hippolyte" }, { "@type": "City", name: "Montréal" }, { "@type": "Place", name: "Worldwide" }],
           knowsAbout: ["Création de sites Web", "Commerce électronique", "Applications Web", "SEO", "Performance Web", "Maintenance Web"]
         },
         {
