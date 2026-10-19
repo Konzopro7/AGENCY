@@ -18,6 +18,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://konzotechagency.com/" />
     <meta property="og:locale" content="fr_CA" />
+    <meta property="og:locale:alternate" content="en_CA" />
     <meta property="og:title" content="KonzoTech Agency | Sites Web performants et SEO à Montréal" />
     <meta
       property="og:description"
@@ -26,6 +27,7 @@
     <meta property="og:image" content="https://konzotechagency.com/og.svg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="KonzoTech Agency — création de sites Web, SEO et performance" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="KonzoTech Agency" />
@@ -34,16 +36,38 @@
       content="Sites web modernes, rapides et rentables. Design premium, performance et SEO."
     />
     <meta name="twitter:image" content="https://konzotechagency.com/og.svg" />
+    <meta name="twitter:image:alt" content="KonzoTech Agency — création de sites Web, SEO et performance" />
+    <meta name="author" content="KonzoTech Agency" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "KonzoTech Agency",
-        "url": "https://konzotechagency.com/",
-        "inLanguage": ["fr-CA", "en-CA"]
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://konzotechagency.com/#website",
+            "name": "KonzoTech Agency",
+            "alternateName": "KonzoTech",
+            "url": "https://konzotechagency.com/",
+            "inLanguage": ["fr-CA", "en-CA"],
+            "publisher": { "@id": "https://konzotechagency.com/#organization" }
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://konzotechagency.com/#organization",
+            "name": "KonzoTech Agency",
+            "url": "https://konzotechagency.com/",
+            "logo": "https://konzotechagency.com/logo.svg",
+            "email": "info@konzotechagency.com",
+            "telephone": "+1-514-772-7758",
+            "sameAs": [
+              "https://www.facebook.com/konzotechagency",
+              "https://www.instagram.com/konzotechagency"
+            ]
+          }
+        ]
       }
     </script>
 
@@ -68,7 +92,27 @@
   </head>
   <body>
     <a class="skip-link" href="#main">Aller au contenu</a>
-    <div id="root"></div>
+    <div id="root">
+      <main class="seo-prerender" aria-label="Contenu principal">
+        <nav aria-label="Pages principales">
+          <a href="/services/">Services</a>
+          <a href="/tarification/">Tarification</a>
+          <a href="/realisations/">Réalisations</a>
+          <a href="/avis/">Avis</a>
+          <a href="/faq/">FAQ</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+        <article>
+          <p class="seo-prerender-kicker">KonzoTech Agency · Montréal, Canada</p>
+          <h1>Agence Web à Montréal : sites performants, SEO et conversion</h1>
+          <p>Nous créons des sites vitrines, boutiques en ligne et applications Web modernes pour les entreprises de Montréal et du Canada.</p>
+          <section><h2>Création de sites Web professionnels</h2><p>Design adaptatif, expérience utilisateur claire, performance mobile et structure prête pour le référencement naturel.</p></section>
+          <section><h2>SEO et croissance numérique</h2><p>Optimisation technique, contenu, vitesse et données structurées pour améliorer la visibilité et attirer une audience qualifiée.</p></section>
+          <section><h2>Maintenance et accompagnement</h2><p>Sécurité, sauvegardes, mises à jour et support pour conserver un site fiable après sa mise en ligne.</p></section>
+          <p><a href="/contact/">Parler de votre projet avec KonzoTech Agency</a></p>
+        </article>
+      </main>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

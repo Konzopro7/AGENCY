@@ -154,10 +154,22 @@ export default function App() {
       ? "Montreal web agency specializing in business websites, e-commerce, web applications, SEO, performance and conversion."
       : "Agence Web à Montréal spécialisée en sites vitrines, commerce électronique, applications Web, SEO, performance et conversion.",
     schema: {
-      "@context": "https://schema.org", "@type": "ProfessionalService", name: "KonzoTech Agency",
-      url: "https://konzotechagency.com/", telephone: "+1-514-772-7758", email: "info@konzotechagency.com",
-      address: { "@type": "PostalAddress", addressLocality: "Montréal", addressRegion: "QC", addressCountry: "CA" },
-      areaServed: "Canada"
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization", "@id": "https://konzotechagency.com/#organization", name: "KonzoTech Agency",
+          url: "https://konzotechagency.com/", logo: "https://konzotechagency.com/logo.svg",
+          telephone: "+1-514-772-7758", email: "info@konzotechagency.com",
+          sameAs: ["https://www.facebook.com/konzotechagency", "https://www.instagram.com/konzotechagency"],
+          areaServed: [{ "@type": "City", name: "Montréal" }, { "@type": "Country", name: "Canada" }],
+          knowsAbout: ["Création de sites Web", "Commerce électronique", "Applications Web", "SEO", "Performance Web", "Maintenance Web"]
+        },
+        {
+          "@type": "WebSite", "@id": "https://konzotechagency.com/#website", name: "KonzoTech Agency",
+          alternateName: "KonzoTech", url: "https://konzotechagency.com/", inLanguage: ["fr-CA", "en-CA"],
+          publisher: { "@id": "https://konzotechagency.com/#organization" }
+        }
+      ]
     }
   }), [lang]);
   usePageSeo({ ...homeSeo, path: "/" });

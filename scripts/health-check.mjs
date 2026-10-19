@@ -22,6 +22,11 @@ for (const url of expectedUrls) {
   report(sitemap.includes(`<loc>${url}</loc>`), `Sitemap is missing: ${url}`);
 }
 
+const homeHtml = await readFile("dist/index.html", "utf8");
+report(/<h1>[^<]{20,}<\/h1>/.test(homeHtml), "Home: missing prerendered H1");
+report(homeHtml.includes('href="/services/"'), "Home: missing crawlable service link");
+report(homeHtml.includes('"@type": "Organization"'), "Home: missing Organization structured data");
+
 for (const route of routes) {
   const file = join("dist", route, "index.html");
   try {
@@ -32,6 +37,8 @@ for (const route of routes) {
     report(html.includes(`<link rel="canonical" href="${canonical}"`), `${route}: invalid canonical URL`);
     report(html.includes('name="robots" content="index,follow"'), `${route}: page is not indexable`);
     report(html.includes('type="application/ld+json"'), `${route}: missing structured data`);
+    report(/<h1>[^<]{15,}<\/h1>/.test(html), `${route}: missing prerendered H1`);
+    report(html.includes('href="/contact/"'), `${route}: missing crawlable internal link`);
   } catch {
     errors.push(`${route}: prerendered page is missing`);
   }
