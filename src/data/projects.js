@@ -1,6 +1,17 @@
 ﻿export const PROJECTS_BY_LANG = {
   fr: [
     {
+      id: "patricia-lanctot",
+      title: "Patricia Lanctot",
+      category: "Vitrine",
+      url: "https://patricialanctot.com/",
+      objective: "Présenter clairement des services de comptabilité et de fiscalité tout en facilitant la prise de contact.",
+      stack: ["Site vitrine", "UI/UX", "Responsive", "SEO local", "Performance"],
+      result: "Site professionnel mis en ligne, adapté aux appareils mobiles et structuré pour rejoindre une clientèle au Québec, au Canada et à l’international.",
+      highlight: "Comptabilité et fiscalité (cliente réelle)",
+      year: "En ligne"
+    },
+    {
       id: "kinoushstore",
       title: "Kinoush Store",
       category: "E-commerce",
@@ -13,6 +24,17 @@
     }
   ],
   en: [
+    {
+      id: "patricia-lanctot",
+      title: "Patricia Lanctot",
+      category: "Showcase",
+      url: "https://patricialanctot.com/",
+      objective: "Clearly present accounting and tax services while making it easy for prospective clients to get in touch.",
+      stack: ["Showcase website", "UI/UX", "Responsive", "Local SEO", "Performance"],
+      result: "A professional, mobile-friendly website structured to reach clients in Quebec, Canada and internationally.",
+      highlight: "Accounting and taxation (real client)",
+      year: "Live"
+    },
     {
       id: "kinoushstore",
       title: "Kinoush Store",
