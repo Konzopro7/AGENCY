@@ -96,11 +96,38 @@ function getKnowledgeReply(rawMessage, lang) {
     };
   }
 
+  if (includesAny(message, ["montage video", "vidéo", "video", "reel", "tiktok", "youtube", "editing"])) {
+    return {
+      text: en
+        ? "We edit videos for social media, businesses, events and promotions. The service can include footage selection, clean cuts, transitions, titles, captions, music, audio optimization and delivery in platform-ready formats. Pricing depends on duration, footage volume and editing complexity."
+        : "Nous réalisons le montage de vidéos pour les réseaux sociaux, entreprises, événements et promotions. Le service peut comprendre le tri des séquences, les coupes, transitions, titres, sous-titres, la musique, l’optimisation audio et la livraison dans les bons formats. Le prix dépend de la durée, du volume de séquences et de la complexité.",
+      actions: en ? ["Get a quote", "Services"] : ["Obtenir un devis", "Services"]
+    };
+  }
+
+  if (includesAny(message, ["ordinateur", "computer", "pc", "laptop", "réparation", "reparation", "dépannage", "depannage"])) {
+    return {
+      text: en
+        ? "We provide computer diagnostics, troubleshooting and maintenance, including cleanup, performance optimization, software installation, updates, backup guidance and common hardware or software issue resolution. A diagnosis is completed before any major repair."
+        : "Nous proposons le diagnostic, le dépannage et la maintenance d’ordinateurs : nettoyage, optimisation des performances, installation de logiciels, mises à jour, conseils de sauvegarde et résolution des problèmes matériels ou logiciels courants. Un diagnostic est effectué avant toute réparation importante.",
+      actions: en ? ["Request a diagnosis", "Contact"] : ["Demander un diagnostic", "Contact"]
+    };
+  }
+
+  if (includesAny(message, ["affiche", "flyer", "anniversaire", "événement", "evenement", "annonce", "poster", "birthday"])) {
+    return {
+      text: en
+        ? "We create custom advertising posters for birthdays, events, announcements, promotions and campaigns. Deliverables can include print-ready, web and social media formats, with a high-resolution final file."
+        : "Nous créons des affiches publicitaires personnalisées pour les anniversaires, événements, annonces, promotions et campagnes. La livraison peut comprendre les formats pour impression, Web et réseaux sociaux, avec un fichier final en haute résolution.",
+      actions: en ? ["Get a quote", "Services"] : ["Obtenir un devis", "Services"]
+    };
+  }
+
   if (includesAny(message, ["service", "faites vous", "proposez", "offre", "what do you do", "services"])) {
     return {
       text: en
-        ? "KonzoTech creates business websites, e-commerce stores, custom web apps and logos. We also provide redesigns, SEO, performance optimization, hosting, maintenance and advertising visuals."
-        : "KonzoTech crée des sites vitrines, boutiques e-commerce, applications web sur mesure et logos. Nous proposons aussi la refonte, le SEO, l’optimisation des performances, l’hébergement, la maintenance et les visuels publicitaires.",
+        ? "KonzoTech creates business websites, e-commerce stores, custom web apps, logos and advertising posters. We also provide video editing, computer repair and maintenance, redesigns, SEO, hosting and website maintenance."
+        : "KonzoTech crée des sites vitrines, boutiques e-commerce, applications Web, logos et affiches publicitaires. Nous proposons aussi le montage vidéo, la réparation et la maintenance d’ordinateurs, la refonte, le SEO, l’hébergement et la maintenance de sites.",
       actions: en ? ["Business website", "E-commerce", "SEO"] : ["Site vitrine", "E-commerce", "SEO"]
     };
   }

@@ -4,12 +4,15 @@ import { join } from "node:path";
 const baseUrl = "https://konzotechagency.com";
 const pages = [
   {
-    path: "/services", title: "Services Web à Montréal | KonzoTech Agency", heading: "Services Web pour développer votre entreprise",
-    description: "Création de sites vitrines, boutiques en ligne, applications Web, optimisation SEO et maintenance à Saint-Hippolyte, Montréal et partout dans le monde.",
+    path: "/services", title: "Services numériques et informatiques | KonzoTech Agency", heading: "Services Web, créatifs et techniques",
+    description: "Création de sites Web, montage vidéo, affiches publicitaires, réparation et maintenance d’ordinateurs à Saint-Hippolyte, Montréal et partout dans le monde.",
     sections: [
       ["Création de sites Web", "Sites vitrines rapides, accessibles et adaptés aux mobiles pour présenter votre offre et convertir vos visiteurs."],
       ["Commerce électronique", "Boutiques en ligne structurées pour vendre, avec paiements, produits, livraison, taxes et optimisation du parcours d’achat."],
-      ["SEO, performance et maintenance", "Optimisation technique, contenu, vitesse, sécurité, sauvegardes et accompagnement après la mise en ligne."]
+      ["SEO, performance et maintenance", "Optimisation technique, contenu, vitesse, sécurité, sauvegardes et accompagnement après la mise en ligne."],
+      ["Montage vidéo", "Montage pour réseaux sociaux, entreprises, événements et promotions avec titres, sous-titres, musique et formats adaptés."],
+      ["Réparation et maintenance d’ordinateurs", "Diagnostic matériel et logiciel, dépannage, nettoyage, optimisation, mises à jour et conseils de sauvegarde."],
+      ["Création d’affiches publicitaires", "Affiches personnalisées pour anniversaires, événements, annonces et promotions, prêtes pour impression et diffusion numérique."]
     ]
   },
   {

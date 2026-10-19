@@ -13,16 +13,16 @@ export function Services({ lang = "fr" }) {
     lang === "en"
       ? {
           eyebrow: "Services",
-          title: "Everything you need to convert",
+          title: "Digital, creative and technical expertise",
           subtitle:
-            "Clean execution, fast delivery and premium design that builds trust. Goal: turn visitors into customers.",
+            "Website creation, visual content, video editing and computer support delivered with care, clarity and reliability.",
           learnMore: "Learn more"
         }
       : {
           eyebrow: "Services",
-          title: "Tout ce qu’il faut pour convertir",
+          title: "Expertise numérique, créative et technique",
           subtitle:
-            "Une exécution propre et rapide, ainsi qu’un design premium qui rassure. Objectif : transformer les visiteurs en clients.",
+            "Création Web, contenus visuels, montage vidéo et assistance informatique, avec un accompagnement clair, soigné et fiable.",
           learnMore: "En savoir plus"
         };
 

@@ -53,15 +53,37 @@
       ]
     },
     {
+      id: "multimedia-support",
+      title: "Multimédia et assistance technique",
+      items: [
+        {
+          id: "montage-video",
+          title: "Montage vidéo",
+          description:
+            "Montage professionnel pour les réseaux sociaux, entreprises, événements et contenus promotionnels, avec un rythme fluide et un rendu adapté à votre audience.",
+          points: ["Tri et assemblage des séquences", "Transitions, titres et sous-titres", "Musique et optimisation audio", "Formats Web et réseaux sociaux"],
+          icon: "wand"
+        },
+        {
+          id: "reparation-ordinateur",
+          title: "Réparation et maintenance d’ordinateur",
+          description:
+            "Diagnostic, dépannage et entretien d’ordinateurs pour corriger les problèmes courants, améliorer les performances et protéger vos données.",
+          points: ["Diagnostic matériel et logiciel", "Nettoyage et optimisation", "Installation et mises à jour", "Sauvegarde et conseils de sécurité"],
+          icon: "shield"
+        }
+      ]
+    },
+    {
       id: "marketing",
       title: "Marketing",
       items: [
         {
           id: "affiches",
-          title: "Affiche publicitaire",
+          title: "Création d’affiches publicitaires",
           description:
-            "Affiches et visuels pour vos campagnes et événements, avec un message clair et percutant.",
-          points: ["Formats imprimés et Web", "Déclinaisons", "Prêt à imprimer", "Livraison rapide"],
+            "Affiches personnalisées pour anniversaires, événements, annonces, promotions et campagnes, avec une composition claire et un visuel adapté à votre public.",
+          points: ["Anniversaires et événements", "Annonces et promotions", "Formats imprimés et numériques", "Fichier haute résolution prêt à diffuser"],
           icon: "wand"
         },
         {
@@ -137,15 +159,37 @@
       ]
     },
     {
+      id: "multimedia-support",
+      title: "Multimedia and technical support",
+      items: [
+        {
+          id: "video-editing",
+          title: "Video editing",
+          description:
+            "Professional editing for social media, businesses, events and promotional content, with smooth pacing and a final cut tailored to your audience.",
+          points: ["Footage selection and assembly", "Transitions, titles and captions", "Music and audio optimization", "Web and social media formats"],
+          icon: "wand"
+        },
+        {
+          id: "computer-repair",
+          title: "Computer repair and maintenance",
+          description:
+            "Computer diagnostics, troubleshooting and maintenance to resolve common issues, improve performance and help protect your data.",
+          points: ["Hardware and software diagnostics", "Cleanup and optimization", "Installation and updates", "Backup and security guidance"],
+          icon: "shield"
+        }
+      ]
+    },
+    {
       id: "marketing",
       title: "Marketing",
       items: [
         {
           id: "affiches",
-          title: "Advertising posters",
+          title: "Advertising poster design",
           description:
-            "Posters and visuals for campaigns and events with clear hierarchy and strong messaging.",
-          points: ["Print and web formats", "Adaptations", "Print ready", "Fast delivery"],
+            "Custom posters for birthdays, events, announcements, promotions and campaigns, with a clear layout tailored to your audience.",
+          points: ["Birthdays and events", "Announcements and promotions", "Print and digital formats", "High-resolution ready-to-publish file"],
           icon: "wand"
         },
         {

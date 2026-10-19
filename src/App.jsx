@@ -27,8 +27,8 @@ const ADMIN_TOKEN = String(import.meta.env.VITE_ADMIN_DASHBOARD_TOKEN || "").tri
 const INDEXED_PAGES = {
   "/services": {
     id: "services", component: Services,
-    fr: { eyebrow: "Services", title: "Services Web pour développer votre entreprise", metaTitle: "Services Web à Saint-Hippolyte et Montréal | KonzoTech Agency", description: "Création de sites vitrines, boutiques en ligne, applications Web, optimisation SEO et maintenance à Saint-Hippolyte, Montréal et partout dans le monde." },
-    en: { eyebrow: "Services", title: "Worldwide Web Services | KonzoTech Agency", metaTitle: "Web Services in Quebec and Worldwide | KonzoTech Agency", description: "Business websites, online stores, web applications, SEO optimization and maintenance from Quebec for clients worldwide." }
+    fr: { eyebrow: "Services", title: "Services Web, créatifs et techniques", metaTitle: "Services numériques et informatiques | KonzoTech Agency", description: "Création de sites Web, montage vidéo, affiches publicitaires, réparation et maintenance d’ordinateurs à Saint-Hippolyte, Montréal et partout dans le monde." },
+    en: { eyebrow: "Services", title: "Web, creative and technical services", metaTitle: "Digital and Computer Services | KonzoTech Agency", description: "Website creation, video editing, advertising poster design, computer repair and maintenance from Quebec for clients worldwide." }
   },
   "/tarification": {
     id: "pricing", component: Pricing,
@@ -163,7 +163,7 @@ export default function App() {
           sameAs: ["https://www.facebook.com/konzotechagency", "https://www.instagram.com/konzotechagency"],
           address: { "@type": "PostalAddress", addressLocality: "Saint-Hippolyte", addressRegion: "Québec", addressCountry: "CA" },
           areaServed: [{ "@type": "City", name: "Saint-Hippolyte" }, { "@type": "City", name: "Montréal" }, { "@type": "Place", name: "Worldwide" }],
-          knowsAbout: ["Création de sites Web", "Commerce électronique", "Applications Web", "SEO", "Performance Web", "Maintenance Web"]
+          knowsAbout: ["Création de sites Web", "Commerce électronique", "Applications Web", "SEO", "Performance Web", "Maintenance Web", "Montage vidéo", "Création d’affiches publicitaires", "Réparation et maintenance d’ordinateurs"]
         },
         {
           "@type": "WebSite", "@id": "https://konzotechagency.com/#website", name: "KonzoTech Agency",

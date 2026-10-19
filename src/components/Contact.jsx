@@ -138,6 +138,9 @@ export function Contact({ lang = "fr" }) {
             "Web app / SaaS",
             "SEO and growth",
             "Maintenance and support",
+            "Video editing",
+            "Computer repair and maintenance",
+            "Advertising poster design",
             "Other"
           ]
         }
@@ -197,6 +200,9 @@ export function Contact({ lang = "fr" }) {
             "Web app / SaaS",
             "SEO et croissance",
             "Maintenance et support",
+            "Montage vidéo",
+            "Réparation et maintenance d’ordinateur",
+            "Création d’affiches publicitaires",
             "Autre"
           ]
         };
