@@ -1,5 +1,5 @@
 ﻿import { useEffect, useRef, useState } from "react";
-import { TESTIMONIALS_BY_LANG } from "../data/testimonials.js";
+import { usePublishedReviews } from "../hooks/usePublishedReviews.js";
 import { Icon } from "./icons.jsx";
 import { Reveal } from "./Reveal.jsx";
 
@@ -8,7 +8,7 @@ function clamp(n, a, b) {
 }
 
 export function Testimonials({ lang = "fr" }) {
-  const testimonials = TESTIMONIALS_BY_LANG[lang] ?? TESTIMONIALS_BY_LANG.fr;
+  const testimonials = usePublishedReviews(lang);
   const scrollerRef = useRef(null);
   const [index, setIndex] = useState(0);
   const count = testimonials.length;
@@ -119,6 +119,7 @@ export function Testimonials({ lang = "fr" }) {
                 <div className="t-meta">
                   <div className="t-name">{t.name}</div>
                   <div className="t-role muted">{t.role}</div>
+                  {t.service && <div className="t-service">{t.service}</div>}
                 </div>
               </article>
             ))}

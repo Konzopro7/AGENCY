@@ -1298,6 +1298,17 @@ html[data-theme="dark"] .modal-overlay {
   font-family: var(--font-display);
 }
 
+.t-service {
+  width: fit-content;
+  margin-top: 7px;
+  padding: 5px 9px;
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  color: var(--accent-strong);
+  font-size: 12px;
+  font-weight: 600;
+}
+
 .t-dots {
   display: flex;
   justify-content: center;
@@ -2446,6 +2457,22 @@ html[data-theme="dark"] .modal-overlay {
   margin: 18px 0 22px;
   font-size: 17px;
   line-height: 1.75;
+}
+
+.review-service-details {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.review-service-details span {
+  padding: 6px 9px;
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  color: var(--accent-strong);
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .review-form {
