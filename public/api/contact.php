@@ -1,69 +1,36 @@
 <?php
 declare(strict_types=1);
 
-header("Content-Type: application/json; charset=utf-8");
-header("X-Content-Type-Options: nosniff");
-header("Cache-Control: no-store, max-age=0");
+require_once __DIR__ . "/_security.php";
+kt_secure_api(["POST"]);
+$payload = kt_read_payload();
+if (kt_is_honeypot_filled($payload)) kt_json_response(200, ["ok" => true]);
+kt_rate_limit("contact", 5, 3600);
 
-if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
-    header("Allow: POST, OPTIONS");
-    http_response_code(204);
-    exit;
-}
+$name = kt_text($payload["name"] ?? "", 80);
+$email = kt_email($payload["email"] ?? "");
+$phone = kt_text($payload["phone"] ?? "", 30);
+$message = kt_text($payload["message"] ?? "", 3000);
+$requestType = kt_text($payload["requestType"] ?? $payload["request_type"] ?? "message_request", 40);
+$allowedRequestTypes = ["message_request", "appointment_request", "chat_assistant"];
+if (!in_array($requestType, $allowedRequestTypes, true)) $requestType = "message_request";
+$country = kt_text($payload["country"] ?? "", 60);
 
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    http_response_code(405);
-    echo json_encode(["ok" => false, "error" => "Method not allowed"]);
-    exit;
-}
+if (kt_length($name) < 2) kt_json_response(422, ["ok" => false, "error" => "Name invalid"]);
+if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 254) kt_json_response(422, ["ok" => false, "error" => "Email invalid"]);
+if (kt_length($message) < 10) kt_json_response(422, ["ok" => false, "error" => "Message too short"]);
 
-function clean_header(string $value): string
-{
-    return trim(str_replace(["\r", "\n"], "", $value));
-}
-
-$raw = file_get_contents("php://input");
-$payload = json_decode((string) $raw, true);
-if (!is_array($payload)) {
-    $payload = $_POST;
-}
-
-$name = trim((string) ($payload["name"] ?? ""));
-$email = trim((string) ($payload["email"] ?? ""));
-$phone = trim((string) ($payload["phone"] ?? ""));
-$message = trim((string) ($payload["message"] ?? ""));
-$requestType = trim((string) ($payload["requestType"] ?? $payload["request_type"] ?? "message_request"));
-$country = trim((string) ($payload["country"] ?? ""));
-
-if ($name === "" || mb_strlen($name) < 2) {
-    http_response_code(422);
-    echo json_encode(["ok" => false, "error" => "Name invalid"]);
-    exit;
-}
-
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    http_response_code(422);
-    echo json_encode(["ok" => false, "error" => "Email invalid"]);
-    exit;
-}
-
-if ($message === "" || mb_strlen($message) < 10) {
-    http_response_code(422);
-    echo json_encode(["ok" => false, "error" => "Message too short"]);
-    exit;
-}
-
-$preferredDate = trim((string) ($payload["preferredDate"] ?? $payload["preferred_date"] ?? ""));
-$preferredTime = trim((string) ($payload["preferredTime"] ?? $payload["preferred_time"] ?? ""));
-$primaryNeed = trim((string) ($payload["primaryNeed"] ?? $payload["primary_need"] ?? ""));
-$lang = trim((string) ($payload["lang"] ?? "fr"));
-$page = trim((string) ($payload["page"] ?? ""));
-$submittedAt = trim((string) ($payload["submittedAt"] ?? gmdate("c")));
-$subject = clean_header((string) ($payload["_subject"] ?? $payload["subject"] ?? "New message - KonzoTech Agency"));
+$preferredDate = kt_text($payload["preferredDate"] ?? $payload["preferred_date"] ?? "", 20);
+$preferredTime = kt_text($payload["preferredTime"] ?? $payload["preferred_time"] ?? "", 20);
+$primaryNeed = kt_text($payload["primaryNeed"] ?? $payload["primary_need"] ?? "", 120);
+$lang = in_array(($payload["lang"] ?? "fr"), ["fr", "en"], true) ? (string) $payload["lang"] : "fr";
+$page = kt_text($payload["page"] ?? "", 300);
+$submittedAt = gmdate("c");
+$subject = $requestType === "appointment_request" ? "Demande de rendez-vous - KonzoTech Agency" : ($requestType === "chat_assistant" ? "Assistant KonzoTech - nouveau contact" : "Nouveau message - KonzoTech Agency");
 
 $recipient = "info@konzotechagency.com";
 $ip = trim((string) ($_SERVER["REMOTE_ADDR"] ?? "-"));
-$userAgent = trim((string) ($_SERVER["HTTP_USER_AGENT"] ?? "-"));
+$userAgent = kt_text($_SERVER["HTTP_USER_AGENT"] ?? "-", 300);
 
 $bodyLines = [
     "New contact submission",
@@ -92,15 +59,13 @@ $headers = [
     "MIME-Version: 1.0",
     "Content-Type: text/plain; charset=UTF-8",
     "From: KonzoTech Agency <info@konzotechagency.com>",
-    "Reply-To: " . clean_header($email),
+    "Reply-To: " . $email,
     "X-Mailer: PHP/" . PHP_VERSION,
 ];
 
 $sent = @mail($recipient, $subject, $body, implode("\r\n", $headers));
 if (!$sent) {
-    http_response_code(500);
-    echo json_encode(["ok" => false, "error" => "Mail delivery failed"]);
-    exit;
+    kt_json_response(502, ["ok" => false, "error" => "Mail delivery failed"]);
 }
 
-echo json_encode(["ok" => true, "message" => "Message sent"]);
+kt_json_response(200, ["ok" => true, "message" => "Message sent"]);

@@ -22,7 +22,8 @@ const INITIAL_FORM = {
   appointmentDate: "",
   appointmentTime: "",
   needs: "",
-  message: ""
+  message: "",
+  website: ""
 };
 
 function isPlaceholderEndpoint(value) {
@@ -291,6 +292,7 @@ export function Contact({ lang = "fr" }) {
                 preferred_time: String(form.appointmentTime).trim() || "-",
                 primary_need: String(form.needs).trim() || "-",
                 message: String(form.message).trim(),
+                website: form.website,
                 _subject: isBooking ? copy.bookingSubmitSubject : copy.formSubmitSubject,
                 _captcha: "false",
                 _template: "table",
@@ -305,6 +307,7 @@ export function Contact({ lang = "fr" }) {
                 preferredTime: String(form.appointmentTime).trim() || "",
                 primaryNeed: String(form.needs).trim() || "",
                 message: String(form.message).trim(),
+                website: form.website,
                 source: SITE.name,
                 lang,
                 page: window.location.href,
@@ -328,12 +331,15 @@ export function Contact({ lang = "fr" }) {
               if (message) details = message;
             } catch {
             }
-            throw new Error(details);
+            const requestError = new Error(details);
+            requestError.stopFallback = response.status >= 400 && response.status < 500;
+            throw requestError;
           }
 
           lastError = null;
           break;
         } catch (err) {
+          if (err?.stopFallback) throw err;
           lastError = err;
         }
       }
@@ -433,6 +439,7 @@ export function Contact({ lang = "fr" }) {
             </div>
 
             <form className="form" onSubmit={onSubmit} noValidate>
+              <label className="review-honeypot" aria-hidden="true">Website<input tabIndex="-1" autoComplete="off" value={form.website} onChange={onChange("website")} /></label>
               <div className="field">
                 <label className="label" htmlFor="contact-name">
                   {copy.name}

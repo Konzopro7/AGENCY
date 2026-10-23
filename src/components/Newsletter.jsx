@@ -39,11 +39,12 @@ function getNewsletterEndpoints() {
   return endpoints;
 }
 
-async function submitNewsletter(endpoint, cleanEmail, copy) {
+async function submitNewsletter(endpoint, cleanEmail, website, copy) {
   const isFormSubmit = endpoint.includes("formsubmit.co");
   const payload = isFormSubmit
     ? {
         email: cleanEmail,
+        website,
         consent_marketing: "yes",
         request_type: "newsletter_signup",
         _subject: copy.subject,
@@ -52,6 +53,7 @@ async function submitNewsletter(endpoint, cleanEmail, copy) {
       }
     : {
         email: cleanEmail,
+        website,
         consentMarketing: true,
         requestType: "newsletter_signup",
         source: SITE.name,
@@ -75,13 +77,16 @@ async function submitNewsletter(endpoint, cleanEmail, copy) {
       if (message) details = message;
     } catch {
     }
-    throw new Error(details);
+    const requestError = new Error(details);
+    requestError.stopFallback = response.status >= 400 && response.status < 500;
+    throw requestError;
   }
 }
 
 export function Newsletter({ lang = "fr", compact = false }) {
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
+  const [website, setWebsite] = useState("");
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
 
@@ -162,10 +167,11 @@ export function Newsletter({ lang = "fr", compact = false }) {
       let lastError = null;
       for (const endpoint of endpoints) {
         try {
-          await submitNewsletter(endpoint, cleanEmail, copy);
+          await submitNewsletter(endpoint, cleanEmail, website, copy);
           lastError = null;
           break;
         } catch (err) {
+          if (err?.stopFallback) throw err;
           lastError = err;
         }
       }
@@ -175,6 +181,7 @@ export function Newsletter({ lang = "fr", compact = false }) {
       setStatus("success");
       setEmail("");
       setConsent(false);
+      setWebsite("");
     } catch (err) {
       setStatus("error");
       const message = err instanceof Error ? err.message : copy.genericError;
@@ -192,6 +199,7 @@ export function Newsletter({ lang = "fr", compact = false }) {
         </div>
 
         <form className="newsletter-bar-form" onSubmit={onSubmit} noValidate>
+          <label className="review-honeypot" aria-hidden="true">Website<input tabIndex="-1" autoComplete="off" value={website} onChange={(e) => setWebsite(e.target.value)} /></label>
           <label className="sr-only" htmlFor="newsletter-email-compact">
             {copy.email}
           </label>
@@ -261,6 +269,7 @@ export function Newsletter({ lang = "fr", compact = false }) {
         </Reveal>
 
         <Reveal as="form" className="newsletter-form card" delay={120} onSubmit={onSubmit} noValidate>
+          <label className="review-honeypot" aria-hidden="true">Website<input tabIndex="-1" autoComplete="off" value={website} onChange={(e) => setWebsite(e.target.value)} /></label>
           <div className="field">
             <label className="label" htmlFor="newsletter-email">
               {copy.email}

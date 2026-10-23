@@ -1,12 +1,7 @@
-Options -Indexes
+Options -Indexes -MultiViews
+ServerSignature Off
 
-<Files "brevo.config.php">
-  Require all denied
-  Order allow,deny
-  Deny from all
-</Files>
-
-<FilesMatch "^\.">
+<FilesMatch "^(?:\.|_security\.php$|.*\.(?:bak|conf|config\.php|dist|ini|log|sql|swp)$)">
   Require all denied
   Order allow,deny
   Deny from all

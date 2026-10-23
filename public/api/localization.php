@@ -1,15 +1,8 @@
 <?php
 declare(strict_types=1);
 
-header("Content-Type: application/json; charset=utf-8");
-header("X-Content-Type-Options: nosniff");
-header("Cache-Control: private, max-age=3600");
-
-function respond(array $payload): void
-{
-    echo json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    exit;
-}
+require_once __DIR__ . "/_security.php";
+kt_secure_api(["GET"], false);
 
 function fetch_json(string $url): ?array
 {
@@ -47,7 +40,7 @@ function currency_for_country(string $country): string
 }
 
 $country = "";
-foreach (["HTTP_CF_IPCOUNTRY", "HTTP_CLOUDFRONT_VIEWER_COUNTRY", "HTTP_X_COUNTRY_CODE", "GEOIP_COUNTRY_CODE"] as $key) {
+foreach (["HTTP_CF_IPCOUNTRY", "HTTP_CLOUDFRONT_VIEWER_COUNTRY", "GEOIP_COUNTRY_CODE"] as $key) {
     $candidate = strtoupper(trim((string) ($_SERVER[$key] ?? "")));
     if (preg_match('/^[A-Z]{2}$/', $candidate)) {
         $country = $candidate;
@@ -87,4 +80,4 @@ if ($currency !== "CAD") {
 
 }
 
-respond(["ok" => true, "country" => $country, "currency" => $currency, "rate" => $rate]);
+kt_json_response(200, ["ok" => true, "country" => $country, "currency" => $currency, "rate" => $rate]);

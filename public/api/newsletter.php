@@ -1,26 +1,8 @@
 <?php
 declare(strict_types=1);
 
-header("Content-Type: application/json; charset=utf-8");
-header("X-Content-Type-Options: nosniff");
-header("Cache-Control: no-store, max-age=0");
-
-if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
-    header("Allow: POST, OPTIONS");
-    http_response_code(204);
-    exit;
-}
-
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    http_response_code(405);
-    echo json_encode(["ok" => false, "error" => "Method not allowed"]);
-    exit;
-}
-
-function clean_header(string $value): string
-{
-    return trim(str_replace(["\r", "\n"], "", $value));
-}
+require_once __DIR__ . "/_security.php";
+kt_secure_api(["POST"]);
 
 function parse_bool(mixed $value): bool
 {
@@ -174,34 +156,23 @@ function subscribe_brevo(string $email, string $apiKey, int $listId): array
     ];
 }
 
-$raw = file_get_contents("php://input");
-$payload = json_decode((string) $raw, true);
-if (!is_array($payload)) {
-    $payload = $_POST;
-}
+$payload = kt_read_payload(16384);
+if (kt_is_honeypot_filled($payload)) kt_json_response(200, ["ok" => true]);
+kt_rate_limit("newsletter", 3, 3600);
 
-$email = trim((string) ($payload["email"] ?? ""));
+$email = kt_email($payload["email"] ?? "");
 $consent = parse_bool($payload["consent_marketing"] ?? $payload["consentMarketing"] ?? false);
 
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    http_response_code(422);
-    echo json_encode(["ok" => false, "error" => "Email invalid"]);
-    exit;
-}
+if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 254) kt_json_response(422, ["ok" => false, "error" => "Email invalid"]);
 
-if (!$consent) {
-    http_response_code(422);
-    echo json_encode(["ok" => false, "error" => "Marketing consent required"]);
-    exit;
-}
+if (!$consent) kt_json_response(422, ["ok" => false, "error" => "Marketing consent required"]);
 
 $brevo = load_brevo_config();
 $hasBrevo = $brevo["api_key"] !== "" && $brevo["list_id"] > 0;
 if ($hasBrevo) {
     $brevoResult = subscribe_brevo($email, $brevo["api_key"], $brevo["list_id"]);
     if ($brevoResult["ok"] === true) {
-        echo json_encode(["ok" => true, "message" => "Subscribed", "provider" => "brevo"]);
-        exit;
+        kt_json_response(200, ["ok" => true, "message" => "Subscribed", "provider" => "brevo"]);
     }
 
     error_log(
@@ -213,10 +184,10 @@ if ($hasBrevo) {
 }
 
 $recipient = "info@konzotechagency.com";
-$subject = clean_header((string) ($payload["_subject"] ?? $payload["subject"] ?? "Newsletter signup - KonzoTech Agency"));
-$submittedAt = trim((string) ($payload["submittedAt"] ?? gmdate("c")));
+$subject = "Newsletter signup - KonzoTech Agency";
+$submittedAt = gmdate("c");
 $ip = trim((string) ($_SERVER["REMOTE_ADDR"] ?? "-"));
-$userAgent = trim((string) ($_SERVER["HTTP_USER_AGENT"] ?? "-"));
+$userAgent = kt_text($_SERVER["HTTP_USER_AGENT"] ?? "-", 300);
 
 $bodyLines = [
     "New newsletter signup",
@@ -233,15 +204,13 @@ $headers = [
     "MIME-Version: 1.0",
     "Content-Type: text/plain; charset=UTF-8",
     "From: KonzoTech Agency <info@konzotechagency.com>",
-    "Reply-To: " . clean_header($email),
+    "Reply-To: " . $email,
     "X-Mailer: PHP/" . PHP_VERSION,
 ];
 
 $sent = @mail($recipient, $subject, $body, implode("\r\n", $headers));
 if (!$sent) {
-    http_response_code(502);
-    echo json_encode(["ok" => false, "error" => "Subscription failed"]);
-    exit;
+    kt_json_response(502, ["ok" => false, "error" => "Subscription failed"]);
 }
 
-echo json_encode(["ok" => true, "message" => "Subscribed", "provider" => "mail"]);
+kt_json_response(200, ["ok" => true, "message" => "Subscribed", "provider" => "mail"]);
