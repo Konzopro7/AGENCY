@@ -92,7 +92,7 @@ $body = implode("\n", [
 ]);
 $headers = [
     "MIME-Version: 1.0", "Content-Type: text/plain; charset=UTF-8",
-    "From: KonzoTech Agency <info@konzotechagency.com>", "Reply-To: {$email}", "X-Mailer: PHP/" . PHP_VERSION
+    "From: KonzoTech Agency <info@konzotechagency.com>", "Reply-To: {$email}"
 ];
 @mail("info@konzotechagency.com", "Nouvel avis publié - KonzoTech Agency", $body, implode("\r\n", $headers));
 

@@ -25,6 +25,15 @@ if (!apiHtaccess.includes("_security\\.php")) errors.push("API .htaccess does no
 const dataHtaccess = await readFile("public/api/data/.htaccess", "utf8");
 if (!dataHtaccess.includes("Require all denied")) errors.push("API data directory is not denied from public access");
 
+const rootHtaccess = await readFile("public/.htaccess", "utf8");
+if (!rootHtaccess.includes("^api/data(?:/|$)")) errors.push("Root routing does not fail closed for private API storage");
+if (!rootHtaccess.includes("Content-Security-Policy")) errors.push("Root security headers are missing a Content Security Policy");
+
+const userIni = await readFile("public/.user.ini", "utf8");
+for (const setting of ["file_uploads=Off", "session.upload_progress.enabled=Off", "display_errors=Off"]) {
+  if (!userIni.includes(setting)) errors.push(`PHP defense-in-depth setting missing: ${setting}`);
+}
+
 if (errors.length) {
   console.error("PHP security check failed:\n- " + errors.join("\n- "));
   process.exit(1);

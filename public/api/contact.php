@@ -60,7 +60,6 @@ $headers = [
     "Content-Type: text/plain; charset=UTF-8",
     "From: KonzoTech Agency <info@konzotechagency.com>",
     "Reply-To: " . $email,
-    "X-Mailer: PHP/" . PHP_VERSION,
 ];
 
 $sent = @mail($recipient, $subject, $body, implode("\r\n", $headers));

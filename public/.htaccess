@@ -1,5 +1,13 @@
 RewriteEngine On
 
+Options -Indexes
+ServerSignature Off
+
+# Never route private API storage or configuration files to the SPA fallback.
+RewriteRule ^api/data(?:/|$) - [F,L,NC]
+RewriteRule ^(?:\.git|\.env|\.user\.ini)(?:/|$) - [F,L,NC]
+RewriteRule (?:^|/).+\.(?:bak|conf|config|dist|ini|log|sql|swp)$ - [F,L,NC]
+
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
@@ -12,4 +20,7 @@ RewriteRule ^ index.html [L]
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header always set X-Permitted-Cross-Domain-Policies "none"
+  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self' https://formsubmit.co; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.frankfurter.app https://formsubmit.co https://www.google-analytics.com https://*.google-analytics.com; upgrade-insecure-requests"
 </IfModule>
