@@ -351,7 +351,7 @@ export function ContactAssistant({ lang = "fr" }) {
       {open ? (
         <section ref={panelRef} className="assistant-panel" role="dialog" aria-modal="false" aria-label={copy.title}>
           <header className="assistant-head">
-            <img className="assistant-head-avatar" src="/chatbot-icon.jpg" alt="" />
+            <img className="assistant-head-avatar" src="/chatbot-icon.jpg" alt="" width="46" height="46" decoding="async" />
             <div>
               <div className="assistant-title">{copy.title}</div>
               <div className="assistant-online"><span aria-hidden="true" />{copy.online}</div>
@@ -410,7 +410,7 @@ export function ContactAssistant({ lang = "fr" }) {
       ) : null}
 
       <button className="assistant-launcher" type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-label={open ? copy.close : copy.launcher}>
-        <img src="/chatbot-icon.jpg" alt="" />
+        <img src="/chatbot-icon.jpg" alt="" width="58" height="58" decoding="async" fetchPriority="low" />
         <span className="assistant-presence" aria-hidden="true" />
       </button>
     </div>

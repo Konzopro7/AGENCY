@@ -176,6 +176,8 @@ textarea {
 }
 
 .section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
   padding: 84px 0;
   scroll-margin-top: 92px;
 }

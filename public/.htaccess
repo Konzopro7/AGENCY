@@ -3,6 +3,14 @@ RewriteEngine On
 Options -Indexes
 ServerSignature Off
 
+# Consolidate every public variant on the canonical HTTPS host.
+RewriteCond %{HTTP_HOST} !^konzotechagency\.com$ [NC]
+RewriteRule ^ https://konzotechagency.com%{REQUEST_URI} [R=301,L,NE]
+
+# Keep the legacy document URL out of Google's duplicate clusters.
+RewriteCond %{THE_REQUEST} \s/+index\.html(?:[?\s]) [NC]
+RewriteRule ^index\.html$ https://konzotechagency.com/ [R=301,L,NE]
+
 # Never route private API storage or configuration files to the SPA fallback.
 RewriteRule ^api/data(?:/|$) - [F,L,NC]
 RewriteRule ^(?:\.git|\.env|\.user\.ini)(?:/|$) - [F,L,NC]
@@ -23,4 +31,27 @@ RewriteRule ^ index.html [L]
   Header always set Cross-Origin-Opener-Policy "same-origin"
   Header always set X-Permitted-Cross-Domain-Policies "none"
   Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self' https://formsubmit.co; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.frankfurter.app https://formsubmit.co https://www.google-analytics.com https://*.google-analytics.com; upgrade-insecure-requests"
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(?:css|js|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(?:jpg|jpeg|png|svg|webp)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json application/xml image/svg+xml
 </IfModule>
