@@ -4,7 +4,7 @@ Options -Indexes
 ServerSignature Off
 
 # Consolidate every public variant on the canonical HTTPS host.
-RewriteCond %{HTTP_HOST} !^konzotechagency\.com$ [NC]
+RewriteCond %{HTTP_HOST} ^www\.konzotechagency\.com$ [NC]
 RewriteRule ^ https://konzotechagency.com%{REQUEST_URI} [R=301,L,NE]
 
 # Keep the legacy document URL out of Google's duplicate clusters.
