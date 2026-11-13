@@ -189,7 +189,11 @@ export default function App() {
       ]
     }
   }), [lang]);
-  usePageSeo({ ...homeSeo, path: "/" });
+  usePageSeo({
+    ...homeSeo,
+    path: "/",
+    enabled: currentPath === "/"
+  });
 
   if (isReviewsPage) {
     return (

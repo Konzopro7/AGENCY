@@ -33,6 +33,9 @@ report(/<h1>[^<]{20,}<\/h1>/.test(homeHtml), "Home: missing prerendered H1");
 report(homeHtml.includes('href="/services/"'), "Home: missing crawlable service link");
 report(homeHtml.includes('"@type": "Organization"'), "Home: missing Organization structured data");
 
+const appSource = await readFile("src/App.jsx", "utf8");
+report(appSource.includes('enabled: currentPath === "/"'), "SPA: home SEO must be disabled on indexed routes");
+
 for (const route of routes) {
   const file = join("dist", route, "index.html");
   try {

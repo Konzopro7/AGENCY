@@ -15,8 +15,10 @@ function setMeta(selector, attribute, value) {
   element.setAttribute(attribute, value);
 }
 
-export function usePageSeo({ title, description, path = "/", schema }) {
+export function usePageSeo({ title, description, path = "/", schema, enabled = true }) {
   useEffect(() => {
+    if (!enabled) return undefined;
+
     const canonicalUrl = `${SITE_URL}${path === "/" ? "/" : path}`;
     document.title = title;
     setMeta('meta[name="description"]', "content", description);
@@ -46,5 +48,5 @@ export function usePageSeo({ title, description, path = "/", schema }) {
     }
 
     return () => document.getElementById(schemaId)?.remove();
-  }, [description, path, schema, title]);
+  }, [description, enabled, path, schema, title]);
 }
