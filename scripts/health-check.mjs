@@ -6,7 +6,7 @@ const routes = [
   "services/montage-video",
   "services/reparation-ordinateur",
   "services/creation-affiches-publicitaires",
-  "tarification", "realisations", "avis", "faq", "contact"
+  "tarification", "realisations", "avis", "faq", "contact", "confidentialite", "conditions"
 ];
 const expectedUrls = ["https://konzotechagency.com/", ...routes.map((route) => `https://konzotechagency.com/${route}/`)];
 const errors = [];
@@ -35,6 +35,12 @@ report(homeHtml.includes('"@type": "Organization"'), "Home: missing Organization
 
 const appSource = await readFile("src/App.jsx", "utf8");
 report(appSource.includes('enabled: currentPath === "/"'), "SPA: home SEO must be disabled on indexed routes");
+report(!appSource.includes("VITE_ADMIN_DASHBOARD_TOKEN"), "SPA: client bundle must not contain an admin token");
+
+const contactSource = await readFile("src/components/Contact.jsx", "utf8");
+const newsletterSource = await readFile("src/components/Newsletter.jsx", "utf8");
+report(!contactSource.includes("formsubmit.co"), "Contact: undisclosed third-party fallback detected");
+report(!newsletterSource.includes("formsubmit.co"), "Newsletter: undisclosed third-party fallback detected");
 
 for (const route of routes) {
   const file = join("dist", route, "index.html");

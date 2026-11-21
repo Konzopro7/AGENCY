@@ -156,7 +156,7 @@ export function Header({ navItems, activeId, lang = "fr", onLangChange }) {
         </nav>
 
         <div className="header-actions">
-          <button className="btn btn-sm btn-ghost lang-btn" type="button" onClick={onToggleLanguage} aria-label={copy.switchLanguage}>
+          <button className="btn btn-sm btn-ghost lang-btn" type="button" onClick={onToggleLanguage} aria-label={`${copy.languageButton} — ${copy.switchLanguage}`}>
             {copy.languageButton}
           </button>
 

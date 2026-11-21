@@ -108,7 +108,7 @@ export function Testimonials({ lang = "fr" }) {
           <div className="t-slider" ref={scrollerRef}>
             {testimonials.map((t) => (
               <article key={t.name} className="t-card">
-                <div className="t-stars" aria-label={`${t.rating} ${copy.starsSuffix}`}>
+                <div className="t-stars" role="img" aria-label={`${t.rating} ${copy.starsSuffix}`}>
                   {Array.from({ length: 5 }).map((_, i) => (
                     <span key={i} className={`t-star ${i < t.rating ? "is-on" : ""}`} aria-hidden="true">
                       <Icon name={i < t.rating ? "star-fill" : "star"} size={18} />
@@ -126,7 +126,7 @@ export function Testimonials({ lang = "fr" }) {
           </div>
 
           {hasMany ? (
-            <div className="t-dots" aria-label={copy.dots}>
+            <div className="t-dots" role="group" aria-label={copy.dots}>
               {testimonials.map((_, i) => (
                 <button
                   key={i}

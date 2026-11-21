@@ -22,8 +22,7 @@ function isPlaceholderEndpoint(value) {
 
 function getNewsletterEndpoints() {
   const firstParty = "/api/newsletter.php";
-  const fallback = `https://formsubmit.co/ajax/${SITE.email}`;
-  const values = [firstParty, NEWSLETTER.endpoint, CONTACT.endpoint, fallback];
+  const values = [firstParty, NEWSLETTER.endpoint, CONTACT.endpoint];
   const seen = new Set();
   const endpoints = [];
 
@@ -35,30 +34,19 @@ function getNewsletterEndpoints() {
     endpoints.push(endpoint);
   }
 
-  if (!endpoints.length) endpoints.push(fallback);
+  if (!endpoints.length) endpoints.push(firstParty);
   return endpoints;
 }
 
 async function submitNewsletter(endpoint, cleanEmail, website, copy) {
-  const isFormSubmit = endpoint.includes("formsubmit.co");
-  const payload = isFormSubmit
-    ? {
-        email: cleanEmail,
-        website,
-        consent_marketing: "yes",
-        request_type: "newsletter_signup",
-        _subject: copy.subject,
-        _captcha: "false",
-        _template: "table"
-      }
-    : {
-        email: cleanEmail,
-        website,
-        consentMarketing: true,
-        requestType: "newsletter_signup",
-        source: SITE.name,
-        submittedAt: new Date().toISOString()
-      };
+  const payload = {
+    email: cleanEmail,
+    website,
+    consentMarketing: true,
+    requestType: "newsletter_signup",
+    source: SITE.name,
+    submittedAt: new Date().toISOString()
+  };
 
   const response = await fetch(endpoint, {
     method: "POST",

@@ -43,8 +43,8 @@ export function ReviewsPage({ lang = "fr" }) {
       };
 
   const seo = useMemo(() => lang === "en"
-    ? { title: `Client Reviews | ${SITE.name}`, description: "Read verified client reviews and share your experience with KonzoTech Agency, a Montreal web design and SEO agency." }
-    : { title: `Avis clients | ${SITE.name}`, description: "Consultez les avis clients vérifiés et partagez votre expérience avec KonzoTech Agency, agence Web et SEO à Montréal." }, [lang]);
+    ? { title: `Client Reviews | ${SITE.name}`, description: "Read published client reviews and share your experience with KonzoTech Agency, a Montreal web design and SEO agency." }
+    : { title: `Avis clients | ${SITE.name}`, description: "Consultez les avis clients publiés et partagez votre expérience avec KonzoTech Agency, agence Web et SEO à Montréal." }, [lang]);
 
   const schema = useMemo(() => ({
     "@context": "https://schema.org", "@type": "WebPage", name: seo.title,

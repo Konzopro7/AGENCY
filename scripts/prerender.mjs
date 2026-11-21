@@ -36,9 +36,9 @@ const pages = [
   },
   {
     path: "/avis", title: "Avis clients | KonzoTech Agency", heading: "Avis et expériences de nos clients",
-    description: "Consultez les avis clients vérifiés et partagez votre expérience avec KonzoTech Agency, agence Web et SEO à Montréal.",
+    description: "Consultez les avis clients publiés et partagez votre expérience avec KonzoTech Agency, agence Web et SEO à Montréal.",
     sections: [
-      ["Avis vérifiés", "Les commentaires sont vérifiés avant leur publication afin de conserver des témoignages authentiques et utiles."],
+      ["Publication transparente", "Les avis autorisés sont publiés automatiquement après validation des champs et contrôles anti-pourriel."],
       ["Partagez votre expérience", "Les clients peuvent attribuer une note et décrire leur expérience directement depuis le formulaire sécurisé."],
       ["Amélioration continue", "Chaque retour nous aide à améliorer nos services, notre communication et notre accompagnement."]
     ]
@@ -59,6 +59,26 @@ const pages = [
       ["Demander un devis", "Expliquez votre objectif, vos besoins et votre échéancier afin de recevoir une recommandation claire."],
       ["Réponse rapide", "Notre équipe répond généralement sous 24 heures pendant les jours ouvrables."],
       ["Montréal et partout au Canada", "Nous accompagnons les entreprises localement et à distance, en français comme en anglais."]
+    ]
+  },
+  {
+    path: "/confidentialite", title: "Politique de confidentialité | KonzoTech Agency", heading: "Politique de confidentialité",
+    description: "Découvrez comment KonzoTech Agency recueille, utilise, protège et conserve les renseignements transmis par les visiteurs et les clients.",
+    sections: [
+      ["Renseignements recueillis", "Nous pouvons recevoir les coordonnées, renseignements de projet, messages, consentements et données techniques nécessaires à la sécurité."],
+      ["Utilisation et fournisseurs", "Les renseignements servent à répondre aux demandes, fournir les services, prévenir les abus et, avec consentement, mesurer l’utilisation du site."],
+      ["Vos choix", "Vous pouvez modifier vos préférences de témoins et demander l’accès, la correction ou la suppression de vos renseignements."],
+      ["Contact confidentialité", "Écrivez à info@konzotechagency.com pour toute question relative à vos renseignements personnels."]
+    ]
+  },
+  {
+    path: "/conditions", title: "Conditions d’utilisation | KonzoTech Agency", heading: "Conditions d’utilisation",
+    description: "Consultez les conditions encadrant l’utilisation du site Web, des contenus et des fonctions proposés par KonzoTech Agency.",
+    sections: [
+      ["Information générale", "Le contenu du site présente nos services. Chaque mandat est encadré par une proposition, un devis ou un contrat distinct."],
+      ["Utilisation acceptable", "Il est interdit de transmettre du contenu illégal ou malveillant, de contourner les protections ou de perturber le site."],
+      ["Avis et contenus", "Les avis autorisés peuvent être publiés automatiquement. Les contenus frauduleux, injurieux ou hors sujet peuvent être retirés."],
+      ["Disponibilité", "Les fonctions peuvent évoluer pour des raisons de sécurité, de maintenance ou d’amélioration."]
     ]
   }
 ];

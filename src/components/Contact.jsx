@@ -40,8 +40,7 @@ function isPlaceholderEndpoint(value) {
 
 function getContactEndpoints() {
   const firstParty = "/api/contact.php";
-  const fallback = `https://formsubmit.co/ajax/${SITE.email}`;
-  const values = [firstParty, CONTACT.endpoint, fallback];
+  const values = [firstParty, CONTACT.endpoint];
   const seen = new Set();
   const endpoints = [];
 
@@ -131,8 +130,6 @@ export function Contact({ lang = "fr" }) {
           missingConfig: "Contact endpoint is missing.",
           genericError: "An error occurred. Please try again.",
           networkError: "Connection blocked (network or SSL certificate). Try again in private mode or contact support.",
-          formSubmitSubject: `New message - ${SITE.name}`,
-          bookingSubmitSubject: `Appointment request - ${SITE.name}`,
           needOptions: [
             "Business website",
             "E-commerce store",
@@ -193,8 +190,6 @@ export function Contact({ lang = "fr" }) {
           missingConfig: "Configuration de contact introuvable.",
           genericError: "Une erreur est survenue. Réessayez.",
           networkError: "Connexion bloquée (réseau ou certificat SSL). Réessayez en navigation privée ou contactez le support.",
-          formSubmitSubject: `Nouveau message - ${SITE.name}`,
-          bookingSubmitSubject: `Demande de rendez-vous - ${SITE.name}`,
           needOptions: [
             "Site vitrine",
             "Boutique e-commerce",
@@ -281,38 +276,21 @@ export function Contact({ lang = "fr" }) {
       let lastError = null;
       for (const endpoint of endpoints) {
         try {
-          const isFormSubmit = endpoint.includes("formsubmit.co");
-          const payload = isFormSubmit
-            ? {
-                name: String(form.name).trim(),
-                email: String(form.email).trim(),
-                phone: String(form.phone).trim() || "-",
-                request_type: requestType,
-                preferred_date: String(form.appointmentDate).trim() || "-",
-                preferred_time: String(form.appointmentTime).trim() || "-",
-                primary_need: String(form.needs).trim() || "-",
-                message: String(form.message).trim(),
-                website: form.website,
-                _subject: isBooking ? copy.bookingSubmitSubject : copy.formSubmitSubject,
-                _captcha: "false",
-                _template: "table",
-                _replyto: String(form.email).trim()
-              }
-            : {
-                name: String(form.name).trim(),
-                email: String(form.email).trim(),
-                phone: String(form.phone).trim() || "",
-                requestType,
-                preferredDate: String(form.appointmentDate).trim() || "",
-                preferredTime: String(form.appointmentTime).trim() || "",
-                primaryNeed: String(form.needs).trim() || "",
-                message: String(form.message).trim(),
-                website: form.website,
-                source: SITE.name,
-                lang,
-                page: window.location.href,
-                submittedAt: new Date().toISOString()
-              };
+          const payload = {
+            name: String(form.name).trim(),
+            email: String(form.email).trim(),
+            phone: String(form.phone).trim() || "",
+            requestType,
+            preferredDate: String(form.appointmentDate).trim() || "",
+            preferredTime: String(form.appointmentTime).trim() || "",
+            primaryNeed: String(form.needs).trim() || "",
+            message: String(form.message).trim(),
+            website: form.website,
+            source: SITE.name,
+            lang,
+            page: window.location.href,
+            submittedAt: new Date().toISOString()
+          };
 
           const response = await fetch(endpoint, {
             method: "POST",
@@ -419,7 +397,7 @@ export function Contact({ lang = "fr" }) {
           </Reveal>
 
           <Reveal as="div" className="card contact-form" delay={120}>
-            <div className="contact-mode" role="tablist" aria-label={copy.eyebrow}>
+            <div className="contact-mode">
               <button
                 type="button"
                 className={`mode-pill ${!isBooking ? "is-active" : ""}`}

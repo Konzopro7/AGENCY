@@ -39,27 +39,6 @@ function load_brevo_config(): array
     $apiKey = get_env_value("BREVO_API_KEY");
     $listIdRaw = get_env_value("BREVO_LIST_ID");
 
-    $configFile = __DIR__ . "/brevo.config.php";
-    if (is_file($configFile)) {
-        $fromFile = require $configFile;
-        if (is_array($fromFile)) {
-            if ($apiKey === "" && isset($fromFile["api_key"])) {
-                $apiKey = trim((string) $fromFile["api_key"]);
-            }
-
-            if ($apiKey === "" && isset($fromFile["api_key_b64"])) {
-                $decoded = base64_decode((string) $fromFile["api_key_b64"], true);
-                if (is_string($decoded) && trim($decoded) !== "") {
-                    $apiKey = trim($decoded);
-                }
-            }
-
-            if ($listIdRaw === "" && isset($fromFile["list_id"])) {
-                $listIdRaw = trim((string) $fromFile["list_id"]);
-            }
-        }
-    }
-
     $listId = ctype_digit($listIdRaw) ? (int) $listIdRaw : 0;
 
     return [

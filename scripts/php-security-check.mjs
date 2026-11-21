@@ -19,6 +19,11 @@ for (const file of mutatingFiles) {
   if (!source.includes("kt_is_honeypot_filled(")) errors.push(`${file}: honeypot protection missing`);
 }
 
+const newsletterSource = await readFile("public/api/newsletter.php", "utf8");
+if (newsletterSource.includes("brevo.config.php") || newsletterSource.includes("base64_decode")) {
+  errors.push("Newsletter secret must come from server environment variables, not the public web directory");
+}
+
 const apiHtaccess = await readFile("public/api/.htaccess", "utf8");
 if (!apiHtaccess.includes("_security\\.php")) errors.push("API .htaccess does not protect the security bootstrap");
 

@@ -4,7 +4,6 @@ import { Hero } from "./components/Hero.jsx";
 import { TrustBar } from "./components/TrustBar.jsx";
 import { Services } from "./components/Services.jsx";
 import { Pricing } from "./components/Pricing.jsx";
-import { Dashboard } from "./components/Dashboard.jsx";
 import { Portfolio } from "./components/Portfolio.jsx";
 import { Testimonials } from "./components/Testimonials.jsx";
 import { FAQ } from "./components/FAQ.jsx";
@@ -17,13 +16,13 @@ import { ContactAssistant } from "./components/ContactAssistant.jsx";
 import { ReviewsPage } from "./components/ReviewsPage.jsx";
 import { IndexedSectionPage } from "./components/IndexedSectionPage.jsx";
 import { ServiceDetailPage } from "./components/ServiceDetailPage.jsx";
+import { LegalPage } from "./components/LegalPage.jsx";
+import { LegalBar } from "./components/LegalBar.jsx";
 import { useScrollSpy } from "./hooks/useScrollSpy.js";
 import { usePageSeo } from "./hooks/usePageSeo.js";
 import { COOKIE_CONSENT, recordSessionVisit } from "./lib/analyticsStore.js";
 
 const LANG_KEY = "kt-lang";
-const ADMIN_MODE_KEY = "kt-admin-dashboard-enabled";
-const ADMIN_TOKEN = String(import.meta.env.VITE_ADMIN_DASHBOARD_TOKEN || "").trim();
 
 const INDEXED_PAGES = {
   "/services": {
@@ -65,6 +64,16 @@ const INDEXED_PAGES = {
     id: "contact", component: Contact,
     fr: { eyebrow: "Contact", title: "Parlons de votre projet Web", metaTitle: "Contactez notre agence Web à Montréal | KonzoTech Agency", description: "Contactez KonzoTech Agency pour discuter de votre site Web, boutique en ligne, application, référencement SEO ou besoin de maintenance." },
     en: { eyebrow: "Contact", title: "Let’s discuss your web project", metaTitle: "Contact Our Montreal Web Agency | KonzoTech Agency", description: "Contact KonzoTech Agency to discuss your website, online store, application, SEO or maintenance needs." }
+  },
+  "/confidentialite": {
+    id: "confidentialite", component: LegalPage, legalKey: "confidentialite",
+    fr: { eyebrow: "Confidentialité", title: "Politique de confidentialité", metaTitle: "Politique de confidentialité | KonzoTech Agency", description: "Découvrez comment KonzoTech Agency recueille, utilise, protège et conserve les renseignements transmis par les visiteurs et les clients." },
+    en: { eyebrow: "Privacy", title: "Privacy Policy", metaTitle: "Privacy Policy | KonzoTech Agency", description: "Learn how KonzoTech Agency collects, uses, protects and retains information submitted by website visitors and clients." }
+  },
+  "/conditions": {
+    id: "conditions", component: LegalPage, legalKey: "conditions",
+    fr: { eyebrow: "Conditions", title: "Conditions d’utilisation", metaTitle: "Conditions d’utilisation | KonzoTech Agency", description: "Consultez les conditions encadrant l’utilisation du site Web, des contenus et des fonctions proposés par KonzoTech Agency." },
+    en: { eyebrow: "Terms", title: "Terms of Use", metaTitle: "Terms of Use | KonzoTech Agency", description: "Read the terms governing use of the KonzoTech Agency website, its content and its interactive features." }
   }
 };
 
@@ -77,42 +86,8 @@ function getInitialLang() {
   }
 }
 
-function removeAdminParamFromUrl() {
-  if (typeof window === "undefined") return;
-  const url = new URL(window.location.href);
-  if (!url.searchParams.has("admin")) return;
-  url.searchParams.delete("admin");
-  window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
-}
-
-function getInitialAdminMode() {
-  if (typeof window === "undefined") return false;
-
-  try {
-    const url = new URL(window.location.href);
-    const adminParam = url.searchParams.get("admin");
-
-    if (adminParam === "off") {
-      localStorage.removeItem(ADMIN_MODE_KEY);
-      removeAdminParamFromUrl();
-      return false;
-    }
-
-    if (ADMIN_TOKEN && adminParam === ADMIN_TOKEN) {
-      localStorage.setItem(ADMIN_MODE_KEY, "1");
-      removeAdminParamFromUrl();
-      return true;
-    }
-
-    return localStorage.getItem(ADMIN_MODE_KEY) === "1";
-  } catch {
-    return false;
-  }
-}
-
 export default function App() {
   const [lang, setLang] = useState(getInitialLang);
-  const [isAdminMode] = useState(getInitialAdminMode);
   const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
   const isReviewsPage = currentPath === "/avis";
   const indexedPage = INDEXED_PAGES[currentPath];
@@ -141,7 +116,6 @@ export default function App() {
       return [
         { id: "services", label: "Services", href: "/services/" },
         { id: "pricing", label: "Pricing", href: "/tarification/" },
-        ...(isAdminMode ? [{ id: "dashboard", label: "Dashboard" }] : []),
         { id: "realisations", label: "Work", href: "/realisations/" },
         { id: "avis", label: "Reviews", href: "/avis/" },
         { id: "faq", label: "FAQ", href: "/faq/" },
@@ -152,13 +126,12 @@ export default function App() {
     return [
       { id: "services", label: "Services", href: "/services/" },
       { id: "pricing", label: "Tarification", href: "/tarification/" },
-      ...(isAdminMode ? [{ id: "dashboard", label: "Dashboard" }] : []),
       { id: "realisations", label: "Réalisations", href: "/realisations/" },
       { id: "avis", label: "Avis", href: "/avis/" },
       { id: "faq", label: "FAQ", href: "/faq/" },
       { id: "contact", label: "Contact", href: "/contact/" }
     ];
-  }, [isAdminMode, lang]);
+  }, [lang]);
 
   const sectionIds = useMemo(() => navItems.map((i) => i.id), [navItems]);
 
@@ -201,6 +174,7 @@ export default function App() {
         <Header navItems={navItems} activeId="avis" lang={lang} onLangChange={setLang} />
         <ReviewsPage lang={lang} />
         <Footer navItems={navItems} lang={lang} />
+        <LegalBar lang={lang} />
         <CookieBanner lang={lang} />
         <ScrollToTop lang={lang} />
       </>
@@ -213,9 +187,10 @@ export default function App() {
       <>
         <Header navItems={navItems} activeId={indexedPage.id} lang={lang} onLangChange={setLang} />
         <IndexedSectionPage lang={lang} page={{ ...indexedPage, path: `${currentPath}/` }}>
-          <PageComponent lang={lang} serviceKey={indexedPage.serviceKey} />
+          <PageComponent lang={lang} serviceKey={indexedPage.serviceKey} legalKey={indexedPage.legalKey} />
         </IndexedSectionPage>
         <Footer navItems={navItems} lang={lang} />
+        <LegalBar lang={lang} />
         <CookieBanner lang={lang} />
         <ScrollToTop lang={lang} />
         <FloatingActions lang={lang} />
@@ -233,7 +208,6 @@ export default function App() {
         <TrustBar lang={lang} />
         <Services lang={lang} />
         <Pricing lang={lang} />
-        {isAdminMode ? <Dashboard lang={lang} /> : null}
         <Portfolio lang={lang} />
         <Testimonials lang={lang} />
         <FAQ lang={lang} />
@@ -241,6 +215,7 @@ export default function App() {
       </main>
 
       <Footer navItems={navItems} lang={lang} />
+      <LegalBar lang={lang} />
       <CookieBanner lang={lang} />
       <ScrollToTop lang={lang} />
       <FloatingActions lang={lang} />

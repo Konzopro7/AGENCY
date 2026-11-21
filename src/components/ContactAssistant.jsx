@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CONTACT, SITE } from "../config/site.js";
+import { Icon } from "./icons.jsx";
 
 const LEAD_INITIAL = { name: "", email: "", country: "CA", message: "" };
 
@@ -410,7 +411,7 @@ export function ContactAssistant({ lang = "fr" }) {
       ) : null}
 
       <button className="assistant-launcher" type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-label={open ? copy.close : copy.launcher}>
-        <img src="/chatbot-icon.jpg" alt="" width="58" height="58" decoding="async" fetchPriority="low" />
+        <span className="assistant-launcher-icon" aria-hidden="true"><Icon name="spark" size={30} /></span>
         <span className="assistant-presence" aria-hidden="true" />
       </button>
     </div>
