@@ -17,25 +17,6 @@ function isSeasonActive() {
   return now >= Date.parse(CHRISTMAS_THEME.start) && now < Date.parse(CHRISTMAS_THEME.end);
 }
 
-function Tree({ side }) {
-  return (
-    <svg className={`christmas-tree christmas-tree-${side}`} viewBox="0 0 120 180" aria-hidden="true">
-      <defs>
-        <linearGradient id={`tree-${side}`} x1="0" x2="1" y1="0" y2="1">
-          <stop offset="0" stopColor="#0f766e" />
-          <stop offset="1" stopColor="#064e3b" />
-        </linearGradient>
-      </defs>
-      <path d="M60 4 47 28h9L37 59h13L25 98h22L15 145h90L73 98h22L70 59h13L64 28h9Z" fill={`url(#tree-${side})`} />
-      <path d="M53 145h14v27H53z" fill="#7c4a2d" />
-      <circle cx="42" cy="78" r="4" fill="#d7b35a" />
-      <circle cx="70" cy="101" r="4" fill="#f4f1de" />
-      <circle cx="54" cy="126" r="4" fill="#b91c1c" />
-      <circle cx="72" cy="54" r="3" fill="#d7b35a" />
-    </svg>
-  );
-}
-
 export function ChristmasDecor({ lang = "fr" }) {
   const [hidden, setHidden] = useState(() => {
     try {
@@ -61,9 +42,12 @@ export function ChristmasDecor({ lang = "fr" }) {
 
   return (
     <aside className="christmas-decor" aria-label={copy.message}>
-      <div className="christmas-lights" aria-hidden="true">
-        {Array.from({ length: 14 }, (_, index) => <i key={index} />)}
-      </div>
+      <img
+        className="christmas-photo-decor"
+        src="/seasonal/christmas-corners.webp"
+        alt=""
+        aria-hidden="true"
+      />
       <div className="christmas-snow" aria-hidden="true">
         {SNOWFLAKES.map((flake) => (
           <i
@@ -78,8 +62,6 @@ export function ChristmasDecor({ lang = "fr" }) {
           />
         ))}
       </div>
-      <Tree side="left" />
-      <Tree side="right" />
       <div className="christmas-message">
         <span aria-hidden="true">✦</span>
         <span>{copy.message}</span>
