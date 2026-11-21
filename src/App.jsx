@@ -18,6 +18,7 @@ import { IndexedSectionPage } from "./components/IndexedSectionPage.jsx";
 import { ServiceDetailPage } from "./components/ServiceDetailPage.jsx";
 import { LegalPage } from "./components/LegalPage.jsx";
 import { LegalBar } from "./components/LegalBar.jsx";
+import { ChristmasDecor } from "./components/ChristmasDecor.jsx";
 import { useScrollSpy } from "./hooks/useScrollSpy.js";
 import { usePageSeo } from "./hooks/usePageSeo.js";
 import { COOKIE_CONSENT, recordSessionVisit } from "./lib/analyticsStore.js";
@@ -171,6 +172,7 @@ export default function App() {
   if (isReviewsPage) {
     return (
       <>
+        <ChristmasDecor lang={lang} />
         <Header navItems={navItems} activeId="avis" lang={lang} onLangChange={setLang} />
         <ReviewsPage lang={lang} />
         <Footer navItems={navItems} lang={lang} />
@@ -185,6 +187,7 @@ export default function App() {
     const PageComponent = indexedPage.component;
     return (
       <>
+        <ChristmasDecor lang={lang} />
         <Header navItems={navItems} activeId={indexedPage.id} lang={lang} onLangChange={setLang} />
         <IndexedSectionPage lang={lang} page={{ ...indexedPage, path: `${currentPath}/` }}>
           <PageComponent lang={lang} serviceKey={indexedPage.serviceKey} legalKey={indexedPage.legalKey} />
@@ -201,6 +204,7 @@ export default function App() {
 
   return (
     <>
+      <ChristmasDecor lang={lang} />
       <Header navItems={navItems} activeId={activeSection} lang={lang} onLangChange={setLang} />
 
       <main id="main">

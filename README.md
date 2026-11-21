@@ -54,3 +54,9 @@ Notes:
 npm run build
 npm run preview
 ```
+
+## Habillage saisonnier de Noël
+
+L’ensemble des décorations et animations est contrôlé depuis `src/config/seasonal.js`.
+Passez simplement `enabled` à `false` pour tout retirer du site en une seule modification.
+Les dates `start` et `end` permettent également son activation et sa désactivation automatiques.
